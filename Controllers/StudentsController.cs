@@ -16,6 +16,11 @@ namespace StudentPortal.Controllers
 			this.dbContext = dbContext;
 		}
 
+		public IActionResult Index()
+		{
+			return View();
+		}
+
 		[HttpGet]
 		public IActionResult Add()
 		{

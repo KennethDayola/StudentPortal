@@ -1,11 +1,3 @@
-/* Universal reset */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    background-color: #24252A; /* Keep background color dark */
-}
-
 table {
     width: 100%;
     border-collapse: collapse; /* Optional: for cleaner borders */
@@ -83,6 +75,7 @@ li, a, button {
 
 /* Specific styling for the header */
 header, .navbar, .navbar-brand, .nav-link {
+    background-color: #24252A;
     font-family: "Montserrat", sans-serif !important; /* Ensure Montserrat is applied to the header */
     color: #edf0f1 !important; /* Make sure text in header is white */
 }
