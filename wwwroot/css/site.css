@@ -32,7 +32,7 @@ tr:hover {
 .navbar-brand {
     font-family: "Montserrat", sans-serif;
     font-weight: 700; /* Make it bold */
-    font-size: 1rem; /* Make the text smaller (adjust as needed) */
+    font-size: 1rem; /* Makes the text smaller (adjust as needed) */
     color: #edf0f1 !important; /* Ensure it's white */
 }
 
