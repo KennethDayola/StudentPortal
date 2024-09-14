@@ -2,12 +2,15 @@
     height: 100vh;
     width: 100vw;
     margin: 0rem;
-    overflow: hidden;
     color: black; /* Override main body text color */
+    overflow-x: hidden; 
+    overflow-y: visible; 
     background-color: white;
 }
 
+
 #image-track > .image {
+    user-select: none;
     width: 40vmin;
     height: 56vmin;
     object-fit: cover;
@@ -16,7 +19,7 @@
 
 #image-track {
     display: flex;
-    gap: 4vmin; /* Adjust the gap here */
+    gap: 10px; /* Adjust the gap here */
     position: absolute;
     top: 37.5%;
     left: 50%;

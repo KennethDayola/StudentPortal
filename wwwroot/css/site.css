@@ -3,7 +3,11 @@ table {
     border-collapse: collapse; /* Optional: for cleaner borders */
     color: #edf0f1; /* Set table text to white */
 }
-
+.readonly-textbox {
+    background-color: #e9ecef; /* Light gray background */
+    color: #6c757d; /* Optional: gray text color */
+    cursor: not-allowed; /* Show a "not-allowed" cursor to indicate it’s readonly */
+}
 th, td {
     padding: 10px;
     text-align: left;
@@ -97,7 +101,7 @@ header, .navbar, .navbar-brand, .nav-link {
 
 /* Footer styling */
 footer {
-    background-color: #24252A; /* Footer background dark */
+    background-color: white; /* Footer background dark */
     color: #edf0f1; /* Footer text white */
 }
 

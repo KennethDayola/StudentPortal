@@ -1,16 +1,32 @@
 ﻿const track = document.getElementById("image-track");
 
-
 window.onmousedown = e => {
-    track.dataset.mouseDownAt = e.clientX;
+    const trackDimensions = track.getBoundingClientRect();
+
+    if (inTrackRect(e)) {
+        track.dataset.mouseDownAt = e.clientX;
+        document.body.style.userSelect = 'none';
+        document.body.style.pointerEvents = 'none';
+    }
+}
+
+function inTrackRect(e) {
+    const trackDimensions = track.getBoundingClientRect();
+    return e.clientX >= trackDimensions.left && e.clientX <= trackDimensions.right &&
+        e.clientY >= trackDimensions.top && e.clientY <= trackDimensions.bottom;
 }
 
 window.onmouseup = () => {
     track.dataset.mouseDownAt = "0";
     track.dataset.prevPercentage = track.dataset.percentage;
+
+    document.body.style.userSelect = '';
+    document.body.style.pointerEvents = '';
 }
 window.onmousemove = e => {
     if (track.dataset.mouseDownAt === "0") return;
+
+
 
     const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
         maxDelta = window.innerWidth / 2;
