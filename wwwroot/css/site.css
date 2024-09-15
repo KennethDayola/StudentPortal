@@ -82,7 +82,7 @@ li, a, button {
 header, .navbar, .navbar-brand, .nav-link {
     z-index: 10000;
     background-color: #24252A;
-    font-family: "Montserrat", sans-serif !important; /* Ensure Montserrat is applied to the header */
+    font-family: "Montserrat", sans-serif ; /* Ensure Montserrat is applied to the header */
     color: #edf0f1 !important; /* Make sure text in header is white */
 }
 
