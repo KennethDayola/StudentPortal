@@ -77,8 +77,10 @@ li, a, button {
     text-decoration: none;
 }
 
+
 /* Specific styling for the header */
 header, .navbar, .navbar-brand, .nav-link {
+    z-index: 10000;
     background-color: #24252A;
     font-family: "Montserrat", sans-serif !important; /* Ensure Montserrat is applied to the header */
     color: #edf0f1 !important; /* Make sure text in header is white */
@@ -89,15 +91,15 @@ header, .navbar, .navbar-brand, .nav-link {
     background-color: transparent !important; /* Transparent navbar */
 }
 
-    /* Ensure the navbar toggle button and icon match the theme */
-    .navbar-light .navbar-toggler {
-        border-color: #edf0f1; /* White border for toggler */
-    }
+/* Ensure the navbar toggle button and icon match the theme */
+.navbar-light .navbar-toggler {
+    border-color: #edf0f1; /* White border for toggler */
+}
 
-    .navbar-light .navbar-toggler-icon {
-        background-image: none;
-        color: #edf0f1; /* White toggler icon */
-    }
+.navbar-light .navbar-toggler-icon {
+    background-image: none;
+    color: #edf0f1; /* White toggler icon */
+}
 
 /* Footer styling */
 footer {

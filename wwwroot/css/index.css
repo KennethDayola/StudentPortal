@@ -1,4 +1,6 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+body {
     height: 100vh;
     width: 100vw;
     margin: 0rem;
@@ -8,8 +10,95 @@
     background-color: white;
 }
 
+#caption {
+    z-index: 5;
+    position: absolute;
+    left: 0;
+    top: 7.5%;
+    height: 1.42rem;
+    width: 100%;
+    background: #26272b;
+    color: #d0d0d1; /* Light gray text color */
+    font-weight: 200; /* Light font weight */
+    vertical-align: middle;
+    text-align: center; /* Center the text horizontally */
+    font-size: 0.8rem; /* Adjust font size if needed */
+    border-bottom: 0.5px solid #c0c1c5;
+}
 
-#image-track > .image {
+.left-icon {
+    position: absolute; /* Fixes the icon to the viewport */
+    left: 0; /* Aligns it to the left */
+    top: 34.8%; /* Center it vertically in the viewport */
+    filter: invert(1);
+    z-index: 1000; /* Ensure it's above all other content */
+    background: transparent; /* Transparent background to avoid overlap issues */
+    padding: 10px; /* Optional: add some padding around the icon */
+}
+
+.right-icon {
+    position: absolute; /* Fixes the icon to the viewport */
+    right: 0; /* Aligns it to the right */
+    top: 35.2%; /* Center it vertically in the viewport */
+    filter: invert(1); /* Optional: Invert colors for better visibility */
+    z-index: 1000; /* Ensure it's above all other content */
+    background: transparent; /* Transparent background to avoid overlap issues */
+    padding: 10px; /* Optional: add some padding around the icon */
+}
+
+.center-icon {
+    position: absolute; /* Fixes the icon to the viewport */
+    left: 50%; /* Center horizontally */
+    top: 35.2%; /* Position at 33.5% from the top */
+    transform: translateX(-50%); /* Center horizontally by shifting left by 50% of the icon's width */
+    filter: invert(1); /* Optional: Invert colors for better visibility */
+    z-index: 1000; /* Ensure it's above all other content */
+    background: transparent; /* Transparent background to avoid overlap issues */
+    padding: 10px; /* Optional: Add some padding around the icon */
+}
+
+.background-color {
+    position: absolute; /* Position it absolutely */
+    background-color: #1a1d20;
+    z-index: 0; /* Ensure it’s behind other content */
+    user-select: none;
+    pointer-events: none; /* Ensure it doesn't block interactions */
+    border-bottom: 2px solid #00ffef ;
+}
+
+header, .navbar, .navbar-brand, .nav-link {
+    position: relative; /* Ensure positioning is set */
+    z-index: 10000; /* High z-index for header */
+    background-color: #ffffff; /* White background for the header and navbar */
+    font-family: "Montserrat", sans-serif !important; /* Maintain font family */
+    color: #333333 !important; /* Dark text color for readability */
+}
+
+.nav-link {
+    color: #333333 !important; /* Use a contrasting color for links */
+}
+
+.nav-link:hover {
+    color: #333333 !important; /* Darker color for hover effect */
+}
+/* CSS for #image-track */
+#image-track {
+    z-index: 1;
+    display: flex;
+    gap: 2vmin; /* Adjust the gap between images */
+    position: absolute;
+    top: 40.5%;
+    left: 50%;
+    transform: translate(-27%, -50%);
+    user-select: none;
+    background-color: #282b2e;
+    padding: 20px; /* Optional: Padding around images */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+}
+
+/* Ensure images fit well within the container */
+#image-track .image {
+    z-index: 1;
     user-select: none;
     width: 40vmin;
     height: 56vmin;
@@ -17,14 +106,5 @@
     object-position: center;
 }
 
-#image-track {
-    display: flex;
-    gap: 10px; /* Adjust the gap here */
-    position: absolute;
-    top: 37.5%;
-    left: 50%;
-    transform: translate(-27%, -50%);
-    user-select: none;
-    background-color: white; /* Ensure background between images is white */
-}
+
 
