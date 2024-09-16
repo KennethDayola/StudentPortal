@@ -8,10 +8,6 @@
     background-color: white;
 }
 
-input[type=checkbox]{
-    display: none;
-}
-
 .container {
     display: flex;
     justify-content: space-between; /* Align text to the left and buttons to the right */
