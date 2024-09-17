@@ -8,7 +8,12 @@
     background-color: white;
 }
 
+footer{
+    background-color: white;
+}
+
 .container {
+    left: 0;
     display: flex;
     justify-content: space-between; /* Align text to the left and buttons to the right */
     align-items: center; /* Center items vertically if needed */
@@ -17,11 +22,9 @@
 .texts {
     flex: 1;
     position: relative;
-    top: 500px;
 }
 
 .buttons {
-    top: 500px;
     display: flex;
     left: 15%;
     position: relative;
@@ -161,6 +164,8 @@
     z-index: 1000; /* Ensure it's above all other content */
     background: transparent; /* Transparent background to avoid overlap issues */
     padding: 10px; /* Optional: Add some padding around the icon */
+    pointer-events: none;
+    user-select: none;
 }
 
 .background-color {
