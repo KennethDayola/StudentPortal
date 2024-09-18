@@ -8,8 +8,24 @@
     background-color: white;
 }
 
+html{
+    background-color: #eaeaeb;
+}
 footer{
     background-color: white;
+}
+
+.content{
+    width: 100%;
+}
+
+#content-title {
+    left: 35%;
+    font-size: 2rem;
+    font-weight: 600;
+    position: relative;
+    top: 100px;
+    margin: 0 auto;
 }
 
 .container {
@@ -102,13 +118,13 @@ footer{
 
 .texts h1 {
     font-size: 1.7rem; /* Large font for the main title */
-    color: #333;
+    color: #000;
     font-weight: bold;
 }
 
 .texts h2 {
     font-size: 1.3rem; /* Slightly smaller for subheading */
-    color: #666;
+    color: #262727;
     margin-top: 0.5rem;
 }
 

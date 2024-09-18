@@ -11,9 +11,12 @@ let zoomedImage = false;
 let clonedImage, originalImgRect;
 let checkedCheckbox = null; // Global variable to store the current checkbox
 
+const trackDimensions = track.getBoundingClientRect();
+const leftDimensions = leftIcon.getBoundingClientRect();
+const rightDimensions = rightIcon.getBoundingClientRect();
 
 window.onmousedown = e => {
-    const trackDimensions = track.getBoundingClientRect();
+   
 
     if (isInRect(e, trackDimensions)) {
 
@@ -25,6 +28,18 @@ window.onmousedown = e => {
     else
         isDragging = false; 
 
+    if (isInRect(e, leftDimensions)) {
+        animateTrack(25, 600);
+        track.dataset.mouseDownAt = "0";
+        track.dataset.prevPercentage = track.dataset.percentage;
+
+    }
+
+    if (isInRect(e, rightDimensions)) {
+        animateTrack(-25, 600);
+        track.dataset.mouseDownAt = "0";
+        track.dataset.prevPercentage = track.dataset.percentage;
+    }
     
 };
 
@@ -51,58 +66,68 @@ window.onmouseup = () => {
 
 document.querySelectorAll('.image-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', function () {
-        // Uncheck all checkboxes and reset images first
-        document.querySelectorAll('.image-checkbox').forEach(cb => cb.checked = false);
-        checkbox.checked = true;  // Only keep the clicked checkbox checked
-
-        // Store the checked checkbox in the global variable
-        checkedCheckbox = checkbox;
-
-        const existingZoomedImage = document.querySelector('.zoomed-image');
-        if (existingZoomedImage) {
-            existingZoomedImage.remove();  // Remove previous zoomed image
+        let timerCountdown = 0;
+        if (window.pageYOffset != 0) {
+            timerCountdown = 500;
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
+        setTimeout(() => {
+            // Uncheck all checkboxes and reset images first
+            document.querySelectorAll('.image-checkbox').forEach(cb => cb.checked = false);
+            checkbox.checked = true;  // Only keep the clicked checkbox checked
 
-        if (checkedCheckbox) {
-            zoomedImage = true;
-            const correspondingImage = checkedCheckbox.nextElementSibling; // Get the corresponding image
-            clonedImage = correspondingImage.cloneNode(true); // Clone the image
+            // Store the checked checkbox in the global variable
+            checkedCheckbox = checkbox;
 
-            // Get the height of the header
-            const headerElement = document.querySelector('header');
-            const headerHeight = headerElement ? headerElement.offsetHeight : 0;
+            const existingZoomedImage = document.querySelector('.zoomed-image');
+            if (existingZoomedImage) {
+                existingZoomedImage.remove();  // Remove previous zoomed image
+            }
 
-            originalImgRect = correspondingImage.getBoundingClientRect();
+            if (checkedCheckbox) {
+                zoomedImage = true;
+                const correspondingImage = checkedCheckbox.nextElementSibling; // Get the corresponding image
+                clonedImage = correspondingImage.cloneNode(true); // Clone the image
 
-            clonedImage.style.position = 'absolute';
-            clonedImage.style.top = originalImgRect.top + window.scrollY + 'px';
-            clonedImage.style.left = originalImgRect.left + window.scrollX + 'px';
-            clonedImage.style.width = originalImgRect.width + 'px';
-            clonedImage.style.height = originalImgRect.height + 'px';
-            clonedImage.style.objectFit = 'cover';
-            clonedImage.style.zIndex = '100000';
-            clonedImage.classList.add('zoomed-image');
+                // Get the height of the header
+                const headerElement = document.querySelector('header');
+                const headerHeight = headerElement ? headerElement.offsetHeight : 0;
 
-            clonedImage.style.transition = 'top 0.5s ease, left 0.5s ease, width 0.5s ease, height 0.5s ease';
+                originalImgRect = correspondingImage.getBoundingClientRect();
 
-            document.body.appendChild(clonedImage);
-            document.body.style.overflow = 'hidden';
+                clonedImage.style.position = 'absolute';
+                clonedImage.style.top = originalImgRect.top + window.scrollY + 'px';
+                clonedImage.style.left = originalImgRect.left + window.scrollX + 'px';
+                clonedImage.style.width = originalImgRect.width + 'px';
+                clonedImage.style.height = originalImgRect.height + 'px';
+                clonedImage.style.objectFit = 'cover';
+                clonedImage.style.zIndex = '100000';
+                clonedImage.classList.add('zoomed-image');
 
+                clonedImage.style.transition = 'top 0.5s ease, left 0.5s ease, width 0.5s ease, height 0.5s ease';
 
-            setTimeout(() => {
-                clonedImage.style.top = `${headerHeight + window.scrollY}px`;
-                clonedImage.style.left = 0;
-                clonedImage.style.width = '100vw';
-                clonedImage.style.height = `calc(100vh - ${headerHeight}px)`;
+                document.body.appendChild(clonedImage);
+                document.body.style.overflowY = 'hidden';
+
 
                 setTimeout(() => {
-                    clonedImage.style.position = 'fixed';
-                    clonedImage.style.top = `${headerHeight}px`;
-                }, 500);
-            }, 10);
+                    clonedImage.style.top = `${headerHeight + window.scrollY}px`;
+                    clonedImage.style.left = 0;
+                    clonedImage.style.width = '100vw';
+                    clonedImage.style.height = `calc(100vh - ${headerHeight}px)`;
 
-            track.style.pointerEvents = "none";
-        }
+                    setTimeout(() => {
+                        clonedImage.style.position = 'fixed';
+                        clonedImage.style.top = `${headerHeight}px`;
+                    }, 500);
+                }, 10);
+
+                track.style.pointerEvents = "none";
+            }
+        }, timerCountdown);
     });
 });
 
@@ -114,12 +139,14 @@ window.addEventListener('wheel', function (event) {
         clonedImage.style.width = originalImgRect.width + 'px';
         clonedImage.style.height = originalImgRect.height + 'px';
 
+
         setTimeout(() => {
-            document.body.style.overflow = 'auto';
+            document.body.style.overflowY = 'auto';
             clonedImage.remove();
             checkedCheckbox.checked = false; // Uncheck the checkbox
             zoomedImage = false;
             track.style.pointerEvents = "auto";
+            track.dataset.mouseDownAt = "0";
         }, 500);
     }
 }, { passive: false })
@@ -160,27 +187,32 @@ window.onmousemove = e => {
         const maxDelta = window.innerWidth / 2;
 
         const percentage = (mouseDelta / maxDelta) * -100;
-        const nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage;
-        const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
+        
 
-
-        // Use the mapped value for the animation
-        track.dataset.percentage = nextPercentage;
-
-        // Use the mapped value for the animation
-        const translateValue = mapRange(nextPercentage, 0, -100, -27, -73);
-
-        track.animate({
-            transform: `translate(${translateValue}%, -50%)`
-        }, { duration: 1200, fill: "forwards" });
-
-        for (const image of track.getElementsByClassName("image")) {
-            image.animate({
-                objectPosition: `${100 + nextPercentage}% center`
-            }, { duration: 1200, fill: "forwards" });
-        }
+        animateTrack(percentage, 1200);
     }
 };
+
+function animateTrack(percentage, duration) {
+    const nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage;
+    const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
+
+    // Use the mapped value for the animation
+    track.dataset.percentage = nextPercentage;
+
+    // Use the mapped value for the animation
+    const translateValue = mapRange(nextPercentage, 0, -100, -27, -73);
+
+    track.animate({
+        transform: `translate(${translateValue}%, -50%)`
+    }, { duration: duration, fill: "forwards" });
+
+    for (const image of track.getElementsByClassName("image")) {
+        image.animate({
+            objectPosition: `${100 + nextPercentage}% center`
+        }, { duration: duration, fill: "forwards" });
+    }
+}
 
 // Helper function to map one range to another
 const mapRange = (value, inMin, inMax, outMin, outMax) => {
@@ -208,16 +240,11 @@ document.addEventListener("DOMContentLoaded", function () {
         backgroundColor.style.left = (rect.left - 400) + 'px'; // Adjust position for padding
         backgroundColor.style.width = (rect.width + 400) + 'px'; // Adjust width for padding
         backgroundColor.style.height = (rect.height + 5) + 'px'; // Height remains the same
-    }
 
-    function setPositionContainer() {
         var container = document.querySelector('.container');
 
         container.style.marginTop = (rect.height + 50) + 'px';
-
     }
-
-    setPositionContainer();
 
     // Set initial size of the background color element
     setInitialSize();
