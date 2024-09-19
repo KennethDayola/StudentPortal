@@ -50,6 +50,7 @@ header, .navbar, .navbar-brand, .nav-link {
 }
 
 header {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
     height: 3.7rem;
     position: fixed;
     width: 100vw;
