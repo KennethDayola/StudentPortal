@@ -75,14 +75,15 @@
     z-index: 1;
 }
 
-    #image-track .image {
-        z-index: 1;
-        user-select: none;
-        width: 40vmin;
-        height: 56vmin;
-        object-fit: cover;
-        object-position: center;
-    }
+#image-track .image {
+    filter: brightness(80%);
+    z-index: 1;
+    user-select: none;
+    width: 40vmin;
+    height: 56vmin;
+    object-fit: cover;
+    object-position: center;
+}
 
 .intro-section {
     width: 100vw;

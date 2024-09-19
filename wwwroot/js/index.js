@@ -89,6 +89,7 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                 clonedImage.style.height = originalImgRect.height + 'px';
                 clonedImage.style.objectFit = 'cover';
                 clonedImage.style.zIndex = '100000';
+                clonedImage.style.filter = 'brightness(80%)';
                 clonedImage.classList.add('zoomed-image');
 
                 clonedImage.style.transition = 'top 0.5s ease, left 0.5s ease, width 0.5s ease, height 0.5s ease';
@@ -223,15 +224,15 @@ function isInRect(mouseEvent, rectangle) {
         mouseEvent.clientY >= rectangle.top && mouseEvent.clientY <= rectangle.bottom;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    function updateImageSources() {
-        const images = document.querySelectorAll('#image-track .image');
+//document.addEventListener("DOMContentLoaded", function () {
+//    function updateImageSources() {
+//        const images = document.querySelectorAll('#image-track .image');
 
-        images.forEach((img) => {
-            const randomNumber = Math.floor(Math.random() * 230) + 1; // Random number between 1 and 230
-            img.src = `https://picsum.photos/id/${randomNumber}/1920/1080`;
-        });
-    }
+//        images.forEach((img) => {
+//            const randomNumber = Math.floor(Math.random() * 230) + 1; // Random number between 1 and 230
+//            img.src = `https://picsum.photos/id/${randomNumber}/1920/1080`;
+//        });
+//    }
 
-    updateImageSources();
-});
+//    updateImageSources();
+//});
