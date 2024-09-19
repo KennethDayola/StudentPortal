@@ -1,53 +1,129 @@
 ﻿body {
-    height: 100vh;
-    width: 100vw;
-    margin: 0rem;
-    color: black; /* Override main body text color */
-    overflow-x: hidden; 
-    overflow-y: visible; 
-    background-color: white;
+    overflow-x: hidden;
 }
 
-html{
-    background-color: #eaeaeb;
-}
-footer{
-    background-color: white;
-}
-
-.content{
-    width: 100%;
-}
-
-#content-title {
-    left: 35%;
-    font-size: 2rem;
-    font-weight: 600;
+.caption {
     position: relative;
-    top: 100px;
-    margin: 0 auto;
-}
-
-.container {
+    top: 0;
     left: 0;
-    display: flex;
-    justify-content: space-between; /* Align text to the left and buttons to the right */
-    align-items: center; /* Center items vertically if needed */
+    height: 1.42rem;
+    width: 100vw;
+    background: #3b3b40;
+    color: #dee7e3;
+    font-weight: 100;
+    text-align: center;
+    font-size: 0.75rem;
+    border-bottom: 0.5px groove #a59eab;
 }
 
-.texts {
+.left-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    filter: invert(1);
+    z-index: 1000;
+    background: transparent;
+    padding: 10px;
+}
+
+.right-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    filter: invert(1);
+    z-index: 1000;
+    background: transparent;
+    padding: 10px;
+}
+
+.center-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    filter: invert(1);
+    z-index: 1000;
+    background: transparent;
+    padding: 10px;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+.track-container {
+    left: 0;
+    position: relative;
+    width: 100vw;
+    background: #393a3c;
+    height: calc(56vmin + 42px);
+    border-bottom: 2px solid #00ffef;
+}
+
+
+#image-track {
+    display: flex;
+    gap: 2vmin;
+    position: absolute;
+    left: 50%;
+    transform: translate(-27%,0);
+    user-select: none;
+    background-color: #282b2e;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+    #image-track .image {
+        z-index: 1;
+        user-select: none;
+        width: 40vmin;
+        height: 56vmin;
+        object-fit: cover;
+        object-position: center;
+    }
+
+.intro-section {
+    width: 100vw;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.intro-texts {
     flex: 1;
-    position: relative;
+    padding-left: 5.5vw;
 }
 
-.buttons {
+    .intro-texts h1 {
+        font-size: 2rem;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .intro-texts h2 {
+        font-size: 1.3rem;
+        color: #262727;
+        margin-top: 0.5rem;
+    }
+
+    .intro-texts p {
+        font-size: 0.8rem;
+        color: #333;
+        line-height: 1.6;
+        margin-top: 1rem;
+    }
+
+.intro-btn {
     display: flex;
-    left: 15%;
-    position: relative;
-    gap: 100px; /* Space between buttons */
+    gap: 100px;
+    padding-right: 5.2vw;
 }
 
-.btn1 {
+.intro-btn1 {
     align-items: center;
     background-color: #26262a; /* Light gray background */
     border-radius: 12px;
@@ -76,24 +152,24 @@ footer{
 }
 
 
-.btn1:hover {
-    box-shadow: #68c3ea 0 0 0 3px, transparent 0 0 0 0;
-    color: #fff;
-}
+    .intro-btn1:hover {
+        box-shadow: #68c3ea 0 0 0 3px, transparent 0 0 0 0;
+        color: #fff;
+    }
 
-.btn2:hover {
+.intro-btn2:hover {
     background-color: #fff;
     color: #709fcf;
     box-shadow: #86c0d9 0 0 0 3px, transparent 0 0 0 0;
 }
 
-.btn2 {
+.intro-btn2 {
     align-items: center;
-    background-color: #fff; /* Light gray background */
+    background-color: #fff;
     border-radius: 12px;
     box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
     box-sizing: border-box;
-    color: #18191a; /* White text color */
+    color: #18191a;
     cursor: pointer;
     display: inline-flex;
     flex: 1 1 auto;
@@ -115,123 +191,52 @@ footer{
     touch-action: manipulation;
 }
 
-
-.texts h1 {
-    font-size: 1.7rem; /* Large font for the main title */
-    color: #000;
-    font-weight: bold;
+.featured-section {
+    position: relative;
+    width: 100vw;
+    margin-top: 3rem;
+    padding-top: 1.2rem;
+    padding-bottom: 3rem;
+    color: black;
+    background-color: #f2f2f2;
+    border-bottom: 2px solid #00ffef;
 }
 
-.texts h2 {
-    font-size: 1.3rem; /* Slightly smaller for subheading */
-    color: #262727;
-    margin-top: 0.5rem;
-}
+    .featured-section h1 {
+        margin-top: 1rem;
+        position: relative;
+        font-weight: 600;
+        text-align: center;
+    }
 
-.texts p {
-    font-size: 0.8rem; /* Regular font size for paragraphs */
-    color: #333;
-    line-height: 1.6; /* Improve readability */
-    margin-top: 1rem;
-}
-
-#caption {
-    z-index: 5;
-    position: absolute;
-    left: 0;
-    top: 7.5%;
-    height: 1.42rem;
-    width: 100%;
-    background: #151823;
-    color: #cacfcd; /* Light gray text color */
-    font-weight: 100; /* Light font weight */
-    vertical-align: 80%;
-    text-align: center; /* Center the text horizontally */
-    font-size: 0.75rem; /* Adjust font size if needed */
-    border-bottom: 0.5px groove #f6f2fa;
-}
-
-.left-icon {
-    position: absolute; /* Fixes the icon to the viewport */
-    left: 0; /* Aligns it to the left */
-    top: 34.8%; /* Center it vertically in the viewport */
-    filter: invert(1);
-    z-index: 1000; /* Ensure it's above all other content */
-    background: transparent; /* Transparent background to avoid overlap issues */
-    padding: 10px; /* Optional: add some padding around the icon */
-}
-
-.right-icon {
-    position: absolute; /* Fixes the icon to the viewport */
-    right: 0; /* Aligns it to the right */
-    top: 35.2%; /* Center it vertically in the viewport */
-    filter: invert(1); /* Optional: Invert colors for better visibility */
-    z-index: 1000; /* Ensure it's above all other content */
-    background: transparent; /* Transparent background to avoid overlap issues */
-    padding: 10px; /* Optional: add some padding around the icon */
-}
-
-.center-icon {
-    position: absolute; /* Fixes the icon to the viewport */
-    left: 50%; /* Center horizontally */
-    top: 35.2%; /* Position at 33.5% from the top */
-    transform: translateX(-50%); /* Center horizontally by shifting left by 50% of the icon's width */
-    filter: invert(1); /* Optional: Invert colors for better visibility */
-    z-index: 1000; /* Ensure it's above all other content */
-    background: transparent; /* Transparent background to avoid overlap issues */
-    padding: 10px; /* Optional: Add some padding around the icon */
-    pointer-events: none;
-    user-select: none;
-}
-
-.background-color {
-    position: absolute; /* Position it absolutely */
-    background-color: #1a1d20;
-    z-index: 0; /* Ensure it’s behind other content */
-    user-select: none;
-    pointer-events: none; /* Ensure it doesn't block interactions */
-    border-bottom: 2px solid #00ffef ;
-}
-
-header, .navbar, .navbar-brand, .nav-link {
-    position: relative; /* Ensure positioning is set */
-    z-index: 10000; /* High z-index for header */
-    background-color: #ffffff; /* White background for the header and navbar */
-    font-family: "Montserrat", sans-serif !important; /* Maintain font family */
-    color: #333333 !important; /* Dark text color for readability */
-}
-
-.nav-link {
-    color: #333333 !important; /* Use a contrasting color for links */
-}
-
-.nav-link:hover {
-    color: #333333 !important; /* Darker color for hover effect */
-}
-/* CSS for #image-track */
-#image-track {
-    z-index: 1;
+.image-container {
     display: flex;
-    gap: 2vmin; /* Adjust the gap between images */
-    position: absolute;
-    top: 40.5%;
-    left: 50%;
-    transform: translate(-27%, -50%);
-    user-select: none;
-    background-color: #282b2e;
-    padding: 20px; /* Optional: Padding around images */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+    justify-content: space-between;
+    text-align: center;
 }
 
-/* Ensure images fit well within the container */
-#image-track .image {
-    z-index: 1;
-    user-select: none;
-    width: 40vmin;
-    height: 56vmin;
-    object-fit: cover;
-    object-position: center;
+.image-column {
+    flex: 1;
+    margin-top: 50px;
 }
 
+.bold-description {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
+.sub-description {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: 300;
+}
 
+footer {
+    border: none;
+    padding-top: 10px;
+    padding-left: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,112 +1,84 @@
-table {
-    width: 100%;
-    border-collapse: collapse; /* Optional: for cleaner borders */
-    color: #edf0f1; /* Set table text to white */
-}
-.readonly-textbox {
-    background-color: #e9ecef; /* Light gray background */
-    color: #6c757d; /* Optional: gray text color */
-    cursor: not-allowed; /* Show a "not-allowed" cursor to indicate it’s readonly */
-}
-th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd; /* Optional: Add borders to cells */
-    color: #edf0f1; /* Ensure table header and data text is white */
-}
-
-thead {
-    background-color: #343a40; /* Optional: Darker background for the table header */
-    color: #edf0f1; /* White text for table header */
-}
-
-/* Add a hover effect to rows if needed */
-tr:hover {
-    background-color: #3a3b3c; /* Optional: Slightly lighter background on hover */
-}
-/* Style for the navbar brand ("Student Portal") */
-.navbar-brand {
+* {
     font-family: "Montserrat", sans-serif;
-    font-weight: 700; /* Make it bold */
-    font-size: 1rem; /* Makes the text smaller (adjust as needed) */
-    color: #edf0f1 !important; /* Ensure it's white */
 }
 
-/* Center the navbar items */
+.container {
+    max-width: 100%;
+    width: 100vw;
+    position: relative;
+    z-index: 10;
+    padding: 0;
+}
+
+html {
+    background-color: #151823;
+}
+
+body {
+    width: 100vw;
+    margin-bottom: 60px;
+}
+
+header, .navbar, .navbar-brand, .nav-link {
+    z-index: 10000;
+    background-color: #24252A;
+    color: #edf0f1 !important;
+}
+
+.brand-text {
+    font-weight: 200;
+    padding-left: 20px;
+    margin-right: -3px;
+}
+
+.brand-text-bold {
+    font-weight: 600;
+}
+
+.navbar-brand {
+    font-size: 1rem;
+}
+
+.nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0 15px;
+}
+
+.navbar {
+    margin-bottom: 0; /* Removes any margin below the navbar */
+}
+
+header {
+    height: 3.7rem;
+    position: fixed;
+    width: 100vw;
+    border-bottom: 2px solid #00ffef !important;
+}
+
+.navbar-light {
+    background-color: transparent;
+}
+
+
+.nav-link:hover {
+    color: #858a8f !important;
+}
+
 .navbar-collapse {
-    justify-content: center !important; /* Center navbar items */
+    justify-content: center;
 }
 
-/* Style for navbar links */
 .nav-link {
     font-size: 0.9rem;
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
-    color: #edf0f1 !important; /* Make navbar links white */
-    margin: 0 15px; /* Add some space between links */
+    color: #edf0f1;
+    margin: 0 15px;
 }
 
-/* Body styling */
-body {
-    background-color: #24252A; /* Dark background */
-    color: white; /* White text for body */
-    margin-bottom: 60px;
-    font-family: "Montserrat", sans-serif; /* Apply font globally */
-}
 
-/* HTML font size */
 html {
-    font-size: 14px;
     position: relative;
     min-height: 100%;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-/* Styling for list items, links, and buttons */
-li, a, button {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    color: #edf0f1; /* White text */
-    text-decoration: none;
-}
-
-
-/* Specific styling for the header */
-header, .navbar, .navbar-brand, .nav-link {
-    z-index: 10000;
-    background-color: #24252A;
-    font-family: "Montserrat", sans-serif ; /* Ensure Montserrat is applied to the header */
-    color: #edf0f1 !important; /* Make sure text in header is white */
-}
-
-/* Remove white background from navbar */
-.navbar-light {
-    background-color: transparent !important; /* Transparent navbar */
-}
-
-/* Ensure the navbar toggle button and icon match the theme */
-.navbar-light .navbar-toggler {
-    border-color: #edf0f1; /* White border for toggler */
-}
-
-.navbar-light .navbar-toggler-icon {
-    background-image: none;
-    color: #edf0f1; /* White toggler icon */
-}
-
-/* Footer styling */
-footer {
-    background-color: white; /* Footer background dark */
-    color: #edf0f1; /* Footer text white */
-}
-
-/* Optional hover effect for links */
-.nav-link:hover {
-    color: #adb5bd !important; /* Light gray on hover */
 }

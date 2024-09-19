@@ -6,67 +6,114 @@
     <link rel="stylesheet" href="~/css/index.css" />
 </head>
 <body>
-    <div id="caption">"Navigate your academic journey with ease | Explore your classes, grades, and upcoming events below." </div>
-    <div class="left-icon">
-        <img width="50" height="50" src="https://img.icons8.com/dotty/80/double-left.png" alt="Icon" draggable="false" />
+    <div class="caption">
+        "Navigate your academic journey with ease | Explore your classes, grades, and upcoming events below."
     </div>
-    <div class="right-icon">
-        <img width="50" height="50" src="https://img.icons8.com/dotty/80/double-right.png" alt="double-right" draggable="false" />
+    <div class="track-container">
+        <div class="left-icon">
+            <img width="50" height="50" src="https://img.icons8.com/dotty/80/double-left.png" alt="Icon" draggable="false" />
+        </div>
+        <div class="right-icon">
+            <img width="50" height="50" src="https://img.icons8.com/dotty/80/double-right.png" alt="double-right" draggable="false" />
+        </div>
+        <div class="center-icon">
+            <img width="50" height="50" src="https://img.icons8.com/dotty/80/zoom-in.png" alt="zoom-in" draggable="false" />
+        </div>
+        <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
+            <label>
+                <input type="checkbox" class="image-checkbox" style="display:none;">
+                <img class="image" src="" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" style="display:none;">
+                <img class="image" src="" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" style="display:none;">
+                <img class="image" src="" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" style="display:none;">
+                <img class="image" src="" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" style="display:none;">
+                <img class="image" src="" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" style="display:none;">
+                <img class="image" src="" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" style="display:none;">
+                <img class="image" src="" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" style="display:none;">
+                <img class="image" src="" draggable="false">
+            </label>
+        </div>
     </div>
-    <div class="center-icon">
-        <img width="50" height="50" src="https://img.icons8.com/dotty/80/zoom-in.png" alt="zoom-in" draggable="false" />
-    </div>
-    <div class="background-color"></div> <!-- Background color container -->
-    
-    <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
-        <label>
-            <input type="checkbox" class="image-checkbox" style="display:none;">
-            <img class="image" src="" draggable="false">
-        </label>
-        <label>
-            <input type="checkbox" class="image-checkbox" style="display:none;">
-            <img class="image" src="" draggable="false">
-        </label>
-        <label>
-            <input type="checkbox" class="image-checkbox" style="display:none;">
-            <img class="image" src="" draggable="false">
-        </label>
-        <label>
-            <input type="checkbox" class="image-checkbox" style="display:none;">
-            <img class="image" src="" draggable="false">
-        </label>
-        <label>
-            <input type="checkbox" class="image-checkbox" style="display:none;">
-            <img class="image" src="" draggable="false">
-        </label>
-        <label>
-            <input type="checkbox" class="image-checkbox" style="display:none;">
-            <img class="image" src="" draggable="false">
-        </label>
-        <label>
-            <input type="checkbox" class="image-checkbox" style="display:none;">
-            <img class="image" src="" draggable="false">
-        </label>
-        <label>
-            <input type="checkbox" class="image-checkbox" style="display:none;">
-            <img class="image" src="" draggable="false">
-        </label>
-    </div>
-    <div class = "container">
-        <div class="texts">
+    <div class="intro-section">
+        <div class="intro-texts">
             <h1>WELCOME TO YOUR STUDENT PORTAL</h1>
             <h2>Effortlessly Manage Student Enrollments and Courses</h2>
-            <p>           Streamline subject enrollment, profile management, and academic tracking for students and administrators.</p>
+            <p>Streamline subject enrollment, profile management, and academic tracking for students and administrators.</p>
         </div>
-        <div class="buttons">
-            <button class="btn1">LEARN MORE</button>
-            <button class="btn2">GET STARTED</button>
+        <div class="intro-btn">
+            <button class="intro-btn1">LEARN MORE</button>
+            <button class="intro-btn2">GET STARTED</button>
         </div>
     </div>
-    <div class="content">
-        <!-- This will ensure the page has enough content to scroll -->
-        <div id="content-title"> Designed for Your Convenience</div>        
+    <div class="featured-section">
+        <h1>Designed for Your Convenience</h1>
+        <div class="image-container">
+            <div class="image-column">
+                <img src="https://img.icons8.com/bubbles/170/map.png" alt="map" />
+                <p class="head-description">Easy Navigation</p>
+                <p class="sub-description">Find what you need effortlessly with straightforward</p>
+                <p class="sub-description">and logical navigation options.</p>
+            </div>
+            <div class="image-column">
+                <img src="https://img.icons8.com/clouds/170/checked--v1.png" alt="checked--v1" />
+                <p class="head-description">Seamless Enrollment</p>
+                <p class="sub-description">Enroll students quickly with an intuitive, step-by-step enrollment</p>
+                <p class="sub-description">process that simplifies registration and setup.</p>
+            </div>
+            <div class="image-column">
+                <img src="https://img.icons8.com/clouds/170/folder-invoices.png" alt="folder-invoices" />
+                <p class="head-description">Quick Access to Resources</p>
+                <p class="sub-description">Instantly retrieve important documents</p>
+                <p class="sub-description">links, and tools without hassle.</p>
+            </div>
+        </div>
+        <div class="image-container">
+            <div class="image-column">
+                <img src="https://img.icons8.com/bubbles/170/apple-clock.png" alt="apple-clock" />
+                <p class="head-description">Real-Time Updates</p>
+                <p class="sub-description">Stay informed with up-to-the-minute</p>
+                <p class="sub-description">notifications and content refreshes.</p>
+            </div>
+            <div class="image-column">
+                <img src="https://img.icons8.com/clouds/170/services.png" alt="automatic" />
+                <p class="head-description">Personalized Settings</p>
+                <p class="sub-description">Adjust your preferences and settings to match</p>
+                <p class="sub-description">your individual needs and working style.</p>
+            </div>
+        </div>
+
     </div>
+    @* <div style="padding-top: 150px;">
+    <div style="height: 2000px; background-color: #f5f5f5; text-align: center; padding-top: 20px;">
+    <h2>Scroll Down Placeholder</h2>
+    <p>This is a placeholder section with enough height to allow scrolling.</p>
+    </div>
+    </div> *@
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Student Portal - Privacy</a>
+        </div>
+    </footer>
     <script src="~/js/index.js"></script>
 </body>
 </html>

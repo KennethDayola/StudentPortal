@@ -1,38 +1,29 @@
 ﻿const track = document.getElementById("image-track");
+
 let startMouseX = 0;
 let startMouseY = 0;
-let isDragging = false; // Flag to determine if dragging occurred
-const dragThreshold = 5; // Minimum movement to consider a drag
+let isDragging = false;
+const dragThreshold = 5;
 
 const leftIcon = document.querySelector('.left-icon img');
 const rightIcon = document.querySelector('.right-icon img');
 
 let zoomedImage = false;
 let clonedImage, originalImgRect;
-let checkedCheckbox = null; // Global variable to store the current checkbox
+let checkedCheckbox = null;
 
 const trackDimensions = track.getBoundingClientRect();
 const leftDimensions = leftIcon.getBoundingClientRect();
 const rightDimensions = rightIcon.getBoundingClientRect();
 
+const headerElement = document.querySelector('header');
+const headerHeight = headerElement ? headerElement.offsetHeight : 0;
+
 window.onmousedown = e => {
-   
-
-    if (isInRect(e, trackDimensions)) {
-
-        startMouseX = e.clientX;
-        startMouseY = e.clientY;
-        track.dataset.mouseDownAt = startMouseX;
-        
-    }
-    else
-        isDragging = false; 
-
     if (isInRect(e, leftDimensions)) {
         animateTrack(25, 600);
         track.dataset.mouseDownAt = "0";
         track.dataset.prevPercentage = track.dataset.percentage;
-
     }
 
     if (isInRect(e, rightDimensions)) {
@@ -40,13 +31,15 @@ window.onmousedown = e => {
         track.dataset.mouseDownAt = "0";
         track.dataset.prevPercentage = track.dataset.percentage;
     }
-    
-};
 
-function isInRect(mouseEvent, rectangle) {
-    return mouseEvent.clientX >= rectangle.left && mouseEvent.clientX <= rectangle.right &&
-        mouseEvent.clientY >= rectangle.top && mouseEvent.clientY <= rectangle.bottom;
-}
+    if (isInRect(e, trackDimensions)) {
+        startMouseX = e.clientX;
+        startMouseY = e.clientY;
+        track.dataset.mouseDownAt = startMouseX;
+    }
+    else
+        isDragging = false;
+};
 
 window.onmouseup = () => {
     if (isDragging) {
@@ -55,14 +48,11 @@ window.onmouseup = () => {
                 checkbox.disabled = false;
             });
         }, 200);
-        
-
         track.dataset.mouseDownAt = "0";
         track.dataset.prevPercentage = track.dataset.percentage;
     }
     isDragging = false;
 };
-
 
 document.querySelectorAll('.image-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', function () {
@@ -75,26 +65,20 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
             });
         }
         setTimeout(() => {
-            // Uncheck all checkboxes and reset images first
             document.querySelectorAll('.image-checkbox').forEach(cb => cb.checked = false);
-            checkbox.checked = true;  // Only keep the clicked checkbox checked
+            checkbox.checked = true;
 
-            // Store the checked checkbox in the global variable
             checkedCheckbox = checkbox;
 
             const existingZoomedImage = document.querySelector('.zoomed-image');
             if (existingZoomedImage) {
-                existingZoomedImage.remove();  // Remove previous zoomed image
+                existingZoomedImage.remove();
             }
 
             if (checkedCheckbox) {
                 zoomedImage = true;
-                const correspondingImage = checkedCheckbox.nextElementSibling; // Get the corresponding image
-                clonedImage = correspondingImage.cloneNode(true); // Clone the image
-
-                // Get the height of the header
-                const headerElement = document.querySelector('header');
-                const headerHeight = headerElement ? headerElement.offsetHeight : 0;
+                const correspondingImage = checkedCheckbox.nextElementSibling;
+                clonedImage = correspondingImage.cloneNode(true);
 
                 originalImgRect = correspondingImage.getBoundingClientRect();
 
@@ -143,7 +127,7 @@ window.addEventListener('wheel', function (event) {
         setTimeout(() => {
             document.body.style.overflowY = 'auto';
             clonedImage.remove();
-            checkedCheckbox.checked = false; // Uncheck the checkbox
+            checkedCheckbox.checked = false;
             zoomedImage = false;
             track.style.pointerEvents = "auto";
             track.dataset.mouseDownAt = "0";
@@ -152,30 +136,12 @@ window.addEventListener('wheel', function (event) {
 }, { passive: false })
 
 
-function animateTrack() {
-    track.dataset.percentage = nextPercentage;
-
-    // Use the mapped value for the animation
-    const translateValue = mapRange(nextPercentage, 0, -100, -27, -73);
-
-    track.animate({
-        transform: `translate(${translateValue}%, -50%)`
-    }, { duration: 1200, fill: "forwards" });
-
-    for (const image of track.getElementsByClassName("image")) {
-        image.animate({
-            objectPosition: `${100 + nextPercentage}% center`
-        }, { duration: 1200, fill: "forwards" });
-    }
-}
-
 window.onmousemove = e => {
     if (track.dataset.mouseDownAt === "0" || zoomedImage) return;
 
     const mouseDeltaX = e.clientX - startMouseX;
     const mouseDeltaY = e.clientY - startMouseY;
 
-    // Check if the mouse has moved beyond the threshold
     if (Math.abs(mouseDeltaX) > dragThreshold || Math.abs(mouseDeltaY) > dragThreshold) {
         isDragging = true;
 
@@ -187,24 +153,58 @@ window.onmousemove = e => {
         const maxDelta = window.innerWidth / 2;
 
         const percentage = (mouseDelta / maxDelta) * -100;
-        
 
         animateTrack(percentage, 1200);
     }
 };
 
+document.querySelector(".intro-btn1").addEventListener("click", function () {
+    const targetSection = document.querySelector(".featured-section");
+    const scrollToPosition = targetSection.getBoundingClientRect().top + window.scrollY - headerHeight;
+    window.scrollTo({
+        top: scrollToPosition,
+        behavior: 'smooth'
+    });
+});
+
+document.querySelector(".intro-btn2").addEventListener("click", function () {
+    const firstCheckbox = document.querySelector('#image-track .image-checkbox');
+    const transformValue = getTransformX(track);
+
+    let duration = 0;
+
+    if (firstCheckbox) {
+        if (transformValue != 0) {
+            animateTrack(100, 500)
+            duration = 500;
+        }
+
+        setTimeout(() => {
+            firstCheckbox.checked = true;
+            firstCheckbox.dispatchEvent(new Event('change'));
+        }, duration);
+    }
+});
+
+function getTransformX(element) {
+    const transform = window.getComputedStyle(element).transform;
+    if (transform !== 'none') {
+        const values = transform.split('(')[1].split(')')[0].split(',');
+        return parseFloat(values[4]); // Extract the X value from the matrix
+    }
+    return 0;
+}
+
 function animateTrack(percentage, duration) {
     const nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage;
     const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
 
-    // Use the mapped value for the animation
     track.dataset.percentage = nextPercentage;
 
-    // Use the mapped value for the animation
     const translateValue = mapRange(nextPercentage, 0, -100, -27, -73);
 
     track.animate({
-        transform: `translate(${translateValue}%, -50%)`
+        transform: `translate(${translateValue}%, 0)`
     }, { duration: duration, fill: "forwards" });
 
     for (const image of track.getElementsByClassName("image")) {
@@ -214,40 +214,24 @@ function animateTrack(percentage, duration) {
     }
 }
 
-// Helper function to map one range to another
 const mapRange = (value, inMin, inMax, outMin, outMax) => {
     return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
 };
 
-function updateImageSources() {
-    const images = document.querySelectorAll('#image-track .image');
-    images.forEach((img) => {
-        const randomNumber = Math.floor(Math.random() * 230) + 1; // Random number between 1 and 300
-        img.src = `https://picsum.photos/id/${randomNumber}/1920/1080`;
-    });
+function isInRect(mouseEvent, rectangle) {
+    return mouseEvent.clientX >= rectangle.left && mouseEvent.clientX <= rectangle.right &&
+        mouseEvent.clientY >= rectangle.top && mouseEvent.clientY <= rectangle.bottom;
 }
 
-// Call the function to update image sources when the page loads
-updateImageSources();
-
 document.addEventListener("DOMContentLoaded", function () {
-    var rect = track.getBoundingClientRect();
-    function setInitialSize() {
-        var backgroundColor = document.querySelector('.background-color');
+    function updateImageSources() {
+        const images = document.querySelectorAll('#image-track .image');
 
-        // Set the dimensions and position of the .background-color element
-        backgroundColor.style.top = (rect.top) + 'px';
-        backgroundColor.style.left = (rect.left - 400) + 'px'; // Adjust position for padding
-        backgroundColor.style.width = (rect.width + 400) + 'px'; // Adjust width for padding
-        backgroundColor.style.height = (rect.height + 5) + 'px'; // Height remains the same
-
-        var container = document.querySelector('.container');
-
-        container.style.marginTop = (rect.height + 50) + 'px';
+        images.forEach((img) => {
+            const randomNumber = Math.floor(Math.random() * 230) + 1; // Random number between 1 and 230
+            img.src = `https://picsum.photos/id/${randomNumber}/1920/1080`;
+        });
     }
 
-    // Set initial size of the background color element
-    setInitialSize();
-
-    
+    updateImageSources();
 });
