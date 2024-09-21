@@ -1,32 +1,35 @@
 ﻿body {
     width:100vw;
     height: 100vh;
-    background-color: #3a3d40;
+    background-color: #fff;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
+
+html {
+    background-color: #fff;
 }
 
 .background-picture {
     position: absolute;
-    top: 0;
     left: 0;
-    width: 100vw;
+    width: 50vw;
     height: 100vh;
     overflow: hidden;
     z-index: -1;
-    background: linear-gradient(to left, black 40%, transparent 60%), url('https://i.imgur.com/8O5mhpj.jpeg');
     background-size: cover;
     background-position: center;
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
 }
 
-
 .image {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     object-fit: cover;
-    max-width: 100vw;
-    max-height: 100vh;
-    transform: translate(-100px, 0); 
-    filter: brightness(50%);
-
 }
 
 html {
@@ -40,8 +43,14 @@ html {
     width: 50vw;
     position: absolute;
     right: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Adds a shadow around the container */
-    border-radius: 10px; /* Optional: Adds rounded corners to the container */
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+}
+
+.content-box {
+    height: 80%;
+    width: 80%;
 }
 
 .mt-3 {
