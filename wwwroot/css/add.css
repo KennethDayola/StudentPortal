@@ -2,6 +2,8 @@
     width:100vw;
     height: 100vh;
     background-color: #fff;
+    color: black;
+    overflow-x: hidden;
 }
 
 .navbar {
@@ -13,7 +15,7 @@ html {
 }
 
 .background-picture {
-    position: absolute;
+    position: fixed;
     left: 0;
     width: 50vw;
     height: 100vh;
@@ -23,12 +25,12 @@ html {
     background-position: center;
     display: flex;
     justify-content: center; /* Horizontal centering */
-    align-items: center; /* Vertical centering */
+    align-items: center;
 }
 
 .image {
-    width: 90%;
-    height: 90%;
+    width: 80%;
+    height: 80%;
     object-fit: cover;
 }
 
@@ -49,22 +51,27 @@ html {
 }
 
 .content-box {
-    height: 80%;
-    width: 80%;
-}
-
-.mt-3 {
-    margin-left: 30px;
+    height: 75%;
+    width: 60%;
 }
 
 .content h1{
+    font-weight: 600;
     font-size: 2rem;
-    margin-left: 40px;
-    margin-top:20px;
+}
+
+.content h2 {
+    font-weight: 300;
+    font-size: 1.4rem;
+    margin-top: -8px;
+    color: gray;
+}
+
+mt-3 {
+    margin-top: -8px;
 }
 
 .form-control {
-    margin-left: 40px;
     width: 80%;
     background-color: #d1dbf2;
 }
