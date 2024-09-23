@@ -48,7 +48,8 @@ header, .navbar, .navbar-brand, .nav-link {
 }
 
 .navbar {
-    margin-bottom: 0; /* Removes any margin below the navbar */
+    box-shadow: 0 .8rem 1rem rgba(0, 0, 0, 0.15);
+    margin-bottom: 0; 
 }
 
 header {

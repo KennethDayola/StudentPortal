@@ -8,11 +8,18 @@
 	<link rel="stylesheet" href="~/css/add.css">
 </head>
 	<body>
-		<div class="background-picture">
-			<img class="image" src="https://imgur.com/S0sWIOE.jpeg"></img>
+		<div class="caption">
+			Your academic hub | Connect with resources, manage your studies, and stay on top of important updates.
+		</div>
+		<img class="background-picture" src="https://bau.edu/blog/wp-content/uploads/2023/04/benefits-of-going-to-college.jpg"></img>
+		<div class="pic-front-container">
+		<img class="image-front" src="https://imgur.com/Ad2lAqK.png" alt="Image">
 		</div>
 		<section class="content">
+			<img class="three-dots-icon" src="https://imgur.com/9GF3tPx.png">
+			
 			<div class="content-box">
+				<img class="plus-icon" src="https://img.icons8.com/ios/55/plus--v1.png" alt="plus--v1" />
 				<h1>Add Student</h1>
 				<h2>Fill in the details to get started.</h2>
 				<hr style="border: 1px solid #252729; width: 90%;">
@@ -20,36 +27,35 @@
 
 					<div class="mt-3">
 						<label class="form-label">Student ID</label>
-						<input type="text" class="form-control" asp-for="Id"/>
+						<input type="text" class="form-control" asp-for="Id" placeholder="Enter student ID"/>
 					</div>
 
 					<div class="mt-3">
 						<label class= "form-label">First Name</label>
-						<input type="text" class="form-control" asp-for="FirstName"/>
+						<input type="text" class="form-control" asp-for="FirstName" placeholder="Enter first name"/>
 					</div>
 
 					<div class="mt-3">
 						<label class="form-label">Middle Name</label>
-						<input type="text" class="form-control" asp-for="MiddleName"/>
+						<input type="text" class="form-control" asp-for="MiddleName" placeholder="Enter middle initial"/>
 					</div>
 
 					<div class="mt-3">
 						<label class="form-label">Last Name</label>
-						<input type="text" class="form-control" asp-for="LastName"/>
+						<input type="text" class="form-control" asp-for="LastName" placeholder="Enter last name"/>
 					</div>
 
 					<div class="mt-3">
 						<label class="form-label">Course</label>
-						<input type="text" class="form-control" asp-for="Course"/>
+						<input type="text" class="form-control" asp-for="Course" placeholder="Enter course"/>
 					</div>
 
 					<div class="mt-3">
 						<label class="form-label">Remarks</label>
-						<input type="text" class="form-control" asp-for="Remarks"/>
+						<input type="text" class="form-control" asp-for="Remarks" placeholder="Enter remarks"/>
 					</div>
 
 					<div class="btn-container">
-						<button type="button" class="btn btn-secondary">Cancel</button>
 						<button type ="submit" class="btn btn-primary">Save</button>
 					</div>
 				</form>
