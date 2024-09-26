@@ -1,0 +1,238 @@
+﻿body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+.background {
+    z-index: -10;
+    position: fixed;
+    background: #e8edf1;
+    /* background: rgb(16,16,18);
+    background: linear-gradient(178deg, rgba(16,16,18,1) 0%, rgba(36,37,42,1) 30%, rgba(35,116,113,1) 69%, rgba(240,228,255,1) 91%);*/
+    height: 100vh;
+    width: 100vw;
+}
+
+.bg-pic-container {
+    position: absolute;
+    top: 1px;
+    height: 230px;
+    width: 100vw;
+    overflow: hidden;
+    border-bottom: 3px solid #00ffef !important;
+}
+
+.background-picture {
+    width: 100vw;
+    filter: brightness(20%) blur(5px);
+    object-fit: cover;
+    transform: scale(1.1);
+}
+
+.abstract-wave-pic {
+    z-index: -20;
+    position: absolute;
+    width: 300vw;
+    filter: brightness(110%);
+    height: 100vh;
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -100px); /* Adjust to center the image */
+}
+
+.caption {
+    z-index: 100;
+    position: relative;
+    height: 1.42rem;
+    width: 100vw;
+    background: #3b3b40;
+    color: #dee7e3;
+    font-weight: 100;
+    text-align: center;
+    font-size: 0.75rem;
+    border-bottom: 0.5px groove #a59eab;
+}
+
+
+h1 {
+    position: relative;
+    left: 100px;
+    color: #dadad8;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 50px;
+}
+
+
+.stud-icon {
+    position: relative;
+    top: -5px;
+    filter: invert(1);
+    margin-right: 20px;
+}
+
+.separator {
+    position: relative;
+    border: 1px solid #c6ccda;
+    width: 53%;
+    left: 200px;
+    margin-top: -10px;
+}
+
+h2 {
+    position: relative;
+    font-size: 1.0rem;
+    color: #dadad8;
+    font-weight: 400;
+    margin-top: -5px;
+    left: 200px;
+}
+
+p {
+    color: #d5d7d8;
+    font-size: 1rem;
+    font-weight: 300;
+    position: relative;
+    text-align: center;
+}
+
+.three-dots-icon {
+    z-index: 10;
+    width: 50px;
+    left: 10px;
+    position: absolute;
+}
+
+.girl-pic {
+    position: absolute;
+    z-index: 50;
+    width: 350px;
+    top: -120px;
+    right: -150px;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+.content {
+    background-color: #fff;
+    border: dotted 2px white;
+    position: relative;
+    margin-left: 6vw;
+    width: 88vw;
+    margin-top: 5px;
+    padding: 1px;
+    height: 27vw;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder-box {
+    background-color: white;
+    z-index: 20;
+    height: 40px;
+    width: 100%;
+}
+
+.table-container {
+    z-index: 1;
+    width: 95%;
+    max-height: 80%; /* Set a maximum height for the table container */
+    overflow-x: hidden;
+    position: relative;
+    overflow-y: auto;
+}
+
+.table {
+    table-layout: fixed; /* Fix table layout for better column sizing */
+    margin-left: 6%;
+    width: 90%;
+    margin-right: auto;
+    padding-right: 0;
+    border-collapse: collapse;
+    border: 1px solid #babdbf;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0; /* Keeps the header stuck at the top when scrolling */
+    z-index: 10;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    color: #5b5c5c;
+    background-color: #e0e0e0;
+    padding-top: 2px;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+.table tbody td {
+    max-height: 50%; /* Set the height of the scrollable table body */
+    overflow-y: auto;
+    font-size: 1rem;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f7f7;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: white; 
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1; 
+}
+
+.btn-primary {
+    background-color: #222727;
+    border-radius: 0;
+    box-shadow: none;
+    color: #fff;
+    margin-left: 0;
+    border-radius: 10px;
+    transition: all 250ms;
+    border: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+    transform: scale(1.02);
+}
+
+footer {
+    border-top: solid 2px #bfc3c5;
+    background-color: white;
+    position: fixed;
+    z-index: -1;
+    bottom: 0;
+    width: 100%;
+    height: 50px; 
+}
+
+.male-stud-icon { 
+    width: 100px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.privacy-text {
+    position: absolute;
+    right: 110px;
+    bottom: 15px; 
+    color: #5b5b5b;
+    font-size: 0.9rem; 
+}
+
+.portal-text {
+    position: absolute;
+    left: 20px;
+    bottom: 15px; 
+    color: #5b5b5b;
+    font-size: 0.9rem; 
+}

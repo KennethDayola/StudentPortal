@@ -5,43 +5,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/css/subpages.css"> 
+    <link rel="stylesheet" href="~/css/list.css"> 
 </head>
 <body>
-    <div class="background-picture">
-        <img class="image" src="https://i.imgur.com/QBdKL7A.jpeg"></img>
+    
+    <div class="caption">
+        Your academic hub | Connect with resources, manage your studies, and stay on top of important updates.
     </div>
+    <div class=""></div>
+    <div class="background">
+        <div class="bg-pic-container">
+            <img class="background-picture" src="https://www.newmetrics.net/files/uploads/2023/08/Student-Experience-Cover-2.jpg">
+        </div>
+@*         <img class="abstract-wave-pic" src="https://imgur.com/TbWJBkI.jpeg">
+ *@    </div>
+    <h1> <img class="stud-icon" src="https://img.icons8.com/dotty/50/student-registration.png" alt="student-registration" />List of Students</h1>
+    <hr class="separator">
+    <h2>Student Enrollment Overview </h2>
+    <p>Current roster of students. Up-to-Date Enrollment Status and Details</p>
     <section class="content">
-        <h1>Students</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Student ID</th>
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-                    <th>Last Name</th>
-                    <th>Course</th>
-                    <th>Remarks</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var student in Model)
-                {
+        <img class="three-dots-icon" src="https://imgur.com/9GF3tPx.png">
+        <div class="placeholder-box"></div>
+        <div class="table-container">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>@student.Id</td>
-                        <td>@student.FirstName</td>
-                        <td>@student.MiddleName</td>
-                        <td>@student.LastName</td>
-                        <td>@student.Course</td>
-                        <td>@student.Remarks</td>
-                        <td>
-                            <a class="btn btn-primary" asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
-                        </td>
+                        <th>Student ID</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Course</th>
+                        <th>Remarks</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model)
+                    {
+                        <tr>
+                            <td>@student.Id</td>
+                            <td>@student.FirstName</td>
+                            <td>@student.MiddleName</td>
+                            <td>@student.LastName</td>
+                            <td>@student.Course</td>
+                            <td>@student.Remarks</td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </section>
-
+    <footer>
+        <img class="male-stud-icon" src="https://cdn-icons-png.flaticon.com/512/2784/2784403.png">
+        <div class="portal-text">Student Portal - 2024</div>
+        <div class="privacy-text">@@privacy</div>
+    </footer>
 </body>
 </html>
