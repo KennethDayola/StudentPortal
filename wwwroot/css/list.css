@@ -4,7 +4,66 @@
     overflow: hidden;
 }
 
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+}
 
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 35%;
+    position: absolute;
+    right: -100%;
+    top: 5%; 
+    animation: slideIn 0.5s forwards; 
+}
+
+.close {
+    z-index:1000;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px; 
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@keyframes slideIn {
+    from {
+        right: -100%; 
+    }
+
+    to {
+        right: 0;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        right: 0; 
+    }
+
+    to {
+        right: -100%; 
+    }
+}
 .background {
     z-index: -10;
     position: fixed;
@@ -31,15 +90,15 @@
     transform: scale(1.1);
 }
 
-.abstract-wave-pic {
+/*.abstract-wave-pic {
     z-index: -20;
     position: absolute;
     width: 300vw;
     filter: brightness(110%);
     height: 100vh;
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -100px); /* Adjust to center the image */
-}
+    left: 50%; 
+    transform: translate(-50%, -100px); 
+}*/
 
 .caption {
     z-index: 100;
@@ -104,7 +163,7 @@ p {
     position: absolute;
 }
 
-.girl-pic {
+/*.girl-pic {
     position: absolute;
     z-index: 50;
     width: 350px;
@@ -112,7 +171,7 @@ p {
     right: -150px;
     filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.5));
 }
-
+*/
 .content {
     background-color: #fff;
     border: dotted 2px white;
@@ -121,13 +180,14 @@ p {
     width: 88vw;
     margin-top: 5px;
     padding: 1px;
-    height: 27vw;
+    height: 55vh;
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
 }
 
 .placeholder-box {
     background-color: white;
     z-index: 20;
+    padding-bottom: 10px;
     height: 40px;
     width: 100%;
 }
@@ -135,14 +195,14 @@ p {
 .table-container {
     z-index: 1;
     width: 95%;
-    max-height: 80%; /* Set a maximum height for the table container */
+    max-height: 80%; 
     overflow-x: hidden;
     position: relative;
     overflow-y: auto;
 }
 
 .table {
-    table-layout: fixed; /* Fix table layout for better column sizing */
+    table-layout: auto;
     margin-left: 6%;
     width: 90%;
     margin-right: auto;
@@ -153,7 +213,7 @@ p {
 
 .table thead th {
     position: sticky;
-    top: 0; /* Keeps the header stuck at the top when scrolling */
+    top: 0; 
     z-index: 10;
     text-transform: uppercase;
     font-size: 0.6rem;
@@ -166,7 +226,7 @@ p {
 }
 
 .table tbody td {
-    max-height: 50%; /* Set the height of the scrollable table body */
+    max-height: 50%; 
     overflow-y: auto;
     font-size: 1rem;
     padding: 12px;
@@ -184,6 +244,29 @@ p {
 .table tbody tr:hover {
     background-color: #f1f1f1; 
 }
+
+.button-container {
+    display: flex;
+    align-items: center; 
+}
+
+
+.delete-btn {
+    background-color: #b8272e;
+    margin-left: 15px;
+    margin-right: -30px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 7px 8px;
+    touch-action: manipulation;
+}
+
+.delete-btn:hover {
+    background-color: #ed5a69;
+    transform: scale(1.02);
+}
+
 
 .btn-primary {
     background-color: #222727;

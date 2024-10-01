@@ -73,16 +73,26 @@ namespace StudentPortal.Controllers
 			return View(students);
 		}
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            var student = await dbContext.Students.FindAsync(Id);
 
-		[HttpGet]
-		public async Task<IActionResult> Edit(int Id)
-		{
-			var student = await dbContext.Students.FindAsync(Id);
+            if (student == null)
+            {
+                return NotFound();
+            }
 
-			return View(student);
-		}
+            // Return partial view for AJAX requests
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("Edit", student);
+            }
 
-		[HttpPost]
+            return View(student);
+        }
+
+        [HttpPost]
 		public async Task<IActionResult> Edit(Student viewModel)
 		{
 			var student = await dbContext.Students.FindAsync(viewModel.Id);
