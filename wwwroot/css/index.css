@@ -60,6 +60,9 @@
     padding: 10px;
 }
 
+.left-icon, .right-icon {
+    transition: all 0.4s ease;
+}
 
 .center-icon {
     position: absolute;
@@ -108,6 +111,25 @@
     object-position: center;
 }
 
+.close-btn {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    font-family: 'Roboto', sans-serif;
+    z-index: 10000000;
+    font-weight: 100;
+    left: 20px;
+    top: 3.7rem;
+    color: white;
+    position: fixed;
+    font-size: 3rem;
+}
+
+.close-btn:hover {
+    cursor: pointer;
+    color: #cccccb;
+}
+
 @keyframes slideIn {
     0% {
         opacity: 0.5;
@@ -125,7 +147,7 @@
     height: 100vh;
     width: 100vw;
     visibility: hidden;
-    z-index: 100000000;
+    z-index: 1000000;
     pointer-events: none;
 }
 
@@ -135,12 +157,12 @@
 
 #zoom-text-1 {
     animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    z-index: 100000000;
+    z-index: 1000000;
     position: absolute;
     color: white;
     margin-right: 100px;
-    left: 57vw;
-    top: 250px;
+    left: 57%;
+    top: 35%;
     display: flex; /* Add flexbox */
     flex-direction: column; /* Stack elements vertically */
     align-items: flex-start;

@@ -11,6 +11,16 @@ let checkedCheckbox = null;
 
 const trackDimensions = track.getBoundingClientRect();
 
+const closeBtn = document.querySelector('.close-btn');
+let closeBtnClone;
+
+const leftIcon = document.querySelector('.left-icon');
+const rightIcon = document.querySelector('.right-icon');
+let leftIconZoomVer, rightIconZoomVer;
+
+const leftIconRect = document.querySelector('.left-icon').getBoundingClientRect();
+const rightIconRect = document.querySelector('.right-icon').getBoundingClientRect();
+
 const headerElement = document.querySelector('header');
 const headerHeight = headerElement ? headerElement.offsetHeight : 0;
 
@@ -81,6 +91,15 @@ document.getElementById('right-icon-checkbox').addEventListener('change', functi
     track.dataset.prevPercentage = track.dataset.percentage;
 });
 
+window.addEventListener('resize', function (event) {
+    if (zoomedImage) {
+        // Prevent resizing
+        event.preventDefault();
+        event.stopPropagation();
+        console.log('Window resizing is disabled while zoomed in.');
+    }
+});
+
 document.querySelectorAll('.image-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', function () {
         const zoomTextId = this.getAttribute('data-zoom-text');
@@ -122,21 +141,54 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                 const zoomTextsClone = document.getElementById(zoomTextId).cloneNode(true);
                 zoomTextsClone.style.visibility = 'visible';
 
+                leftIconZoomVer = leftIcon.cloneNode(true);
+                rightIconZoomVer = rightIcon.cloneNode(true);
+
+                leftIconZoomVer.style.position = 'fixed';
+                rightIconZoomVer.style.position = 'fixed';
+
+                leftIconZoomVer.style.zIndex = 1000000000;
+                rightIconZoomVer.style.zIndex = 1000000000;
+
+                leftIcon.style.display = 'none';
+                rightIcon.style.display = 'none';
+
+                setArrowDimensions(leftIconZoomVer, leftIconRect, 'scale(1.0)');
+                setArrowDimensions(rightIconZoomVer, rightIconRect, 'scale(1.0)');
+
+                closeBtnClone = closeBtn.cloneNode(true);
+                closeBtnClone.style.display = 'block';
+
+               
                 zoomContainer.appendChild(clonedImage);
                 zoomContainer.appendChild(zoomTextsClone);
 
+                zoomContainer.appendChild(leftIconZoomVer);
+                zoomContainer.appendChild(rightIconZoomVer);
+                zoomContainer.appendChild(closeBtnClone);
+
                 document.body.appendChild(zoomContainer);
 
-                
                 document.body.style.overflowY = 'hidden';
 
                 setTimeout(() => {
+                    closeBtnClone.style.opacity = 1;
+
                     clonedImage.style.top = `${headerHeight + window.scrollY}px`;
                     clonedImage.style.left = 0;
                     clonedImage.style.width = '100vw';
                     clonedImage.style.height = `calc(100vh - ${headerHeight}px)`;
 
+                    leftIconZoomVer.style.top = '50%';
+                    leftIconZoomVer.style.transform = 'scale(1.15)'; // Example scaling
+
+                    rightIconZoomVer.style.top = '50%';
+                    rightIconZoomVer.style.left = `calc(100% -  ${rightIconZoomVer.offsetWidth}px)`;
+                    rightIconZoomVer.style.transform = 'scale(1.15)'; // Example scaling
+
                     setTimeout(() => {
+                         // Keep the icon fixed at 50% height
+                        
                         clonedImage.style.position = 'fixed';
                         clonedImage.style.top = `${headerHeight}px`;
                     }, 500);
@@ -150,24 +202,21 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
 
 window.addEventListener('wheel', function (event) {
     if (zoomedImage && event.deltaY > 0) {
-        // Reverse animation for the zoomed text
         const zoomTextsClone = zoomContainer.querySelector('div');
         if (zoomTextsClone) {
             const keyframes = [
-                { transform: 'translateY(0)', opacity: 1 }, // Starting point (visible and in place)
+                { transform: 'translateY(0)', opacity: 1 },
                 { transform: 'translateY(20%)', opacity: 0 },
             ];
             const options = {
-                duration: 500, // 500ms for the transition
-                easing: 'ease', // Smooth easing
-                fill: 'forwards' // Maintain the final state (opacity 0 and moved) after the animation completes
+                duration: 500, 
+                easing: 'ease',
+                fill: 'forwards' 
             };
 
-            // Apply the animation
             zoomTextsClone.animate(keyframes, options);
-
+            closeBtnClone.animate(keyframes, options);
         }
-        // Animate the image back to its original position and size
         clonedImage.style.transition = "transform 0.5s ease, width 0.5s ease, height 0.5s ease, top 0.5s ease, left 0.5s ease";
         clonedImage.style.position = 'absolute';
         clonedImage.style.top = originalImgRect.top + window.scrollY + 'px';
@@ -175,21 +224,38 @@ window.addEventListener('wheel', function (event) {
         clonedImage.style.width = originalImgRect.width + 'px';
         clonedImage.style.height = originalImgRect.height + 'px';
 
-        // Wait for the reverse animation to complete before removing the zoomContainer
+        setArrowDimensions(leftIconZoomVer, leftIconRect, 'scale(1.0)');
+        setArrowDimensions(rightIconZoomVer, rightIconRect, 'scale(1.0)');
+
+        //const currentTopLeftIcon = parseFloat(leftIconZoomVer.style.top) || 0;
+        //leftIconZoomVer.style.top = `${currentTopLeftIcon + headerHeight}px`; 
+
+        //const currentTopRightIcon = parseFloat(rightIconZoomVer.style.top) || 0; 
+        //rightIconZoomVer.style.top = `${currentTopRightIcon + headerHeight}px`;
+
         setTimeout(() => {
-            zoomTextsClone.remove();
-            if (zoomContainer && zoomContainer.parentElement) {
-                zoomContainer.remove();
-            }
+            leftIcon.style.display = 'block';
+            rightIcon.style.display = 'block';
             document.body.style.overflowY = 'auto';
             checkedCheckbox.checked = false;
             zoomedImage = false;
             track.style.pointerEvents = "auto";
             track.dataset.mouseDownAt = "0";
-        }, 510); // Ensure this timeout matches the reverse animation duration
+            zoomTextsClone.remove();
+            if (zoomContainer && zoomContainer.parentElement) {
+                zoomContainer.remove();
+            }
+        }, 510); 
     }
 }, { passive: false });
 
+function setArrowDimensions(element, rect, scale) {
+    element.style.top = `${rect.top + headerHeight}px`;
+    element.style.left = `${rect.left}px`;
+    element.style.width = `${rect.width}px`;
+    element.style.height = `${rect.height}px`;
+    element.style.transform = scale;
+}
 
 window.onmousemove = e => {
     if (track.dataset.mouseDownAt === "0" || zoomedImage) return;
@@ -246,7 +312,7 @@ function getTransformX(element) {
     const transform = window.getComputedStyle(element).transform;
     if (transform !== 'none') {
         const values = transform.split('(')[1].split(')')[0].split(',');
-        return parseFloat(values[4]); // Extract the X value from the matrix
+        return parseFloat(values[4]); 
     }
     return 0;
 }
