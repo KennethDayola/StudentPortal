@@ -159,7 +159,49 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                 closeBtnClone = closeBtn.cloneNode(true);
                 closeBtnClone.style.display = 'block';
 
-               
+                // Add click listener for closeBtnClone
+                closeBtnClone.addEventListener('click', function () {
+                    // Trigger zoom-out when close button is clicked
+                    const zoomTextsClone = zoomContainer.querySelector('div');
+                    if (zoomTextsClone) {
+                        const keyframes = [
+                            { transform: 'translateY(0)', opacity: 1 },
+                            { transform: 'translateY(20%)', opacity: 0 },
+                        ];
+                        const options = {
+                            duration: 500,
+                            easing: 'ease',
+                            fill: 'forwards'
+                        };
+
+                        zoomTextsClone.animate(keyframes, options);
+                        closeBtnClone.animate(keyframes, options);
+                    }
+                    clonedImage.style.transition = "transform 0.5s ease, width 0.5s ease, height 0.5s ease, top 0.5s ease, left 0.5s ease";
+                    clonedImage.style.position = 'absolute';
+                    clonedImage.style.top = originalImgRect.top + window.scrollY + 'px';
+                    clonedImage.style.left = originalImgRect.left + window.scrollX + 'px';
+                    clonedImage.style.width = originalImgRect.width + 'px';
+                    clonedImage.style.height = originalImgRect.height + 'px';
+
+                    setArrowDimensions(leftIconZoomVer, leftIconRect, 'scale(1.0)');
+                    setArrowDimensions(rightIconZoomVer, rightIconRect, 'scale(1.0)');
+
+                    setTimeout(() => {
+                        leftIcon.style.display = 'block';
+                        rightIcon.style.display = 'block';
+                        document.body.style.overflowY = 'auto';
+                        checkedCheckbox.checked = false;
+                        zoomedImage = false;
+                        track.style.pointerEvents = "auto";
+                        track.dataset.mouseDownAt = "0";
+                        zoomTextsClone.remove();
+                        if (zoomContainer && zoomContainer.parentElement) {
+                            zoomContainer.remove();
+                        }
+                    }, 510);
+                });
+
                 zoomContainer.appendChild(clonedImage);
                 zoomContainer.appendChild(zoomTextsClone);
 
@@ -187,8 +229,8 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                     rightIconZoomVer.style.transform = 'scale(1.15)'; // Example scaling
 
                     setTimeout(() => {
-                         // Keep the icon fixed at 50% height
-                        
+                        // Keep the icon fixed at 50% height
+
                         clonedImage.style.position = 'fixed';
                         clonedImage.style.top = `${headerHeight}px`;
                     }, 500);
@@ -199,55 +241,6 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
         }, timerCountdown);
     });
 });
-
-window.addEventListener('wheel', function (event) {
-    if (zoomedImage && event.deltaY > 0) {
-        const zoomTextsClone = zoomContainer.querySelector('div');
-        if (zoomTextsClone) {
-            const keyframes = [
-                { transform: 'translateY(0)', opacity: 1 },
-                { transform: 'translateY(20%)', opacity: 0 },
-            ];
-            const options = {
-                duration: 500, 
-                easing: 'ease',
-                fill: 'forwards' 
-            };
-
-            zoomTextsClone.animate(keyframes, options);
-            closeBtnClone.animate(keyframes, options);
-        }
-        clonedImage.style.transition = "transform 0.5s ease, width 0.5s ease, height 0.5s ease, top 0.5s ease, left 0.5s ease";
-        clonedImage.style.position = 'absolute';
-        clonedImage.style.top = originalImgRect.top + window.scrollY + 'px';
-        clonedImage.style.left = originalImgRect.left + window.scrollX + 'px';
-        clonedImage.style.width = originalImgRect.width + 'px';
-        clonedImage.style.height = originalImgRect.height + 'px';
-
-        setArrowDimensions(leftIconZoomVer, leftIconRect, 'scale(1.0)');
-        setArrowDimensions(rightIconZoomVer, rightIconRect, 'scale(1.0)');
-
-        //const currentTopLeftIcon = parseFloat(leftIconZoomVer.style.top) || 0;
-        //leftIconZoomVer.style.top = `${currentTopLeftIcon + headerHeight}px`; 
-
-        //const currentTopRightIcon = parseFloat(rightIconZoomVer.style.top) || 0; 
-        //rightIconZoomVer.style.top = `${currentTopRightIcon + headerHeight}px`;
-
-        setTimeout(() => {
-            leftIcon.style.display = 'block';
-            rightIcon.style.display = 'block';
-            document.body.style.overflowY = 'auto';
-            checkedCheckbox.checked = false;
-            zoomedImage = false;
-            track.style.pointerEvents = "auto";
-            track.dataset.mouseDownAt = "0";
-            zoomTextsClone.remove();
-            if (zoomContainer && zoomContainer.parentElement) {
-                zoomContainer.remove();
-            }
-        }, 510); 
-    }
-}, { passive: false });
 
 function setArrowDimensions(element, rect, scale) {
     element.style.top = `${rect.top + headerHeight}px`;
