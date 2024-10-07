@@ -297,6 +297,29 @@
     }
 }
 
+@keyframes textFadeToLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-11%);
+        opacity: 0;
+    }
+}
+
+@keyframes textFadeToRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(11%);
+        opacity: 0;
+    }
+}
+
 .intro-section {
     width: 100vw;
     position: relative;

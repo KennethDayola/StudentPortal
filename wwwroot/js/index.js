@@ -10,11 +10,13 @@ let clonedImage, clickedImgRect;
 let checkedCheckbox = null;
 
 let zoomedImages, currentImageIndex;
+let nextZoomTextClone;
 
 const trackDimensions = track.getBoundingClientRect();
 
 const closeBtn = document.querySelector('.close-btn');
 let closeBtnClone;
+let hasClickedArrow = false, recentlyClickedArrow = false;
 
 const leftIcon = document.querySelector('.left-icon');
 const rightIcon = document.querySelector('.right-icon');
@@ -22,16 +24,6 @@ let leftIconZoomVer, rightIconZoomVer;
 
 const leftIconRect = document.querySelector('.left-icon').getBoundingClientRect();
 const rightIconRect = document.querySelector('.right-icon').getBoundingClientRect();
-
-const fadeUpKeyFrames = [
-    { transform: 'translateY(0)', opacity: 1 },
-    { transform: 'translateY(-11%)', opacity: 0 },
-];
-const fadeUpOptions = {
-    duration: 500,
-    easing: 'ease',
-    fill: 'forwards'
-};
 
 const headerElement = document.querySelector('header');
 const headerHeight = headerElement ? headerElement.offsetHeight : 0;
@@ -133,7 +125,7 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
 
                 zoomContainer.style.textAlign = 'center';
 
-                const zoomTextsClone = document.getElementById(zoomTextId).cloneNode(true);
+                let zoomTextsClone = document.getElementById(zoomTextId).cloneNode(true);
                 zoomTextsClone.style.display = 'block';
 
                 leftIconZoomVer = leftIcon.cloneNode(true);
@@ -181,28 +173,50 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                     currentImageIndex = currentImageIndex; 
                 }
 
-                function showImage(newImageIndex, direction) {
-                    const currentImage = zoomedImages[currentImageIndex];
-                    const nextImage = zoomedImages[newImageIndex];
+                function showImage(currentImageIndex, direction) {
+                    let previousImgIndex = currentImageIndex;
 
-                    currentImage.style.display = 'block';
-                    nextImage.style.display = 'block';
+                    if (currentImageIndex == 0) {
+                        previousImgIndex = 0;
+                        leftIconZoomVer.style.opacity = 0.2;
+                    }
+                    else if (currentImageIndex == zoomedImages.length - 1) {
+                        rightIconZoomVer.style.opacity = 0.2;
+                    }
+                    else {
+                        rightIconZoomVer.style.opacity = 1;
+                        leftIconZoomVer.style.opacity = 1;
+                    }    
+
+                    if (direction === 'right')
+                        previousImgIndex = currentImageIndex - 1;
+                    if (direction === 'left')
+                        previousImgIndex = currentImageIndex + 1;
+                 
+                    const currentImage = zoomedImages[previousImgIndex];
+                    const nextImage = zoomedImages[currentImageIndex];
 
                     if (direction === 'right') {
-                        currentImage.style.animation = 'slideOutToLeft 0.5s forwards';
-                        nextImage.style.animation = 'slideInFromRight 0.5s forwards';
+                        currentImage.style.animation = 'slideOutToLeft 0.5s ease forwards';
+                        nextImage.style.animation = 'slideInFromRight 0.5s ease forwards';
                     } else if (direction === 'left') {
-                        currentImage.style.animation = 'slideOutToRight 0.5s forwards';
-                        nextImage.style.animation = 'slideInFromLeft 0.5s forwards';
+                        currentImage.style.animation = 'slideOutToRight 0.5s ease forwards';
+                        nextImage.style.animation = 'slideInFromLeft 0.5s ease forwards';
                     }                    
-                    currentImageIndex = newImageIndex;
+
+                    if (previousImgIndex < 0 || previousImgIndex >= zoomedImages.length) {
+                        return; // Exit if the index goes out of bounds
+                    }
 
                     zoomedImages.forEach((img, imgPosition) => {
-                        if (imgPosition !== currentImageIndex && imgPosition !== newImageIndex) {
+                        if (imgPosition !== currentImageIndex && imgPosition !== currentImageIndex-1) {
                             img.style.display = 'none'; 
                             img.style.animation = '';   
                         }
                     });
+
+                    currentImage.style.display = 'block';
+                    nextImage.style.display = 'block';
                 }
                 showImage(currentImageIndex);
 
@@ -211,18 +225,54 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                 zoomedImages[currentImageIndex].style.left = clickedImgRect.left + window.scrollX + 'px';
                 zoomedImages[currentImageIndex].style.width = clickedImgRect.width + 'px';
                 zoomedImages[currentImageIndex].style.height = clickedImgRect.height + 'px';
+
+                function animateNextText(direction) {
+                    const nextZoomTextId = document.querySelectorAll('.image-checkbox')[currentImageIndex].getAttribute('data-zoom-text');
+                    newZoomTextClone = document.getElementById(nextZoomTextId).cloneNode(true);
+                    hasClickedArrow = true;
+
+                    newZoomTextClone.style.display = 'block'; 
+                    newZoomTextClone.style.animation = '';
+
+                    zoomContainer.appendChild(newZoomTextClone);
+
+                    if (direction == 'right') {
+                        zoomTextsClone.style.animation = 'textFadeToLeft 0.4s ease forwards';
+                    } else if (direction == 'left') {
+                        zoomTextsClone.style.animation = 'textFadeToRight 0.4s ease forwards';
+                    }
+
+                    setTimeout(() => {
+                        zoomTextsClone.remove(); 
+                        zoomTextsClone = newZoomTextClone; 
+                    }, 410); 
+                }
                 
                 leftIconZoomVer.addEventListener('click', () => {
+                    if (recentlyClickedArrow) return;
+                    recentlyClickedArrow = true;
+                    setTimeout(() => {
+                        recentlyClickedArrow = false;
+                    }, 510);
+
                     if (currentImageIndex > 0) {
-                        currentImageIndex--; // Decrease index only if it's greater than 0
+                        currentImageIndex--;
                         showImage(currentImageIndex, 'left');
+                        animateNextText('left');
                     }
                 });
 
                 rightIconZoomVer.addEventListener('click', () => {
+                    if (recentlyClickedArrow) return;
+                    recentlyClickedArrow = true;
+                    setTimeout(() => {
+                        recentlyClickedArrow = false;
+                    }, 510);
+
                     if (currentImageIndex < zoomedImages.length - 1) {
-                        currentImageIndex++; // Increase index only if it's less than the last index
+                        currentImageIndex++;
                         showImage(currentImageIndex, 'right');
+                        animateNextText('right');
                     }
                 });
 
@@ -266,9 +316,24 @@ window.addEventListener('wheel', function (event) {
 
 function zoomOut() {
     const zoomTextsClone = zoomContainer.querySelector('div');
+    if (zoomTextsClone) {
+        const keyframes = [
+            { transform: 'translateY(0)', opacity: 1 },
+            { transform: 'translateY(-11%)', opacity: 0 },
+        ];
+        const options = {
+            duration: 500,
+            easing: 'ease',
+            fill: 'forwards'
+        };
 
-    zoomTextsClone.animate(fadeUpKeyFrames, fadeUpOptions);
-    closeBtnClone.animate(fadeUpKeyFrames, fadeUpOptions);
+        zoomTextsClone.animate(keyframes, options);
+        if (hasClickedArrow) {
+            newZoomTextClone.animate(keyframes, options);
+            hasClickedArrow = false;
+        }
+        closeBtnClone.animate(keyframes, options);
+    }
 
     const recentImgRect = document.querySelectorAll('.image-checkbox')[currentImageIndex].nextElementSibling.getBoundingClientRect();
 
@@ -291,7 +356,6 @@ function zoomOut() {
         track.style.pointerEvents = "auto";
         track.dataset.mouseDownAt = "0";
         zoomContainer.remove();
-        
     }, 510);
 }
 
