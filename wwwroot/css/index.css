@@ -109,6 +109,11 @@
     height: 56vmin;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.3s ease;
+}
+
+#image-track .image:hover {
+    transform: scale(.95);
 }
 
 .close-btn {
@@ -154,7 +159,7 @@
     animation: slideIn 0.5s ease-out forwards; 
 }
 
-#zoom-text-1 {
+#zoom-text-addstud {
     animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     z-index: 1000000;
     position: absolute;
@@ -165,7 +170,7 @@
 }
 
 
-#zoom-text-2 {
+#zoom-text-students {
     text-align: center;
     animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     position: absolute;
@@ -174,6 +179,17 @@
     z-index: 1000000;
     top: 35%;
     color: white;
+}
+
+#zoom-text-addsub {
+    animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    z-index: 1000000;
+    position: absolute;
+    color: white;
+    margin-right: 100px;
+    width: 60%;
+    left: 10%;
+    top: 37%;
 }
 
 .zoom-text-h1 {
@@ -204,13 +220,13 @@
     cursor: pointer;
     display: inline-flex;
     font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 1vw; /* Adjust font size relative to viewport width */
+    font-size: 1vw; 
     font-weight: 600;
     justify-content: center;
     line-height: 1.25;
     margin: 0;
-    min-height: 4vw; /* Adjust min-height using vw */
-    padding: 0 calc(6vw - 0.1vw); /* Adjust padding using vw */
+    min-height: 4vw;
+    padding: 0 calc(6vw - 0.1vw);
     text-decoration: none;
     transition: all 250ms;
     user-select: none;
@@ -245,7 +261,11 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 10000000001; /* Ensure it's higher than the cloned image */
+    z-index: 10000000001;
+}
+
+.zoom-container > *:not(#zoom-text-addsub) {
+    text-align: center;
 }
 
 .zoomed-image {
@@ -316,6 +336,30 @@
 
     to {
         transform: translateX(11%);
+        opacity: 0;
+    }
+}
+
+@keyframes textSlideToRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes textSlideToLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-100%);
         opacity: 0;
     }
 }

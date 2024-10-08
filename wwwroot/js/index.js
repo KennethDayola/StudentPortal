@@ -123,8 +123,6 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                 zoomContainer = document.createElement('div');
                 zoomContainer.classList.add('zoom-container');
 
-                zoomContainer.style.textAlign = 'center';
-
                 let zoomTextsClone = document.getElementById(zoomTextId).cloneNode(true);
                 zoomTextsClone.style.display = 'block';
 
@@ -177,7 +175,6 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                     let previousImgIndex = currentImageIndex;
 
                     if (currentImageIndex == 0) {
-                        previousImgIndex = 0;
                         leftIconZoomVer.style.opacity = 0.2;
                     }
                     else if (currentImageIndex == zoomedImages.length - 1) {
@@ -190,26 +187,26 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
 
                     if (direction === 'right')
                         previousImgIndex = currentImageIndex - 1;
-                    if (direction === 'left')
+                    else if (direction === 'left')
                         previousImgIndex = currentImageIndex + 1;
                  
                     const currentImage = zoomedImages[previousImgIndex];
                     const nextImage = zoomedImages[currentImageIndex];
 
                     if (direction === 'right') {
-                        currentImage.style.animation = 'slideOutToLeft 0.5s ease forwards';
-                        nextImage.style.animation = 'slideInFromRight 0.5s ease forwards';
+                        currentImage.style.animation = 'slideOutToLeft 0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards';
+                        nextImage.style.animation = 'slideInFromRight 0.5s  cubic-bezier(0.42, 0, 0.58, 1) forwards';
                     } else if (direction === 'left') {
-                        currentImage.style.animation = 'slideOutToRight 0.5s ease forwards';
-                        nextImage.style.animation = 'slideInFromLeft 0.5s ease forwards';
+                        currentImage.style.animation = 'slideOutToRight 0.5s  cubic-bezier(0.42, 0, 0.58, 1) forwards';
+                        nextImage.style.animation = 'slideInFromLeft 0.5s  cubic-bezier(0.42, 0, 0.58, 1) forwards';
                     }                    
 
                     if (previousImgIndex < 0 || previousImgIndex >= zoomedImages.length) {
-                        return; // Exit if the index goes out of bounds
+                        return; 
                     }
 
                     zoomedImages.forEach((img, imgPosition) => {
-                        if (imgPosition !== currentImageIndex && imgPosition !== currentImageIndex-1) {
+                        if (imgPosition !== currentImageIndex && imgPosition !== previousImgIndex) {
                             img.style.display = 'none'; 
                             img.style.animation = '';   
                         }
@@ -232,15 +229,16 @@ document.querySelectorAll('.image-checkbox').forEach(checkbox => {
                     hasClickedArrow = true;
 
                     newZoomTextClone.style.display = 'block'; 
-                    newZoomTextClone.style.animation = '';
-
-                    zoomContainer.appendChild(newZoomTextClone);
-
+                    
                     if (direction == 'right') {
                         zoomTextsClone.style.animation = 'textFadeToLeft 0.4s ease forwards';
+                        newZoomTextClone.style.animation = 'textSlideToRight 0.5s cubic-bezier(0.42, 0, 0.58, 1) reverse forwards';
                     } else if (direction == 'left') {
                         zoomTextsClone.style.animation = 'textFadeToRight 0.4s ease forwards';
+                        newZoomTextClone.style.animation = 'textSlideToLeft 0.5s cubic-bezier(0.42, 0, 0.58, 1) reverse forwards';
                     }
+
+                    zoomContainer.appendChild(newZoomTextClone);
 
                     setTimeout(() => {
                         zoomTextsClone.remove(); 
