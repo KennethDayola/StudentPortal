@@ -1,4 +1,5 @@
 ﻿const track = document.getElementById("image-track");
+const trackImgs = document.querySelectorAll('#image-track .image');
 
 let startMouseX = 0;
 let startMouseY = 0;
@@ -80,17 +81,24 @@ window.onmouseup = () => {
         track.dataset.mouseDownAt = "0";
         track.dataset.prevPercentage = track.dataset.percentage;
     }
+    noHover.remove();
     isDragging = false;
 };
 
 document.getElementById('left-icon-checkbox').addEventListener('change', function () {
-    animateTrack(40, 600, 'cubic-bezier(0.25, 1, 0.5, 1)');
+    if (!isZoomed)
+        animateTrack(40, 600, 'cubic-bezier(0.25, 1, 0.5, 1)');
+    else if (isZoomed)
+        animateTrack(14, 0);
     track.dataset.mouseDownAt = "0";
     track.dataset.prevPercentage = track.dataset.percentage;
 });
 
 document.getElementById('right-icon-checkbox').addEventListener('change', function () {
-    animateTrack(-45, 600, 'cubic-bezier(0.25, 1, 0.5, 1)');
+    if (!isZoomed)
+        animateTrack(-45, 600, 'cubic-bezier(0.25, 1, 0.5, 1)');
+    else if (isZoomed)
+        animateTrack(-14, 0);
     track.dataset.mouseDownAt = "0";
     track.dataset.prevPercentage = track.dataset.percentage;
 });
@@ -366,6 +374,11 @@ function setArrowDimensions(element, rect, scale) {
 }
 
 window.onmousemove = e => {
+    //if (isDragging)
+    //    imgTrack.classList.add('no-hover');
+    //else
+    //    imgTrack.classList.remove('no-hover');
+
     if (track.dataset.mouseDownAt === "0" || isZoomed) return;
 
     const mouseDeltaX = e.clientX - startMouseX;

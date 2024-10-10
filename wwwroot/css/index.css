@@ -112,6 +112,7 @@
     transition: transform 0.3s ease;
 }
 
+
 #image-track .image:hover {
     transform: scale(.95);
 }
