@@ -1,8 +1,169 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/index.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+</head>
+<body >
+    @* <div id="loading-screen">
+        <div class="loading-text">Loading...</div>
+    </div> *@
+    <div id="zoom-texts">
+        <div id="zoom-text-addstud">
+            <h1 class="zoom-text-h1">Enroll a New Student</h1>
+            <h2 class="zoom-text-h2" style="text-indent: .5em;">Welcome New Faces to Our School</h2>
+            <p class="zoom-text-p" style="text-indent: 3em;">
+                Adding a new student to our school community is the first step toward unlocking a world of opportunities for their growth and development.
+                Click the button below to begin the enrollment process and help shape their educational journey.
+            </p>
+            <a href="@Url.Action("Add", "Students")" class="btn-in-zoom">ENROLL NOW</a>
+        </div>
+        <div id="zoom-text-students">
+            <h1 class="zoom-text-h1">Student Directory</h1>
+            <h2 class="zoom-text-h2" style="margin: 2% 0;">Explore Student Profiles</h2>
+            <p class="zoom-text-p">Browse through the list of students currently enrolled in the program. Get insights into their academic progress and personal details.</p>
+            <p class="zoom-text-p" style=" width:80%; margin-left: auto; margin-top: -1.3%;">View the profiles of our students and track their achievements and activities.</p>
+            <a href="@Url.Action("List", "Students")" class="btn-in-zoom">VIEW LIST</a>
+        </div>
+        <div id="zoom-text-addsub">
+            <h1 class="zoom-text-h1">Register for Classes Today</h1>
+            <h2 class="zoom-text-h2" style="text-indent: .5em;">Find Your Passion—Enroll in the Right Courses for You</h2>
+            <p class="zoom-text-p" style="text-indent: 3em;">
+                Whether you’re pursuing a major, exploring new fields, or enhancing your skillset, our wide range of subjects offers something for every interest. 
+                Enroll today to begin your academic journey.
+            </p>
+            <a href="@Url.Action("Add", "Students")" class="btn-in-zoom">CHOOSE YOUR SUBJECTS</a>
+        </div>
+        <div id="zoom-text-privacy">
+            <h1 class="zoom-text-h1">Privacy and Security</h1>
+            <h2 class="zoom-text-h2" style="text-indent: .5em;">Welcome New Faces to Our School</h2>
+            <p class="zoom-text-p" style="text-indent: 3em;">
+                Adding a new student to our school community is the first step toward unlocking a world of opportunities for their growth and development.
+                Click the button below to begin the enrollment process and help shape their educational journey.
+            </p>
+            <a href="@Url.Action("Add", "Students")" class="btn-in-zoom">ENROLL NOW</a>
+        </div>
+    </div>
+    <div class="caption">
+        Your academic hub | Connect with resources, manage your studies, and stay on top of important updates.
+    </div>
+    <div class="close-btn">Back</div>
+    <div class="track-container">
+        <div class="left-icon">
+            <input type="checkbox" id="left-icon-checkbox" style="display:none;">
+            <label for="left-icon-checkbox">
+                <img width="50" height="50" src="https://imgur.com/wcdMngb.png" alt="Icon" draggable="false" />
+            </label>
+            
+        </div>
+        <div class="right-icon">
+            <input type="checkbox" id="right-icon-checkbox" style="display:none;">
+            <label for="right-icon-checkbox">
+                <img width="50" height="50" src="https://imgur.com/w38T1bk.png" alt="double-right" draggable="false" />
+            </label>
+        </div>
+        <div class="center-icon">
+            <img width="45" height="45" src="https://imgur.com/B6SIXrn.png" alt="external-Drag-hand-gestures-on-ipad-outline-berkahicon" />
+        </div>
+        <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
+            <label>
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <img class="image" src="https://imgur.com/8RIDUwi.jpeg" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-students" style="display:none;">
+                <img class="image" src="https://mycehd.gsu.edu/files/2020/10/research-diverse-students-planning-banner-1920x1080.jpg" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addsub" style="display:none;">
+                <img class="image" src="https://i.abcnewsfe.com/a/58a35e3a-b15c-46f4-8bb3-a71ccf9809d0/ca-schools-3-rf-gty-bb-230906_1694023890660_hpMain.jpg" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <img class="image" src="https://www.daysoftheyear.com/wp-content/uploads/world-student-day1.jpg" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <img class="image" src="https://imgur.com/vq5JpUu.jpeg" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <img class="image" src="https://imgur.com/72UcVFH.jpeg" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <img class="image" src="https://imgur.com/qVVxlqP.jpeg" draggable="false">
+            </label>
+            <label>
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <img class="image" src="https://www.universityliving.com/blog/wp-content/uploads/2024/01/The-Student-Library-Top-Pick-Books-For-Students-to-Read-1000x418.webp" draggable="false">
+            </label>
+        </div>
+    </div>
+   
+    <div class="intro-section">
+        <div class="intro-texts">
+            <h1>WELCOME TO YOUR STUDENT PORTAL</h1>
+            <h2>Effortlessly Manage Student Enrollments and Courses</h2>
+            <p>Streamline subject enrollment, profile management, and academic tracking for students and administrators.</p>
+        </div>
+        <div class="intro-btn">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+            <button class="intro-btn1">LEARN MORE</button>
+            <button class="intro-btn2">GET STARTED</button>
+        </div>
+    </div>
+    <div class="featured-section">
+        <h1>Designed for Your Convenience</h1>
+        <div class="image-container">
+            <div class="image-column">
+                <img src="https://imgur.com/7VQl6uj.png" alt="map" />
+                <p class="head-description">Easy Navigation</p>
+                <p class="sub-description">Find what you need effortlessly with straightforward</p>
+                <p class="sub-description">and logical navigation options.</p>
+            </div>
+            <div class="image-column">
+                <img src="https://imgur.com/u0eqaGM.png" alt="checked--v1" />
+                <p class="head-description">Seamless Enrollment</p>
+                <p class="sub-description">Enroll students quickly with an intuitive, step-by-step enrollment</p>
+                <p class="sub-description">process that simplifies registration and setup.</p>
+            </div>
+            <div class="image-column">
+                <img src="https://imgur.com/L5vRilk.png" alt="folder-invoices" />
+                <p class="head-description">Quick Access to Resources</p>
+                <p class="sub-description">Instantly retrieve important documents</p>
+                <p class="sub-description">links, and tools without hassle.</p>
+            </div>
+        </div>
+        <div class="image-container">
+            <div class="image-column">
+                <img src="https://imgur.com/mw9qUZv.png" alt="apple-clock" />
+                <p class="head-description">Real-Time Updates</p>
+                <p class="sub-description">Stay informed with up-to-the-minute</p>
+                <p class="sub-description">notifications and content refreshes.</p>
+            </div>
+            <div class="image-column">
+                <img src="https://imgur.com/BOtoaQY.png" alt="automatic" />
+                <p class="head-description">Personalized Settings</p>
+                <p class="sub-description">Adjust your preferences and settings to match</p>
+                <p class="sub-description">your individual needs and working style.</p>
+            </div>
+        </div>
+
+    </div>
+    @* <div style="padding-top: 150px;">
+    <div style="height: 2000px; background-color: #f5f5f5; text-align: center; padding-top: 20px;">
+    <h2>Scroll Down Placeholder</h2>
+    <p>This is a placeholder section with enough height to allow scrolling.</p>
+    </div>
+    </div> *@
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Student Portal - Privacy</a>
+        </div>
+    </footer>
+    <script src="~/js/index.js"></script>
+</body>
+</html>

@@ -34,12 +34,11 @@ namespace StudentPortal.Controllers
 			{
 				try
 				{
-					// Enable IDENTITY_INSERT
 					await dbContext.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Students ON");
 
 					var student = new Student
 					{
-						Id = viewModel.Id, // Explicit value for Id
+						Id = viewModel.Id, 
 						FirstName = viewModel.FirstName,
 						MiddleName = viewModel.MiddleName,
 						LastName = viewModel.LastName,
@@ -50,13 +49,10 @@ namespace StudentPortal.Controllers
 					await dbContext.Students.AddAsync(student);
 					await dbContext.SaveChangesAsync();
 
-
-					// Commit the transaction
 					await transaction.CommitAsync();
 				}
 				catch (Exception ex)
 				{
-					// Rollback if something goes wrong
 					await transaction.RollbackAsync();
 					throw;
 				}
@@ -83,7 +79,6 @@ namespace StudentPortal.Controllers
                 return NotFound();
             }
 
-            // Return partial view for AJAX requests
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 return PartialView("Edit", student);

@@ -6,34 +6,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/list.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     
+    <div class="left-navbar">
+        <h1>Record Archive</h1>
+        @* <p class="nav-item-header"><i class="far fa-list-alt"></i>Lists </p> *@
+        <div class="nav-ic-selected" data-href="@Url.Action("List", "Students")">
+            <p class="navbar-items"><i class="far fa-user"></i></p>
+        </div>
+        <div class="nav-ic" style="padding-top: 20px;" data-href="@Url.Action("Add", "Students")">
+            <p class="navbar-items"><i class="far fa-file-alt"></i></p>
+        </div>
+        <div class="nav-ic" data-href="@Url.Action("Add", "Students")">
+            <p class="navbar-items"><i class="far fa-calendar-alt" ></i></p>
+        </div>
+    </div>
+    
     <div class="caption">
         Your academic hub | Connect with resources, manage your studies, and stay on top of important updates.
     </div>
-    <div class=""></div>
+    <div class="placeholder"></div>
     <div class="background">
-        <div class="bg-pic-container">
+        @* <div class="bg-pic-container">
             <img class="background-picture" src="https://www.newmetrics.net/files/uploads/2023/08/Student-Experience-Cover-2.jpg">
-        </div>
+        </div> *@
 @*         <img class="abstract-wave-pic" src="https://imgur.com/TbWJBkI.jpeg">
- *@    </div>
-    <h1> <img class="stud-icon" src="https://imgur.com/FxCqMz3.png" alt="student-registration" />List of Students</h1>
+ *@ </div>
+    @* <h1> <img class="stud-icon" src="https://imgur.com/FxCqMz3.png" alt="student-registration" />List of Students</h1>
     <hr class="separator">
-    <h2>Student Enrollment Overview </h2>
-    <p>Current roster of students. Up-to-Date Enrollment Status and Details</p>
+    <h2>Student Enrollment Overview </h2> *@
+    <h1>Current roster of students.</h1>
+    <h2> Up-to-Date Enrollment Status and Details</h2>
     <section class="content">
         <img class="three-dots-icon" src="https://imgur.com/9GF3tPx.png">
-        <div class="placeholder-box"></div>
-        <div class="table-container">
+@*         <div class="placeholder-box"></div>
+ *@        <div class="table-container">
             <table class="table">
                 <thead>
                     <tr>
                         <th>Student ID</th>
                         <th>First Name</th>
-                        <th>Middle Name</th>
+                        <th>Middle Initial</th>
                         <th>Last Name</th>
                         <th>Course</th>
                         <th>Remarks</th>
@@ -46,7 +62,7 @@
                         <tr>
                             <td>@student.Id</td>
                             <td>@student.FirstName</td>
-                            <td>@student.MiddleName</td>
+                            <td class="middle-initial">@student.MiddleName</td> 
                             <td>@student.LastName</td>
                             <td>@student.Course</td>
                             <td>@student.Remarks</td>
@@ -76,10 +92,21 @@
     </div>
 
     <script>
+        document.querySelectorAll('.nav-ic, .nav-ic-selected').forEach(function (div) {
+            div.addEventListener('click', function () {
+                window.location.href = this.getAttribute('data-href');
+            });
+        });
+        $('.middle-initial').each(function () {
+            const middleInitial = $(this).text().trim();
+            if (middleInitial === '�') {
+                $(this).text('-');
+            }
+        });
         $(document).ready(function () {
             $(".edit-btn").click(function (e) {
                 e.preventDefault();
-                var studentId = $(this).data("id");
+                const studentId = $(this).data("id");
 
                 $.get("/Students/Edit/" + studentId, function (data) {
                     $("#editContent").html(data);  

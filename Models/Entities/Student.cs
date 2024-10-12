@@ -6,12 +6,10 @@ namespace StudentPortal.Models.Entities
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public string  FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        public char MiddleName {  get; set; }
-        public string Course { get; set; }
-        public string Remarks { get; set; }
+        public required string  FirstName { get; set; }
+        public required string LastName { get; set; }
+        public char? MiddleName {  get; set; }
+        public required string Course { get; set; }
+        public required string Remarks { get; set; }
     }
 }
