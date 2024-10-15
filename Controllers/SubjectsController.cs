@@ -55,5 +55,69 @@ namespace StudentPortal.Controllers
 
             return View(); 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            var subjects = await dbContext.Subjects.ToListAsync();
+
+            return View(subjects);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string Code)
+        {
+            var subject = await dbContext.Subjects.FindAsync(Code);
+
+            if (subject == null)
+            {
+                return NotFound();
+            }
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("Edit", subject);
+            }
+
+            return View(subject);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Subject viewModel)
+        {
+            var subject = await dbContext.Subjects.FindAsync(viewModel.Code);
+
+            if (subject is not null)
+            {
+                subject.Code = viewModel.Code;
+                subject.Description = viewModel.Description;
+                subject.Units = viewModel.Units;
+                subject.Course = viewModel.Course;
+                subject.Offering = viewModel.Offering;
+                subject.Category = viewModel.Category;
+                subject.Curriculum = viewModel.Curriculum;
+                subject.Status = viewModel.Status;
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction("List", "Subjects");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Subject viewModel)
+        {
+            var subject = await dbContext.Subjects.
+                AsNoTracking().
+                FirstOrDefaultAsync(x => x.Code == viewModel.Code);
+
+            if (subject is not null)
+            {
+                dbContext.Subjects.Remove(viewModel);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction("List", "Subjects");
+        }
     }
 }

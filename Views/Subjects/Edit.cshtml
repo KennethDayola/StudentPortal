@@ -1,0 +1,95 @@
+﻿@model StudentPortal.Models.Entities.Subject
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/edit.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <section class="content-box">
+        <h1><img width="30" style="margin-right: 10px; margin-top: -5px;" src="https://cdn-icons-png.freepik.com/512/5812/5812594.png">Edit Subject</h1>
+
+        @if (Model is null)
+        {
+            <p>No subject was found with this code</p>
+        }
+        else
+        {
+            <form id="editForm">
+
+                <div class="mt-3">
+                    <label class="form-label">Subject Code</label>
+                    <input type="number" class="form-control readonly-textbox" asp-for="Code" min="1" readonly />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Description</label>
+                    <input type="text" class="form-control" asp-for="Description" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Units</label>
+                    <input type="text" class="form-control" asp-for="Units" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Offering</label>
+                    <input type="text" class="form-control" asp-for="Offering" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Category</label>
+                    <input type="text" class="form-control" asp-for="Category" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Course</label>
+                    <input type="text" class="form-control" asp-for="Course" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Curriculum</label>
+                    <input type="text" class="form-control" asp-for="Curriculum" required />
+                </div>
+       
+                <div class="mt-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" style="border-color: #999c9b !important;" asp-for="Status">
+                        <option value="AC">Active</option>
+                        <option value="IN" selected="@(Model.Status == "IN")">Inactive</option>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <button type="button" id="saveButton" class="btn btn-primary-save">Save</button>
+                </div>
+            </form>
+        }
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            $("#saveButton").click(function (event) {
+                event.preventDefault();
+
+                var formData = $("#editForm").serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Edit", "Subjects")",
+                    data: formData,
+                    success: function (response) {
+                        alert("Subject details updated successfully!");
+                        window.location.href = "@Url.Action("List", "Subjects")";
+                    },
+                    error: function (xhr, status, error) {
+                        alert("An error occurred: " + error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

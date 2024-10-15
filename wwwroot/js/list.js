@@ -16,15 +16,20 @@ $('.middle-initial').each(function () {
 });
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+
     $(".dropdown-item").click(function (e) {
         e.preventDefault();
 
         $(this).closest(".dropdown").removeClass("show");
 
-        const studentId = $(this).data("id");
+        // Determine if the active view is "Students" or "Subjects"
+        let activeView = window.location.pathname.includes("Students") ? "Students" : "Subjects";
 
-        // Perform the AJAX request to load the edit form
-        $.get("/Students/Edit/" + studentId, function (data) {
+        // Use 'id' for Students and 'code' for Subjects
+        const identifier = activeView === "Students" ? $(this).data("id") : $(this).data("code");
+
+        // Perform the AJAX request to load the correct edit form based on the active view
+        $.get("/" + activeView + "/Edit/" + identifier, function (data) {
             $("#editContent").html(data);  // Populate the modal with the edit form
 
             // Show the modal and apply animation
