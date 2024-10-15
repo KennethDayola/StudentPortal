@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using StudentPortal.Data;
 using StudentPortal.Models;
 using StudentPortal.Models.Entities;
@@ -40,16 +41,18 @@ namespace StudentPortal.Controllers
 					{
 						Id = viewModel.Id, 
 						FirstName = viewModel.FirstName,
-						MiddleName = viewModel.MiddleName,
-						LastName = viewModel.LastName,
+                        MiddleName = viewModel.MiddleName == null || viewModel.MiddleName == '\0' ? '-' : viewModel.MiddleName,
+                        LastName = viewModel.LastName,
 						Course = viewModel.Course,
 						Remarks = viewModel.Remarks,
+						Year = viewModel.Year,
 					};
 
 					await dbContext.Students.AddAsync(student);
 					await dbContext.SaveChangesAsync();
 
 					await transaction.CommitAsync();
+
 				}
 				catch (Exception ex)
 				{
@@ -99,6 +102,8 @@ namespace StudentPortal.Controllers
 				student.LastName = viewModel.LastName;
 				student.Course = viewModel.Course;
 				student.Remarks = viewModel.Remarks;
+                student.Year = viewModel.Year;
+                student.Status = viewModel.Status;
 
 				await dbContext.SaveChangesAsync();
 			}

@@ -11,5 +11,7 @@ namespace StudentPortal.Models.Entities
         public char? MiddleName {  get; set; }
         public required string Course { get; set; }
         public required string Remarks { get; set; }
+        public string Status { get; set; } = "AC";
+        public int Year { get; set; }
     }
 }

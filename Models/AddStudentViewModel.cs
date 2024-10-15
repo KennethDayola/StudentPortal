@@ -8,5 +8,6 @@
         public char MiddleName { get; set; }
         public string Course { get; set; }
         public string Remarks { get; set; }
+        public int Year { get; set; }
     }
 }

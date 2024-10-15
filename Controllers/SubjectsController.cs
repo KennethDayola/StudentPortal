@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentPortal.Data;
+using StudentPortal.Models;
 using StudentPortal.Models.Entities;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace StudentPortal.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Subject viewModel)
+        public async Task<IActionResult> Add(AddSubjectViewModel viewModel)
         {
             using (var transaction = await dbContext.Database.BeginTransactionAsync())
             {

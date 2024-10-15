@@ -2,11 +2,13 @@
 {
     public class AddSubjectViewModel
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public char MiddleName { get; set; }
-        public string Course { get; set; }
-        public string Remarks { get; set; }
-    }
+		public required string Code { get; set; }
+		public required string Description { get; set; }
+		public required int Units { get; set; }
+		public required int Offering { get; set; }
+		public required string Category { get; set; }
+		public required string Status { get; set; }
+		public required string Course { get; set; }
+		public required int Curriculum { get; set; }
+	}
 }
