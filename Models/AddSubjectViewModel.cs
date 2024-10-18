@@ -9,6 +9,6 @@
 		public required string Category { get; set; }
 		public required string Status { get; set; }
 		public required string Course { get; set; }
-		public required int Curriculum { get; set; }
+		public required string Curriculum { get; set; }
 	}
 }

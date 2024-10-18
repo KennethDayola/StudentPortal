@@ -1,0 +1,285 @@
+﻿body {
+    width: 100vw;
+    height: auto;
+    background: transparent;
+    overflow-x: hidden;
+}
+
+html {
+    height: auto;
+    background: transparent;
+}
+
+.pattern-bg {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    --s: 200px; /* control the size */
+    --c1: #1d1d1d;
+    --c2: #242527;
+    --c3: #3c3c3c;
+    background: repeating-conic-gradient( from 30deg, #0000 0 120deg, var(--c3) 0 180deg ) calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577), repeating-conic-gradient( from 30deg, var(--c1) 0 60deg, var(--c2) 0 120deg, var(--c3) 0 180deg );
+    background-size: var(--s) calc(var(--s) * 0.577);
+    filter: blur(.6px); /* Blur only the background */
+}
+
+.caption {
+    z-index: 10000;
+    position: fixed;
+    height: 1.42rem;
+    width: 100vw;
+    background: #3b3b40;
+    color: #dee7e3;
+    font-weight: 300;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.schedule-transition {
+    text-align: center;
+    position: absolute;
+    z-index: 100;
+    width: 27.5%;
+    height: 100vh;
+    right: 0;
+    background: transparent;
+}
+
+.schedule-transition h1, .schedule-transition h2 {
+    color: #ecece6;
+    position: relative;
+}
+
+.schedule-transition h1 {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-top: 20%;
+}
+
+.schedule-transition h2 {
+    font-weight: 300;
+    font-size: 1rem;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.transition-btn {
+    right: 50%;
+    transform: translateX(50%);
+    background: transparent;
+    position: absolute;
+    bottom: 20%;
+    padding: 1em 2em;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #fff;
+    transition: all 700ms;
+    font-size: 15px;
+    overflow: hidden;
+    outline: 2px solid #fff;
+}
+
+.transition-btn:hover {
+    color: #121313;
+    transform: translateX(50%) scale(1.1);
+    outline: 2px solid #1a1a1a;
+    box-shadow: 4px 5px 17px -4px #e7fcff;
+}
+
+.transition-btn::before {
+    content: "";
+    position: absolute;
+    left: -50px;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background-color: #fff;
+    transform: skewX(45deg);
+    z-index: -1;
+    transition: width 1000ms;
+}
+
+.transition-btn:hover::before {
+    width: 250%;
+}
+
+.block-display {
+    display: block;
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100vw);
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(120vw);
+    }
+}
+
+.subj-content {
+    position: absolute;
+    background: white;
+    width: 72.5%;
+    height: 100%;
+    min-height: 100vh;
+    padding-bottom: 50px;
+    left: 0;
+    overflow: hidden;
+    box-shadow: inset -10px 0 15px -5px rgba(0, 0, 0, 0.3);
+}
+
+.three-dots-icon {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    width: 50px;
+    height: auto;
+}
+
+.subj-container {
+    position: relative;
+    animation: none;
+    width: 60%;
+    margin: 4.5rem 0;
+    left: 15%;
+}
+
+.row {
+    display: flex; /* Use Flexbox to create a row */
+    justify-content: space-between; /* Space between columns */
+}
+
+.column {
+    flex: 1; /* Each column takes equal space */
+    margin-right: 10px; /* Add spacing between columns */
+}
+
+.subj-content h1 {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.subj-content h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.separator {
+    width: 80%; /* Set the width to 80% */
+    height: 2px; /* Set the height (thickness) of the line */
+    background-color: gray; /* Set the color of the line */
+    border: none; /* Remove the default border */
+    margin: 10px auto; /* Center it and add vertical spacing */
+}
+
+.form-label {
+    color: #61615e;
+    font-size: 0.9rem;
+    display: block; /* Ensure the label takes the full width */
+    text-align: left; /* Center the text */
+    width: 100%;
+    font-weight: 600;
+}
+
+.column .form-label {
+    text-align: left;
+}
+
+.form-control, .form-select {
+    background-color: #e7e8ec;
+    width: 100%;
+    border-radius: 10px;
+}
+
+input.form-control:focus, select.form-select:focus {
+    border-color: #4CAF50; /* Custom border color on focus */
+    background-color: #f0f8ff; /* Custom background color on focus */
+    color: #000; /* Custom text color */
+    outline: none; /* Removes the browser's default focus outline (highlight) */
+}
+
+.mt-4 {
+    text-align: center;
+}
+
+.subj-btn {
+    margin-top: 30px;
+    width: 40%;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+    background: #22293c;
+    color: white;
+    padding: 0.7em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.subj-btn span {
+    position: relative;
+    transform: translateX(-105%);
+    left: 50%;
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+}
+
+.subj-btn svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.subj-btn:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.subj-btn:hover span {
+    transform: translateX(10rem);
+}
+
+.subj-btn:active {
+    transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+    from {
+        transform: translateY(0.1em);
+    }
+
+    to {
+        transform: translateY(-0.1em);
+    }
+}
+
+.sched-content {
+    position: absolute;
+    width: 72.5%;
+    height: 100vh;
+    right: 0;
+    transform: translateX(100vw);
+
+}

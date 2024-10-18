@@ -26,10 +26,10 @@ $(document).ready(function () {
         let activeView = window.location.pathname.includes("Students") ? "Students" : "Subjects";
 
         // Use 'id' for Students and 'code' for Subjects
-        const identifier = activeView === "Students" ? $(this).data("id") : $(this).data("code");
+        const id = $(this).data("id");
 
         // Perform the AJAX request to load the correct edit form based on the active view
-        $.get("/" + activeView + "/Edit/" + identifier, function (data) {
+        $.get("/" + activeView + "/Edit/" + id, function (data) {
             $("#editContent").html(data);  // Populate the modal with the edit form
 
             // Show the modal and apply animation

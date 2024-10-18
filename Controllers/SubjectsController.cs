@@ -19,7 +19,7 @@ namespace StudentPortal.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return View();
+            return View("AddSubjects");
         }
 
         [HttpPost]
@@ -36,7 +36,7 @@ namespace StudentPortal.Controllers
                         Units = viewModel.Units,
                         Offering = viewModel.Offering,
                         Category = viewModel.Category,
-                        Status = viewModel.Status,
+                        Status = "AC",
                         Course = viewModel.Course,
                         Curriculum = viewModel.Curriculum
                     };
@@ -53,7 +53,7 @@ namespace StudentPortal.Controllers
                 }
             }
 
-            return View(); 
+            return View("AddSubjects"); 
         }
 
         [HttpGet]
@@ -65,9 +65,9 @@ namespace StudentPortal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string Code)
+        public async Task<IActionResult> Edit(string Id)
         {
-            var subject = await dbContext.Subjects.FindAsync(Code);
+            var subject = await dbContext.Subjects.FindAsync(Id);
 
             if (subject == null)
             {

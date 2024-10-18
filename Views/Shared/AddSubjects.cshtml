@@ -1,0 +1,87 @@
+﻿@model StudentPortal.Models.AddSubjectViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/addSubject.css">
+</head>
+<body>
+    <div class="pattern-bg"></div>
+    <div class="caption">
+        Your academic hub | Connect with resources, manage your studies, and stay on top of important updates.
+    </div>
+    <div class="schedule-transition">
+        <h1>Already Created a Subject?</h1>
+        <h2>Click the Button to Set Up Your Schedule and Finalize the Subject Details Below</h2>
+        <button class="transition-btn">Assign Schedules<span class="block-display">►</span> </button>
+    </div>
+    <div class="subj-content">
+        <img class="three-dots-icon" src="https://imgur.com/9GF3tPx.png">
+        <div class="subj-container">
+            <h1>Create Subject</h1>
+            <h2>Enter the details for the new subject below</h2>
+            <hr class="separator">
+            <form asp-action="Add" asp-controller="Subjects" method="post">
+                <div class="mt-3">
+                    <label class="form-label">Subject Code</label>
+                    <input type="text" class="form-control" asp-for="Code" required />
+                </div>
+                <div class="mt-3">
+                    <label class="form-label">Description</label>
+                    <input type="text" class="form-control" asp-for="Description" required />
+                </div>
+                <div class="row mt-3">
+                    <div class="column">
+                        <label class="form-label">Units</label>
+                        <input type="number" class="form-control" asp-for="Units" required />
+                    </div>
+                    <div class="column">
+                        <label class="form-label">Offering</label>
+                        <input type="number" class="form-control" asp-for="Offering" required />
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label class="form-label">Course</label>
+                    <input type="text" class="form-control" asp-for="Course" required />
+                </div>
+                <div class="row mt-3">
+                    <div class="column">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" asp-for="Category" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Shiftee">LEC</option>
+                            <option value="Transferee">LAB</option>
+                        </select>
+                    </div>
+                    <div class="column">
+                        <label class="form-label">Curriculum</label>
+                        <input type="text" class="form-control" asp-for="Curriculum" required />
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="subj-btn">
+                        <div class="svg-wrapper-1">
+                            <div class="svg-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 24 24"
+                                     width="24"
+                                     height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                    <path fill="currentColor"
+                                          d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <span>Send</span>
+                    </button>
+                   @*  <button type="submit" class="btn btn-primary">Save</button> *@
+                </div>
+            </form>
+        </div>
+    </div>
+    @* <div class="sched-content"></div> *@
+    <script src ="~/js/addSubject.js"></script>
+</body>
+</html>

@@ -17,14 +17,6 @@
 
 .loading-text {
     font-size: 24px;
-    font-weight: bold;
-    color: #000;
-}
-
-.caption {
-    position: relative;
-    top: 0;
-    left: 0;
     height: 1.42rem;
     width: 100vw;
     background: #3b3b40;
@@ -36,6 +28,14 @@
 }
 
 .left-icon {
+    font-weight: bold;
+    color: #000;
+}
+
+.caption {
+    position: relative;
+    top: 0;
+    left: 0;
     user-select: none;
     pointer-events: auto; 
     position: absolute;
@@ -314,7 +314,7 @@
     }
 
     to {
-        transform: translateX(100%);
+        transform: translateX(100vw);
     }
 }
 
@@ -324,7 +324,7 @@
         opacity: 1;
     }
     to {
-        transform: translateX(-11%);
+        transform: translateX(-100vw);
         opacity: 0;
     }
 }

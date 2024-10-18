@@ -41,7 +41,7 @@ namespace StudentPortal.Controllers
 					{
 						Id = viewModel.Id, 
 						FirstName = viewModel.FirstName,
-                        MiddleName = viewModel.MiddleName == null || viewModel.MiddleName == '\0' ? '-' : viewModel.MiddleName,
+                        MiddleName = string.IsNullOrWhiteSpace(viewModel.MiddleName) ? "-" : viewModel.MiddleName,
                         LastName = viewModel.LastName,
 						Course = viewModel.Course,
 						Remarks = viewModel.Remarks,
