@@ -23,11 +23,15 @@ const subjContent = document.querySelector('.subj-content');
 const subjContainer = document.querySelector('.subj-container');
 const dotsIcon = document.querySelector('.three-dots-icon');
 
+const schedContent = document.querySelector('.sched-content');
+
 document.querySelector('.transition-btn').addEventListener('click', function () {
-  
-    subjContent.style.animation = 'slideLeft 2s ease forwards';
-    subjContainer.style.animation = 'slideRight 1.9s forwards';
-    dotsIcon.style.animation = 'slideRight 1.9s forwards';
 
+    schedContent.style.animation = 'slideRight 2s cubic-bezier(0.7, 0, 1, 1)  reverse forwards';
 
+    setTimeout(() => {
+        subjContent.style.animation = 'slideLeft 1.7s  forwards';
+        subjContainer.style.animation = 'longSlideRight 1.6s forwards';
+        dotsIcon.style.animation = 'longSlideRight 1.6s forwards';
+    }, 0);
 });

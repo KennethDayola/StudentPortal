@@ -1,6 +1,11 @@
-﻿body {
+﻿﻿body {
+    overflow-x: hidden !important;
+}
+
+html {
     overflow-x: hidden;
 }
+
 
 #loading-screen {
     position: fixed;
@@ -17,6 +22,14 @@
 
 .loading-text {
     font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+.caption {
+    position: relative;
+    top: 0;
+    left: 0;
     height: 1.42rem;
     width: 100vw;
     background: #3b3b40;
@@ -28,16 +41,8 @@
 }
 
 .left-icon {
-    font-weight: bold;
-    color: #000;
-}
-
-.caption {
-    position: relative;
-    top: 0;
-    left: 0;
     user-select: none;
-    pointer-events: auto; 
+    pointer-events: auto;
     position: absolute;
     left: 0;
     top: 50%;
@@ -101,21 +106,21 @@
     z-index: 1;
 }
 
-#image-track .image {
-    filter: brightness(60%);
-    z-index: 1;
-    user-select: none;
-    width: 40vmin;
-    height: 56vmin;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.3s ease;
-}
+    #image-track .image {
+        filter: brightness(60%);
+        z-index: 1;
+        user-select: none;
+        width: 40vmin;
+        height: 56vmin;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.3s ease;
+    }
 
 
-#image-track .image:hover {
-    transform: scale(.95);
-}
+        #image-track .image:hover {
+            transform: scale(.95);
+        }
 
 .close-btn {
     display: none;
@@ -130,10 +135,10 @@
     font-size: 1rem;
 }
 
-.close-btn:hover {
-    cursor: pointer;
-    color: #cccccb;
-}
+    .close-btn:hover {
+        cursor: pointer;
+        color: #cccccb;
+    }
 
 @keyframes slideIn {
     0% {
@@ -157,7 +162,7 @@
 }
 
 .animate-text {
-    animation: slideIn 0.5s ease-out forwards; 
+    animation: slideIn 0.5s ease-out forwards;
 }
 
 #zoom-text-addstud {
@@ -221,7 +226,7 @@
     cursor: pointer;
     display: inline-flex;
     font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 1vw; 
+    font-size: 1vw;
     font-weight: 600;
     justify-content: center;
     line-height: 1.25;
@@ -237,24 +242,24 @@
     width: auto;
 }
 
-.btn-in-zoom:hover,
-.btn-in-zoom:focus {
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-    color: rgba(0, 0, 0, 0.65);
-}
+    .btn-in-zoom:hover,
+    .btn-in-zoom:focus {
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        color: rgba(0, 0, 0, 0.65);
+    }
 
-.btn-in-zoom:hover {
-    transform: translateY(-1px);
-}
+    .btn-in-zoom:hover {
+        transform: translateY(-1px);
+    }
 
-.btn-in-zoom:active {
-    background-color: #F0F0F1;
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-    color: rgba(0, 0, 0, 0.65);
-    transform: translateY(0);
-}
+    .btn-in-zoom:active {
+        background-color: #F0F0F1;
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+        color: rgba(0, 0, 0, 0.65);
+        transform: translateY(0);
+    }
 
 .zoom-container {
     position: fixed;
@@ -265,9 +270,9 @@
     z-index: 10000000001;
 }
 
-.zoom-container > *:not(#zoom-text-addsub) {
-    text-align: center;
-}
+    .zoom-container > *:not(#zoom-text-addsub) {
+        text-align: center;
+    }
 
 .zoomed-image {
     position: absolute;
@@ -314,7 +319,7 @@
     }
 
     to {
-        transform: translateX(100vw);
+        transform: translateX(100%);
     }
 }
 
@@ -323,8 +328,9 @@
         transform: translateX(0);
         opacity: 1;
     }
+
     to {
-        transform: translateX(-100vw);
+        transform: translateX(-11%);
         opacity: 0;
     }
 }
@@ -379,24 +385,24 @@
     padding-left: 5.5vw;
 }
 
-.intro-texts h1 {
-    font-size: 2rem;
-    color: #000;
-    font-weight: bold;
-}
+    .intro-texts h1 {
+        font-size: 2rem;
+        color: #000;
+        font-weight: bold;
+    }
 
-.intro-texts h2 {
-    font-size: 1.3rem;
-    color: #262727;
-    margin-top: 0.5rem;
-}
+    .intro-texts h2 {
+        font-size: 1.3rem;
+        color: #262727;
+        margin-top: 0.5rem;
+    }
 
-.intro-texts p {
-    font-size: 0.9rem;
-    color: #333;
-    line-height: 1.6;
-    margin-top: 1rem;
-}
+    .intro-texts p {
+        font-size: 0.9rem;
+        color: #333;
+        line-height: 1.6;
+        margin-top: 1rem;
+    }
 
 .intro-btn {
     display: flex;
@@ -432,10 +438,10 @@
     touch-action: manipulation;
 }
 
-.intro-btn1:hover {
-    box-shadow: #68c3ea 0 0 0 3px, transparent 0 0 0 0;
-    color: #fff;
-}
+    .intro-btn1:hover {
+        box-shadow: #68c3ea 0 0 0 3px, transparent 0 0 0 0;
+        color: #fff;
+    }
 
 .intro-btn2:hover {
     background-color: #fff;

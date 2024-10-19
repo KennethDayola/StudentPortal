@@ -38,7 +38,6 @@ html {
 .schedule-transition {
     text-align: center;
     position: absolute;
-    z-index: 100;
     width: 27.5%;
     height: 100vh;
     right: 0;
@@ -115,8 +114,9 @@ html {
     0% {
         transform: translateX(0%);
     }
+
     100% {
-        transform: translateX(-100vw);
+        transform: translateX(-100%); /* Slow down at the end */
     }
 }
 
@@ -126,20 +126,43 @@ html {
     }
 
     100% {
+        transform: translateX(100%); /* Slow down at the end */
+
+    }
+}
+
+@keyframes longSlideRight {
+    0% {
+    transform: translateX(0%);
+    }
+
+    80% {
+        transform: translateX(90vw);
+    }
+
+    100% {
         transform: translateX(120vw);
     }
 }
 
-.subj-content {
+.subj-content, .sched-content {
     position: absolute;
-    background: white;
     width: 72.5%;
     height: 100%;
     min-height: 100vh;
     padding-bottom: 50px;
-    left: 0;
     overflow: hidden;
+}
+
+.subj-content {
+    background: white;
+    left: 0;
     box-shadow: inset -10px 0 15px -5px rgba(0, 0, 0, 0.3);
+}
+
+.sched-content {
+    right: 0;
+    background-color: rgba(17, 24, 39, 1);
 }
 
 .three-dots-icon {
@@ -150,12 +173,18 @@ html {
     height: auto;
 }
 
-.subj-container {
-    position: relative;
-    animation: none;
+.subj-container, .sched-container {
+    position: absolute;
     width: 60%;
     margin: 4.5rem 0;
+}
+
+.subj-container {
     left: 15%;
+}
+
+.sched-container {
+    right: 15%;
 }
 
 .row {
@@ -168,13 +197,13 @@ html {
     margin-right: 10px; /* Add spacing between columns */
 }
 
-.subj-content h1 {
+h1 {
     font-size: 2rem;
     text-align: center;
     font-weight: 600;
 }
 
-.subj-content h2 {
+h2 {
     font-size: 1rem;
     font-weight: 500;
     text-align: center;
@@ -190,12 +219,15 @@ html {
 }
 
 .form-label {
-    color: #61615e;
     font-size: 0.9rem;
     display: block; /* Ensure the label takes the full width */
     text-align: left; /* Center the text */
     width: 100%;
     font-weight: 600;
+}
+
+.subj-container .form-label {
+    color: #61615e;
 }
 
 .column .form-label {
@@ -273,13 +305,4 @@ input.form-control:focus, select.form-select:focus {
     to {
         transform: translateY(-0.1em);
     }
-}
-
-.sched-content {
-    position: absolute;
-    width: 72.5%;
-    height: 100vh;
-    right: 0;
-    transform: translateX(100vw);
-
 }

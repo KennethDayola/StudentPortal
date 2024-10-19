@@ -23,7 +23,7 @@ namespace StudentPortal.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddSubjectViewModel viewModel)
+        public async Task<IActionResult> Add(AddSubjectWithScheduleViewModel viewModel)
         {
             using (var transaction = await dbContext.Database.BeginTransactionAsync())
             {

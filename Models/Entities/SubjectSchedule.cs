@@ -9,7 +9,6 @@ namespace StudentPortal.Models.Entities
         [StringLength(8)]
         public required string EDPCode { get; set; } 
 
-        [StringLength(15)]
         public required string SubjectCode { get; set; } 
 
         public required DateTime StartTime { get; set; } 
@@ -37,7 +36,7 @@ namespace StudentPortal.Models.Entities
 
         public required int Year { get; set; } 
 
-        [ForeignKey("SSFEDPCODE")]
+        [ForeignKey("SubjectCode")]
         public Subject Subject { get; set; } 
     }
 }
