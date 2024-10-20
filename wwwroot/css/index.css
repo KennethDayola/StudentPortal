@@ -6,6 +6,9 @@ html {
     overflow-x: hidden;
 }
 
+html.hide-overflow-y {
+    overflow-y: hidden;
+}
 
 #loading-screen {
     position: fixed;

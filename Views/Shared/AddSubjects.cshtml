@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/addSubject.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 </head>
 <body>
     <div class="pattern-bg"></div>
@@ -92,11 +95,12 @@
             <h1>Schedule Assignment</h1>
             <h2>Provide the details to allot a new schedule</h2>
             <hr class="separator">
-            <form asp-action="Add" asp-controller="SubjectSchedules" method="post">
+            <form asp-action="Add" asp-controller="SubjectSchedules" id="SchedForm" method="post">
                 <div class="mt-3">
                     <label class="form-label">Subject Code</label>
-                    <input type="text" class="form-control" asp-for="SubjectCode" required />
+                    <input type="text" class="form-control" asp-for="SubjectCode" id="SubjectCode" required />
                 </div>
+
                 <div class="mt-3">
                     <label class="form-label">EDP Code</label>
                     <input type="text" class="form-control" asp-for="EDPCode" required />

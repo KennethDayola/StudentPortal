@@ -58,5 +58,25 @@ namespace StudentPortal.Controllers
 
             return View("AddSubjects");
         }
+
+        // Fetch subject codes for autocomplete
+        [HttpGet]
+        public JsonResult GetSubjectCodes(string term)
+        {
+            var subjectCodes = dbContext.Subjects
+                .Where(s => s.Code.StartsWith(term)) // 'Code' refers to the subject identifier
+                .Select(s => new { s.Code })
+                .ToList();
+
+            return Json(subjectCodes);
+        }
+
+        // Validate if the subject code exists
+        [HttpGet]
+        public JsonResult ValidateSubjectCode(string code)
+        {
+            bool exists = dbContext.Subjects.Any(s => s.Code == code);
+            return Json(exists);
+        }
     }
 }

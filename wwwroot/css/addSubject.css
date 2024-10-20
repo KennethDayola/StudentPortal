@@ -307,6 +307,10 @@ h2 {
     border: 2px solid #374151;
 }
 
+#SubjectCode {
+    overflow: auto;
+}
+
 input.form-control:focus, select.form-select:focus {
     border-color: #4CAF50; /* Custom border color on focus */
     background-color: #f0f8ff; /* Custom background color on focus */

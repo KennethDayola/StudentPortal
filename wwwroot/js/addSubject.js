@@ -36,20 +36,15 @@ let recentlyPressed = false;
 
 document.querySelectorAll('.transition-btn').forEach(button => {
     function replaceAnimation(element, newAnimation) {
-        // Get the computed transform style after the first animation ends
         const computedStyle = window.getComputedStyle(element);
         const finalTransform = computedStyle.transform;
 
-        // Apply the final transform as an inline style
         element.style.transform = finalTransform;
 
-        // Re-trigger the animation by resetting the style and applying the new animation
-        element.style.animation = 'none';  // Temporarily remove the animation
-        element.offsetHeight;  // Force a reflow
-        element.style.animation = newAnimation;  // Apply the new animation
+        element.style.animation = 'none'; 
+        element.offsetHeight;
+        element.style.animation = newAnimation;  
     }
-
-    // Example usage:
     button.addEventListener('click', function () {
         if (currentState === "subject") {
             replaceAnimation(schedContent, 'slideRight 2s cubic-bezier(0.7, 0, 1, 1) reverse forwards');
@@ -79,5 +74,53 @@ document.querySelectorAll('.transition-btn').forEach(button => {
 
             currentState = "subject";
         }
+    });
+});
+
+$(function () {
+    $("#SubjectCode").autocomplete({
+        source: function (request, response) {
+            console.log("Fetching subject codes for:", request.term); // Log the term being searched
+            $.ajax({
+                url: '/SubjectSchedules/GetSubjectCodes', // Action to get valid subject codes
+                type: "GET",
+                dataType: "json",
+                data: { term: request.term },
+                success: function (data) {
+                    console.log("Received subject codes:", data); // Log the received data
+                    response(data); // Directly use the array of strings
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching subject codes:", status, error); // Log any errors
+                }
+            });
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            console.log("Selected subject code:", ui.item.value); // Log the selected item
+            $("#SubjectCode").val(ui.item.value); // Set selected item
+            return false;
+        }
+    });
+
+    $("form").submit(function (event) {
+        var subjectCode = $("#SubjectCode").val();
+        console.log("Submitting form with subject code:", subjectCode); // Log the subject code being submitted
+        $.ajax({
+            url: '/SubjectSchedules/ValidateSubjectCode', // Action to validate the subject code
+            type: "GET",
+            data: { code: subjectCode },
+            success: function (isValid) {
+                console.log("Subject code validation result:", isValid); // Log validation result
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if invalid
+                    alert("Invalid Subject Code");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error validating subject code:", status, error); // Log any errors during validation
+            },
+            async: false // Consider switching to async: true for better performance
+        });
     });
 });
