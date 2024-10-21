@@ -19,6 +19,7 @@ namespace StudentPortal.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewData["ControllerName"] = "Subjects";
             return View("AddSubjects");
         }
 

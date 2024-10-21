@@ -18,17 +18,28 @@ html {
     --c1: #1d1d1d;
     --c2: #242527;
     --c3: #3c3c3c;
-    background: repeating-conic-gradient( from 30deg, #0000 0 120deg, var(--c3) 0 180deg ) calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577), repeating-conic-gradient( from 30deg, var(--c1) 0 60deg, var(--c2) 0 120deg, var(--c3) 0 180deg );
+    background: repeating-conic-gradient(
+        from 30deg, 
+        #0000 0 120deg, 
+        var(--c3) 0 180deg
+    ) calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577), 
+    repeating-conic-gradient(
+        from 30deg, 
+        var(--c1) 0 60deg, 
+        var(--c2) 0 120deg, 
+        var(--c3) 0 180deg
+    );
     background-size: var(--s) calc(var(--s) * 0.577);
     filter: blur(.6px); /* Blur only the background */
-    transition: background-color 0.5s ease, filter 0.5s ease;
+    transition: background 0.5s ease, filter 0.5s ease;
 }
 
-.whitish-bg {
+
+/*.whitish-bg {
     --c1: #f0f0f0;
     --c2: #e0e0e0;
     --c3: #d0d0d0;
-}
+}*/
 
 .caption {
     z-index: 10000;
@@ -282,6 +293,14 @@ h2 {
     text-align: left; /* Center the text */
     width: 100%;
     font-weight: 600;
+}
+
+.right-label {
+    font-size: 0.7rem;
+    font-style: italic;
+    font-weight: 300;
+    text-align: right;
+    float: right;
 }
 
 .subj-container .form-label {

@@ -27,7 +27,7 @@ const schedContent = document.querySelector('.sched-content');
 const schedContainer = document.querySelector('.sched-container');
 const schedDotsIcon = document.querySelector('.sched-content .three-dots-icon')
 
-const patternBg = document.querySelector('.pattern-bg');
+//const patternBg = document.querySelector('.pattern-bg');
 const scheduleTransition = document.querySelector('.schedule-transition');
 const subjectTransition = document.querySelector('.subj-transition');
 
@@ -77,17 +77,21 @@ document.querySelectorAll('.transition-btn').forEach(button => {
     });
 });
 
+let controllerName = '@ViewContext.RouteData.Values["controller"]';
+document.addEventListener("DOMContentLoaded", function () {
+    console.log(controllerName);
+    if (controllerName == 'SubjectsController')
+    else if (controllerName == 'SubjectSchedulesController')
+});
 $(function () {
     $("#SubjectCode").autocomplete({
         source: function (request, response) {
-            console.log("Fetching subject codes for:", request.term); // Log the term being searched
             $.ajax({
                 url: '/SubjectSchedules/GetSubjectCodes', // Action to get valid subject codes
                 type: "GET",
                 dataType: "json",
                 data: { term: request.term },
                 success: function (data) {
-                    console.log("Received subject codes:", data); // Log the received data
                     response(data); // Directly use the array of strings
                 },
                 error: function (xhr, status, error) {
@@ -97,7 +101,6 @@ $(function () {
         },
         minLength: 2,
         select: function (event, ui) {
-            console.log("Selected subject code:", ui.item.value); // Log the selected item
             $("#SubjectCode").val(ui.item.value); // Set selected item
             return false;
         }
@@ -111,10 +114,9 @@ $(function () {
             type: "GET",
             data: { code: subjectCode },
             success: function (isValid) {
-                console.log("Subject code validation result:", isValid); // Log validation result
                 if (!isValid) {
                     event.preventDefault(); // Prevent form submission if invalid
-                    alert("Invalid Subject Code");
+                    alert("Subject Code Doesn't Exist!");
                 }
             },
             error: function (xhr, status, error) {

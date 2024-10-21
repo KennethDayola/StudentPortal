@@ -97,7 +97,7 @@
             <hr class="separator">
             <form asp-action="Add" asp-controller="SubjectSchedules" id="SchedForm" method="post">
                 <div class="mt-3">
-                    <label class="form-label">Subject Code</label>
+                    <label class="form-label">Subject Code<span class="right-label">*Please enter an existing subject code</span></label>
                     <input type="text" class="form-control" asp-for="SubjectCode" id="SubjectCode" required />
                 </div>
 

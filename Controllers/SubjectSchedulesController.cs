@@ -18,6 +18,7 @@ namespace StudentPortal.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewData["ControllerName"] = "SubjectSchedules";
             return View("AddSubjects");
         }
 
@@ -64,8 +65,9 @@ namespace StudentPortal.Controllers
         public JsonResult GetSubjectCodes(string term)
         {
             var subjectCodes = dbContext.Subjects
-                .Where(s => s.Code.StartsWith(term)) // 'Code' refers to the subject identifier
-                .Select(s => new { s.Code })
+                .Where(s => s.Code.StartsWith(term))
+                .Select(s => s.Code)
+                .Take(4) // Limit the result to 4
                 .ToList();
 
             return Json(subjectCodes);
