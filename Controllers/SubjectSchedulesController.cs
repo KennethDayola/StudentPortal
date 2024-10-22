@@ -56,8 +56,76 @@ namespace StudentPortal.Controllers
                     throw;
                 }
             }
+            ModelState.Clear();
+			ViewData["RecentForm"] = "SubjectSchedules";
+			return View("AddSubjects");
+        }
 
-            return View("AddSubjects");
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            var subjectSchedules = await dbContext.SubjectSchedules.ToListAsync();
+            return View(subjectSchedules);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string Id)
+        {
+            var subjectSchedule = await dbContext.SubjectSchedules.FindAsync(Id);
+
+            if (subjectSchedule == null)
+            {
+                return NotFound();
+            }
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("Edit", subjectSchedule);
+            }
+
+            return View(subjectSchedule);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(SubjectSchedule viewModel)
+        {
+            var subjectSchedule = await dbContext.SubjectSchedules.FindAsync(viewModel.EDPCode);
+
+            if (subjectSchedule is not null)
+            {
+                subjectSchedule.EDPCode = viewModel.EDPCode;
+                subjectSchedule.SubjectCode = viewModel.SubjectCode;
+                subjectSchedule.StartTime = viewModel.StartTime;
+                subjectSchedule.EndTime = viewModel.EndTime;
+                subjectSchedule.Days = viewModel.Days;
+                subjectSchedule.Room = viewModel.Room;
+                subjectSchedule.MaxSize = viewModel.MaxSize;
+                subjectSchedule.ClassSize = viewModel.ClassSize;
+                subjectSchedule.Status = viewModel.Status;
+                subjectSchedule.XM = viewModel.XM;
+                subjectSchedule.Section = viewModel.Section;
+                subjectSchedule.Year = viewModel.Year;
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction("List", "SubjectSchedules");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(SubjectSchedule viewModel)
+        {
+            var subjectSchedule = await dbContext.SubjectSchedules
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.EDPCode == viewModel.EDPCode);
+
+            if (subjectSchedule is not null)
+            {
+                dbContext.SubjectSchedules.Remove(viewModel);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction("List", "SubjectSchedules");
         }
 
         // Fetch subject codes for autocomplete

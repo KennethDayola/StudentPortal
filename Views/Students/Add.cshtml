@@ -74,21 +74,13 @@
 				</form>
 			</div>
 		</section>
-	<script>
-		
-		function notifySave(){
-			this.form.submit();
-			const inputs = form.querySelectorAll('input');
-			inputs.forEach(input => {
-				input.value = ''; 
+		<script type="text/javascript">
+			document.addEventListener('DOMContentLoaded', function () {
+				var alertMessage = "@ViewBag.AlertMessage";  // Get the message from ViewBag
+				if (alertMessage) {
+					alert(alertMessage);  // Show the popup if the message exists
+				}
 			});
-
-			const remarksSelect = form.querySelector('select[asp-for="Remarks"]');
-			remarksSelect.selectedIndex = 0; 
-			remarksSelect.setCustomValidity('');
-			alert('Student has been successfully added!');
-			return false;
-		}
-	</script>
+		</script>
 	</body>
 </html>

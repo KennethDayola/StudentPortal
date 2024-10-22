@@ -1,4 +1,4 @@
-﻿@model List<StudentPortal.Models.Entities.Subject>
+﻿@model List<StudentPortal.Models.Entities.SubjectSchedule>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,16 +12,14 @@
 <body>
 
     <div class="left-navbar">
-        @* <h1>Record Archive</h1> *@
-        @* <p class="nav-item-header"><i class="far fa-list-alt"></i>Lists </p> *@
         <img class="list-icon" src="https://imgur.com/7AYhKsM.png">
         <div class="nav-ic" data-href="@Url.Action("List", "Students")" data-toggle="tooltip" data-placement="right" title="Students">
             <p class="navbar-items"><i class="far fa-user"></i></p>
         </div>
-        <div class="nav-ic-selected" style="padding-top: 20px;" data-href="@Url.Action("List", "Subjects")" data-toggle="tooltip" data-placement="right" title="Subjects">
+        <div class="nav-ic" data-href="@Url.Action("List", "Subjects")" data-toggle="tooltip" data-placement="right" title="Subjects">
             <p class="navbar-items"><i class="far fa-file-alt"></i></p>
         </div>
-        <div class="nav-ic" data-href="@Url.Action("List", "SubjectSchedules")" data-toggle="tooltip" data-placement="right" title="Schedule">
+        <div class="nav-ic-selected" style="padding-top: 20px;" data-href="@Url.Action("List", "SubjectSchedules")" data-toggle="tooltip" data-placement="right" title="Schedules">
             <p class="navbar-items"><i class="far fa-clock"></i></p>
         </div>
     </div>
@@ -29,13 +27,12 @@
     <div class="caption">
         Your academic hub | Connect with resources, manage your studies, and stay on top of important updates.
     </div>
-    <div class="add-card">
-        @* <i class="fa-solid fa-plus"></i> *@
-    </div>
+    @* <input type="text" id="searchEDP" placeholder="Search by EDP Code..." class="search-box"> *@
+    <div class="add-card"></div>
     <div class="placeholder"></div>
     <div class="background"></div>
-    <h1>Our Subject Offerings</h1>
-    <h2> A complete selection of available subjects</h2>
+    <h1>Subject Schedule Listings</h1>
+    <h2> Stay updated with current subject schedules</h2>
     <section class="content">
         <img class="three-dots-icon" src="https://imgur.com/9GF3tPx.png">
         <div class="table-container">
@@ -43,41 +40,47 @@
                 <thead>
                     <tr>
                         <th>Status</th>
+                        <th>EDP Code</th>
                         <th>Subject Code</th>
-                        <th>Description</th>
-                        <th>Units</th>
-                        <th>Offering</th>
-                        <th>Category</th>
-                        <th>Course</th>
-                        <th>Curriculum</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Days</th>
+                        <th>Room</th>
+                        <th>Max Size</th>
+                        <th>Class Size</th>
+                        <th>Section</th>
+                        <th>Year</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var subject in Model)
+                    @foreach (var schedule in Model)
                     {
                         <tr>
-                            <td class="@(subject.Status == "AC" ? "active-status" : "inactive-status")">
-                                <img class="active-icon @(subject.Status == "AC" ? "" : "grayed-out")"
+                            <td class="@(schedule.Status == "AC" ? "active-status" : "inactive-status")">
+                                <img class="active-icon @(schedule.Status == "AC" ? "" : "grayed-out")"
                                      src="https://imgur.com/j2yhqKh.png">
-                                @(subject.Status == "AC" ? "Active" : "Inactive")
+                                @(schedule.Status == "AC" ? "Active" : "Inactive")
                             </td>
-                            <td>@subject.Code</td>
-                            <td>@subject.Description</td>
-                            <td class="middle-initial">@subject.Units</td>
-                            <td>@subject.Offering</td>
-                            <td>@subject.Category</td>
-                            <td>@subject.Course</td>
-                            <td>@subject.Curriculum</td>
+                            <td>@schedule.EDPCode</td>
+                            <td>@schedule.SubjectCode</td>
+                            <td>@schedule.StartTime.ToString("hh:mm tt")</td>
+                            <td>@schedule.EndTime.ToString("hh:mm tt")</td>
+                            <td>@schedule.Days</td>
+                            <td>@schedule.Room</td>
+                            <td>@schedule.MaxSize</td>
+                            <td>@schedule.ClassSize</td>
+                            <td>@schedule.Section</td>
+                            <td>@schedule.Year</td>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-link" type="button" id="dropdownMenuButton">
                                         <i class="fas fa-cog"></i><i class="fa-solid fa-caret-down"></i>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#" data-id="@subject.Code">Edit</a>
-                                        <form asp-action="Delete" asp-controller="Subjects" method="post" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this subject?');">
-                                            <input type="hidden" name="Code" value="@subject.Code" />
+                                        <a class="dropdown-item" href="#" data-id="@schedule.EDPCode">Edit</a>
+                                        <form asp-action="Delete" asp-controller="SubjectSchedules" method="post" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this schedule?');">
+                                            <input type="hidden" name="EDPCode" value="@schedule.EDPCode" />
                                             <button type="submit" class="delete-btn">Delete</button>
                                         </form>
                                     </div>

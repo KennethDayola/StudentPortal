@@ -21,7 +21,7 @@
         <div class="nav-ic" style="padding-top: 20px;" data-href="@Url.Action("List", "Subjects")" data-toggle="tooltip" data-placement="right" title="Subjects">
             <p class="navbar-items"><i class="far fa-file-alt"></i></p>
         </div>
-        <div class="nav-ic" data-href="@Url.Action("Add", "Students")" data-toggle="tooltip" data-placement="right" title="Schedule">
+        <div class="nav-ic" data-href="@Url.Action("List", "SubjectSchedules")" data-toggle="tooltip" data-placement="right" title="Schedule">
             <p class="navbar-items"><i class="far fa-clock" ></i></p>
         </div>
     </div>
@@ -64,7 +64,7 @@
                             </td>
                             <td>@student.Id</td>
                             <td>@student.FirstName</td>
-                            <td class="middle-initial">@student.MiddleName</td> 
+                            <td class="middle-name">@student.MiddleName</td> 
                             <td>@student.LastName</td>
                             <td>@student.Course</td>
                             <td>@student.Year</td>

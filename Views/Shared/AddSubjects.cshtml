@@ -31,7 +31,9 @@
             <h1>Create Subject</h1>
             <h2>Enter the details for the new subject below</h2>
             <hr class="separator">
-            <form asp-action="Add" asp-controller="Subjects" method="post">
+            <input type="hidden" id="controllerName" value="@ViewData["ControllerName"]" />
+            <input type="hidden" id="recentForm" value="@ViewData["RecentForm"]" />
+            <form asp-action="Add" asp-controller="Subjects" method="post" onsubmit="makeRecentForm('subjects')">
                 <div class="mt-3">
                     <label class="form-label">Subject Code</label>
                     <input type="text" class="form-control" asp-for="Code" required />
@@ -59,8 +61,8 @@
                         <label class="form-label">Category</label>
                         <select class="form-select" asp-for="Category" required>
                             <option value="" disabled selected hidden></option>
-                            <option value="Shiftee">LEC</option>
-                            <option value="Transferee">LAB</option>
+                            <option value="LEC">LEC</option>
+                            <option value="LAB">LAB</option>
                         </select>
                     </div>
                     <div class="column">
@@ -69,7 +71,7 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <button type="submit" class="subj-btn">
+                    <button type="submit" class="submit-btn">
                         <div class="svg-wrapper-1">
                             <div class="svg-wrapper">
                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +97,7 @@
             <h1>Schedule Assignment</h1>
             <h2>Provide the details to allot a new schedule</h2>
             <hr class="separator">
-            <form asp-action="Add" asp-controller="SubjectSchedules" id="SchedForm" method="post">
+            <form asp-action="Add" asp-controller="SubjectSchedules" id="SchedForm" method="post" onsubmit="makeRecentForm('schedules')">
                 <div class="mt-3">
                     <label class="form-label">Subject Code<span class="right-label">*Please enter an existing subject code</span></label>
                     <input type="text" class="form-control" asp-for="SubjectCode" id="SubjectCode" required />
@@ -109,11 +111,11 @@
                 <div class="row mt-3">
                     <div class="column">
                         <label class="form-label">Start Time</label>
-                        <input type="time" class="form-control" asp-for="StartTime" required />
+                        <input type="time" class="form-control" asp-for="StartTime" id="StartTime" required />
                     </div>
                     <div class="column">
                         <label class="form-label">End Time</label>
-                        <input type="time" class="form-control" asp-for="EndTime" required />
+                        <input type="time" class="form-control" asp-for="EndTime" id="EndTime" required />
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -156,7 +158,7 @@
                 </div>
                 
                 <div class="mt-4">
-                    <button type="submit" class="subj-btn">
+                    <button type="submit" class="submit-btn">
                         <div class="svg-wrapper-1">
                             <div class="svg-wrapper">
                                 <svg xmlns="http://www.w3.org/2000/svg"

@@ -1,0 +1,125 @@
+﻿@model StudentPortal.Models.Entities.SubjectSchedule
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/edit.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <section class="content-box">
+        <h1><img width="30" style="margin-right: 10px; margin-top: -5px;" src="https://cdn-icons-png.freepik.com/512/5812/5812594.png">Edit Schedule</h1>
+
+        @if (Model is null)
+
+        {
+            <p>No schedule was found with this EDP code</p>
+        }
+
+        else
+
+        {
+            <form id="editForm">
+
+                <div class="mt-3">
+                    <label class="form-label">EDP Code</label>
+                    <input type="text" class="form-control readonly-textbox" asp-for="EDPCode" readonly />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Subject Code</label>
+                    <input type="text" class="form-control readonly-textbox" asp-for="SubjectCode" readonly />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Start Time</label>
+                    <input type="time" class="form-control" asp-for="StartTime" id="StartTime" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">End Time</label>
+                    <input type="time" class="form-control" asp-for="EndTime" id="EndTime" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Days</label>
+                    <input type="text" class="form-control" asp-for="Days" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Room</label>
+                    <input type="text" class="form-control" asp-for="Room" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Max Size</label>
+                    <input type="number" class="form-control" asp-for="MaxSize" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Class Size</label>
+                    <input type="number" class="form-control" asp-for="ClassSize" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" style="border-color: #999c9b !important;" asp-for="Status">
+                        <option value="AC">Active</option>
+                        <option value="IN" selected="@(Model.Status == "IN")">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">XM</label>
+                    <input type="text" class="form-control" asp-for="XM" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Section</label>
+                    <input type="text" class="form-control" asp-for="Section" required />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Year</label>
+                    <input type="number" class="form-control" asp-for="Year" required />
+                </div>
+
+                <div class="mt-3">
+                    <button type="button" id="saveButton" class="btn btn-primary-save">Save</button>
+                </div>
+            </form>
+        }
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            $("#saveButton").click(function (event) {
+                if ($("#StartTime").val() >= $("#EndTime").val()) {
+                    alert("Start Time must be less than End Time.");
+                    event.preventDefault(); // Prevent form submission
+                    return; // Exit the function
+                }
+
+                event.preventDefault();
+
+                var formData = $("#editForm").serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Edit", "SubjectSchedules")",
+                    data: formData,
+                    success: function (response) {
+                        alert("Subject schedule details updated successfully!");
+                        window.location.href = "@Url.Action("List", "SubjectSchedules")";
+                    },
+                    error: function (xhr, status, error) {
+                        alert("An error occurred: " + error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

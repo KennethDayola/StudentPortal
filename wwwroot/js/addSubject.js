@@ -1,4 +1,4 @@
-﻿document.querySelectorAll('.subj-btn').forEach(button => {
+﻿document.querySelectorAll('.submit-btn').forEach(button => {
     const svg = button.querySelector('svg');
     const span = button.querySelector('span');
 
@@ -17,6 +17,10 @@
     button.addEventListener('mouseout', () => {
         svg.style.transform = ''; 
     });
+
+    button.addEventListener('mousedown', () => {
+        button.style.transform = 'translateX(-50%)'; // Reset on mousedown
+    });
 });
 
 const subjContent = document.querySelector('.subj-content');
@@ -31,7 +35,7 @@ const schedDotsIcon = document.querySelector('.sched-content .three-dots-icon')
 const scheduleTransition = document.querySelector('.schedule-transition');
 const subjectTransition = document.querySelector('.subj-transition');
 
-let currentState = "schedule";
+let currentState;
 let recentlyPressed = false;
 
 document.querySelectorAll('.transition-btn').forEach(button => {
@@ -77,12 +81,6 @@ document.querySelectorAll('.transition-btn').forEach(button => {
     });
 });
 
-let controllerName = '@ViewContext.RouteData.Values["controller"]';
-document.addEventListener("DOMContentLoaded", function () {
-    console.log(controllerName);
-    if (controllerName == 'SubjectsController')
-    else if (controllerName == 'SubjectSchedulesController')
-});
 $(function () {
     $("#SubjectCode").autocomplete({
         source: function (request, response) {
@@ -106,9 +104,13 @@ $(function () {
         }
     });
 
-    $("form").submit(function (event) {
+    $("#SchedForm").submit(function (event) {
+        if ($("#StartTime").val() >= $("#EndTime").val()) {
+            alert("Start Time must be less than End Time.");
+            event.preventDefault(); // Prevent form submission
+            return; // Exit the function
+        }
         var subjectCode = $("#SubjectCode").val();
-        console.log("Submitting form with subject code:", subjectCode); // Log the subject code being submitted
         $.ajax({
             url: '/SubjectSchedules/ValidateSubjectCode', // Action to validate the subject code
             type: "GET",
@@ -125,4 +127,34 @@ $(function () {
             async: false // Consider switching to async: true for better performance
         });
     });
+});
+
+
+let controllerName = document.getElementById('controllerName').value;
+document.addEventListener("DOMContentLoaded", function () {
+    const recentForm = document.getElementById('recentForm').value;
+    if (recentForm)
+        controllerName = recentForm;
+    if (controllerName == 'Subjects') {
+        subjContent.style.transform = `translateX(0)`;
+        subjContent.style.display = 'block';
+        schedContent.style.display = 'block';
+
+        subjectTransition.style.transform = `translateX(30vw)`;
+        subjectTransition.style.display = 'block';
+        scheduleTransition.style.display = 'block';
+
+        currentState = "subject";
+    }
+    else if (controllerName == 'SubjectSchedules') {
+        schedContent.style.transform = `translateX(0)`;
+        schedContent.style.display = 'block';
+        subjContent.style.display = 'block';
+
+        scheduleTransition.style.transform = `translateX(30vw)`;
+        scheduleTransition.style.display = 'block';
+        subjectTransition.style.display = 'block';
+
+        currentState = "schedule";
+    }
 });

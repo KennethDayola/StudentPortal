@@ -55,7 +55,8 @@ namespace StudentPortal.Controllers
 					throw;
 				}
 			}
-
+            ModelState.Clear();
+			ViewBag.AlertMessage = "Student added successfully!";
 			return View();
 		}
 
