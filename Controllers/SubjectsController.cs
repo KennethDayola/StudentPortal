@@ -30,6 +30,11 @@ namespace StudentPortal.Controllers
             {
                 try
                 {
+                    var existingSubject = dbContext.Subjects.Find(viewModel.Code);
+                    if (existingSubject != null) {
+                        ViewBag.AlertMessage = "Subject already exists!";
+						return View(viewModel);
+					}
                     var subject = new Subject
                     {
                         Code = viewModel.Code,
@@ -53,8 +58,10 @@ namespace StudentPortal.Controllers
                     throw;
                 }
             }
-
-            return View("AddSubjects"); 
+			ModelState.Clear();
+			ViewData["RecentForm"] = "Subjects";
+			ViewBag.AlertMessage = "You have been successfully enrolled!";
+			return View("AddSubjects"); 
         }
 
         [HttpGet]

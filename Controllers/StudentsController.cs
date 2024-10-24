@@ -32,6 +32,13 @@ namespace StudentPortal.Controllers
 				{
 					await dbContext.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Students ON");
 
+					var existingStudent = dbContext.Students.Find(viewModel.Id);
+					if (existingStudent != null)
+					{
+						ViewBag.AlertMessage = "Student ID already exists!";
+						return View(viewModel);
+					}
+
 					var student = new Student
 					{
 						Id = viewModel.Id, 
@@ -56,7 +63,7 @@ namespace StudentPortal.Controllers
 				}
 			}
             ModelState.Clear();
-			ViewBag.AlertMessage = "Student added successfully!";
+			ViewBag.AlertMessage = "You have been successfully enrolled!";
 			return View();
 		}
 
