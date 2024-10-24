@@ -14,6 +14,7 @@ $('.middle-name').each(function () {
         $(this).text('-');
     }
 });
+
 $(document).ready(function () {
     //$("#searchEDP").on("keyup", function() {
     //    var value = $(this).val().toLowerCase(); // Get the input value

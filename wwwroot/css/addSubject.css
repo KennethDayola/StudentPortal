@@ -53,6 +53,26 @@ html {
     font-size: 0.75rem;
 }
 
+#toast {
+    z-index: 90; /* Ensure it's on top */
+    background-color: #f1f1f1; /* Dark background */
+    margin-top: 6rem;
+    border: 1px solid #becac9; /* Highlight border */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Darker shadow */
+}
+
+.toast-header {
+    border-bottom: 1px solid #9c9c9c; /* Highlight border */
+}
+
+.custom-toast-img {
+    background-color: #51d251; /* Set the background color to green */
+    border-radius: 50%; /* Ensure the image remains rounded */
+    width: 20px; /* Set a width for the image */
+    height: 20px; /* Set a height for the image */
+    object-fit: cover; /* Ensure the image fits well within the rounded shape */
+}
+
 .schedule-transition, .subj-transition {
     text-align: center;
     position: absolute;

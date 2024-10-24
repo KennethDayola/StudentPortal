@@ -29,7 +29,14 @@ namespace StudentPortal.Controllers
             {
                 try
                 {
-                    var subjectSchedule = new SubjectSchedule
+					ViewData["RecentForm"] = "SubjectSchedules";
+					var existingSchedule = dbContext.SubjectSchedules.Find(viewModel.EDPCode);
+					if (existingSchedule != null)
+					{
+						ViewBag.AlertMessage = "EDP Code already exists!";
+						return View("AddSubjects", viewModel);
+					}
+					var subjectSchedule = new SubjectSchedule
                     {
                         EDPCode = viewModel.EDPCode,
                         SubjectCode = viewModel.SubjectCode,
@@ -57,7 +64,7 @@ namespace StudentPortal.Controllers
                 }
             }
             ModelState.Clear();
-			ViewData["RecentForm"] = "SubjectSchedules";
+			ViewBag.AlertMessage = "Schedule successfully added!";
 			return View("AddSubjects");
         }
 

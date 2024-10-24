@@ -19,39 +19,40 @@
         else
         {
             <form id="editForm">
-
                 <div class="mt-3">
                     <label class="form-label">Student ID</label>
-                    <input type="number" class="form-control readonly-textbox" asp-for="Id" min="1" readonly />
+                    <input type="number" class="form-control readonly-textbox" asp-for="Id" min="1" readonly required />
                 </div>
 
                 <div class="mt-3">
                     <label class="form-label">First Name</label>
-                    <input type="text" class="form-control" asp-for="FirstName" required />
+                    <input type="text" class="form-control" asp-for="FirstName" placeholder="Enter first name" required maxlength="15" pattern="^[A-Za-z]{1,15}$" title="First name should only contain letters and be up to 15 characters long." />
                 </div>
 
                 <div class="mt-3">
                     <label class="form-label">Middle Name</label>
-                    <input type="text" class="form-control" asp-for="MiddleName" required/>
+                    <input type="text" class="form-control" asp-for="MiddleName" placeholder="Enter middle name" maxlength="15" pattern="^[A-Za-z]{0,15}$" title="Middle name should only contain letters and be up to 15 characters long." />
                 </div>
 
                 <div class="mt-3">
                     <label class="form-label">Last Name</label>
-                    <input type="text" class="form-control" asp-for="LastName" required />
+                    <input type="text" class="form-control" asp-for="LastName" placeholder="Enter last name" required maxlength="15" pattern="^[A-Za-z]{1,15}$" title="Last name should only contain letters and be up to 15 characters long." />
                 </div>
 
                 <div class="mt-3">
                     <label class="form-label">Course</label>
-                    <input type="text" class="form-control" asp-for="Course" required />
+                    <input type="text" class="form-control" asp-for="Course" placeholder="Enter Course" required maxlength="10" />
                 </div>
 
                 <div class="mt-3">
                     <label class="form-label">Year</label>
-                    <input type="number" class="form-control" asp-for="Year" min="1" required />
+                    <input type="number" class="form-control" asp-for="Year" placeholder="Enter Year" min="1" required />
                 </div>
+
                 <div class="mt-3">
                     <label class="form-label">Remarks</label>
-                    <select class="form-select" style="border-color: #999c9b !important;" asp-for="Remarks" required>
+                    <select class="form-select" asp-for="Remarks" required>
+                        <option value="" disabled selected hidden>Enter Remarks</option>
                         <option value="Shiftee">Shiftee</option>
                         <option value="Transferee">Transferee</option>
                         <option value="New">New</option>
@@ -59,13 +60,15 @@
                         <option value="Cross-Enrollee">Cross-Enrollee</option>
                     </select>
                 </div>
+
                 <div class="mt-3">
                     <label class="form-label">Status</label>
-                    <select class="form-select" style="border-color: #999c9b !important;" asp-for="Status">
+                    <select class="form-select" asp-for="Status">
                         <option value="AC">Active</option>
                         <option value="IN" selected="@(Model.Status == "IN")">Inactive</option>
                     </select>
                 </div>
+
                 <div class="mt-3">
                     <button type="button" id="saveButton" class="btn btn-primary-save">Save</button>
                 </div>

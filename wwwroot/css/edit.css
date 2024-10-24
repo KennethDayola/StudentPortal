@@ -28,6 +28,32 @@
     filter: brightness(50%);
 }*/
 
+#toast {
+    z-index: 9000; /* Ensure it's on top */
+    background-color: #f1f1f1; /* Dark background */
+    margin-top: 4rem;
+    border: 1px solid #becac9; /* Highlight border */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Darker shadow */
+}
+
+.toast-header {
+    border-bottom: 1px solid #9c9c9c; /* Highlight border */
+}
+
+.custom-toast-img {
+    background-color: #51d251;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+#editForm.disable-interaction input,
+#editForm.disable-interaction select,
+#editForm.disable-interaction button {
+    pointer-events: none; /* Disable pointer events */
+    opacity: 0.8; /* Visually show they are disabled */
+}
 
 .content-box {
     height: auto;

@@ -105,11 +105,37 @@ $(function () {
     });
 
     $("#SchedForm").submit(function (event) {
-        if ($("#StartTime").val() >= $("#EndTime").val()) {
-            alert("Start Time must be less than End Time.");
-            event.preventDefault(); // Prevent form submission
-            return; // Exit the function
+        const startTime = $("#StartTime").val();
+        const endTime = $("#EndTime").val();
+        const selectedXM = $("#XM").val(); 
+        const maxSize = parseInt($("input[asp-for='MaxSize']").val(), 10);
+        const classSize = parseInt($("input[asp-for='ClassSize']").val(), 10);
+
+        if (classSize >= maxSize) {
+            alertMessage = `Max Size must be more than Class Size!`;
+            displayToast();
+            event.preventDefault();
+            return;
         }
+
+        function getTimePeriod(time) {
+            const [hours] = time.split(":").map(Number);
+            return hours < 12 ? "AM" : "PM"; // Hours 0 to 11 are AM, 12 to 23 are PM
+        }
+        if (selectedXM && getTimePeriod(startTime) !== selectedXM) {
+            alertMessage = `Start Time must match the selected XM period!`;
+            displayToast();
+            event.preventDefault();
+            return;
+        }
+
+        if (startTime >= endTime) {
+            alertMessage = "Start Time must be less than End Time!"
+            displayToast();
+            event.preventDefault(); 
+            return; 
+        }
+
         var subjectCode = $("#SubjectCode").val();
         $.ajax({
             url: '/SubjectSchedules/ValidateSubjectCode', // Action to validate the subject code
@@ -117,8 +143,9 @@ $(function () {
             data: { code: subjectCode },
             success: function (isValid) {
                 if (!isValid) {
+                    alertMessage = "Subject Code does not exist!"
+                    displayToast();
                     event.preventDefault(); // Prevent form submission if invalid
-                    alert("Subject Code Doesn't Exist!");
                 }
             },
             error: function (xhr, status, error) {
@@ -129,6 +156,28 @@ $(function () {
     });
 });
 
+let alertMessage = document.getElementById('alertMessage').value;
+function displayToast() {
+    if (alertMessage) {
+        const toastMessageElement = document.getElementById('toastMessage');
+        const toastTitleElement = document.getElementById('toastTitle');
+        const toastSquare = document.getElementById('toastSquare');
+
+        if (alertMessage.includes("successfully")) {
+            toastTitleElement.innerText = "Complete!";
+        } else {
+            toastSquare.style.backgroundColor = '#d12525';
+            toastTitleElement.innerText = "Error!";
+        }
+
+        toastMessageElement.innerText = alertMessage;
+
+        const toastElement = document.getElementById('toast');
+        toastElement.style.display = 'block';
+        const toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    }
+}
 
 let controllerName = document.getElementById('controllerName').value;
 document.addEventListener("DOMContentLoaded", function () {
@@ -157,4 +206,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         currentState = "schedule";
     }
+
+    displayToast();
 });
