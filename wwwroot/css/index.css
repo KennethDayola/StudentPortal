@@ -170,7 +170,6 @@
     top: 35%;
 }
 
-
 #zoom-text-students {
     text-align: center;
     animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
@@ -192,6 +191,94 @@
     left: 10%;
     top: 37%;
 }
+
+
+#zoom-text-addsched {
+    animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    z-index: 1000000;
+    position: absolute;
+    color: white;
+    width: 55%;
+    left: 23.5%; /* Aligned more centrally */
+    top: 35%;
+    text-align: center; /* Center alignment for headings */
+}
+
+    #zoom-text-addsched .zoom-text-h1 {
+        margin-bottom: 0.5em;
+    }
+
+    #zoom-text-addsched .zoom-text-h2 {
+        margin-bottom: 1em;
+    }
+
+    #zoom-text-addsched .zoom-text-p {
+        margin-bottom: 2em;
+    }
+
+    #zoom-text-addsched .btn-in-zoom {
+        margin-top: 1em;
+    }
+
+/* Subjects Section */
+#zoom-text-subjects {
+    animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    z-index: 1000000;
+    position: absolute;
+    color: white;
+    width: 65%;
+    right: 10%;
+    top: 35%;
+    text-align: right; /* Right alignment for h1, h2, p */
+}
+
+    #zoom-text-subjects .zoom-text-h1 {
+        margin-bottom: 0.7em;
+    }
+
+    #zoom-text-subjects .zoom-text-h2 {
+        margin-bottom: 0.9em;
+    }
+
+    #zoom-text-subjects .zoom-text-p {
+        margin-bottom: 1.2em;
+    }
+
+    #zoom-text-subjects .btn-in-zoom {
+        margin-right: 1.5em;
+    }
+
+/* Schedules Section */
+#zoom-text-schedules {
+    animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    z-index: 1000000;
+    position: absolute;
+    color: white;
+    width: 70%;
+    right: 0;
+    padding-right: 100px;
+    top: 35%;
+    text-align: left; /* Left alignment for variation */
+}
+
+    #zoom-text-schedules .zoom-text-h1 {
+        margin-bottom: 0.6em;
+    }
+
+    #zoom-text-schedules .zoom-text-h2 {
+        margin-bottom: 1.1em;
+        margin-left: 1em; /* Slight indentation */
+    }
+
+    #zoom-text-schedules .zoom-text-p {
+        margin-bottom: 1.8em;
+        margin-left: 4em; /* More indentation */
+    }
+
+    #zoom-text-schedules .btn-in-zoom {
+        left: 10%;
+        margin-left: 18em;
+    }
 
 .zoom-text-h1 {
     font-weight: 600;
@@ -265,7 +352,7 @@
     z-index: 10000000001;
 }
 
-.zoom-container > *:not(#zoom-text-addsub) {
+.zoom-container > #zoom-text-students, .zoom-container > #zoom-text-addstud {
     text-align: center;
 }
 

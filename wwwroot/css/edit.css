@@ -52,7 +52,7 @@
 #editForm.disable-interaction select,
 #editForm.disable-interaction button {
     pointer-events: none; /* Disable pointer events */
-    opacity: 0.8; /* Visually show they are disabled */
+    opacity: 0.7; /* Visually show they are disabled */
 }
 
 .content-box {

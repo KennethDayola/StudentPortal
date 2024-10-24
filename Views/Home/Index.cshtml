@@ -25,25 +25,43 @@
             <h2 class="zoom-text-h2" style="margin: 2% 0;">Explore Student Profiles</h2>
             <p class="zoom-text-p">Browse through the list of students currently enrolled in the program. Get insights into their academic progress and personal details.</p>
             <p class="zoom-text-p" style=" width:80%; margin-left: auto; margin-top: -1.3%;">View the profiles of our students and track their achievements and activities.</p>
-            <a href="@Url.Action("List", "Students")" class="btn-in-zoom">VIEW LIST</a>
+            <a href="@Url.Action("List", "Students")" class="btn-in-zoom">VIEW STUDENTS</a>
         </div>
         <div id="zoom-text-addsub">
-            <h1 class="zoom-text-h1">Register for Classes Today</h1>
-            <h2 class="zoom-text-h2" style="text-indent: .5em;">Find Your Passion—Enroll in the Right Courses for You</h2>
+            <h1 class="zoom-text-h1">Add a New Subject Today</h1>
+            <h2 class="zoom-text-h2" style="text-indent: .5em;">Expand Your Curriculum—Create Your Unique Course Offerings</h2>
             <p class="zoom-text-p" style="text-indent: 3em;">
-                Whether you’re pursuing a major, exploring new fields, or enhancing your skillset, our wide range of subjects offers something for every interest. 
-                Enroll today to begin your academic journey.
+                Whether you’re developing a new program, responding to student needs, or innovating your educational offerings, our platform provides all the tools you need to add a subject.
+                Start the process today to enrich your academic catalog.
             </p>
-            <a href="@Url.Action("Add", "Students")" class="btn-in-zoom">CHOOSE YOUR SUBJECTS</a>
+            <a href="@Url.Action("Add", "Subjects")" class="btn-in-zoom">ADD YOUR SUBJECT</a>
         </div>
-        <div id="zoom-text-privacy">
-            <h1 class="zoom-text-h1">Privacy and Security</h1>
-            <h2 class="zoom-text-h2" style="text-indent: .5em;">Welcome New Faces to Our School</h2>
+        <div id="zoom-text-addsched">
+            <h1 class="zoom-text-h1">Assign Schedules Effeciently</h1>
+            <h2 class="zoom-text-h2" style="text-indent: .5em;">Organize Your Classes—Manage Course Timetables Effectively</h2>
             <p class="zoom-text-p" style="text-indent: 3em;">
-                Adding a new student to our school community is the first step toward unlocking a world of opportunities for their growth and development.
-                Click the button below to begin the enrollment process and help shape their educational journey.
+                Streamline your educational offerings by efficiently assigning schedules for your subjects. Whether you're optimizing class times or accommodating student needs, our platform makes it easy to manage your course schedules.
+                Begin the scheduling process today to enhance your academic planning.
             </p>
-            <a href="@Url.Action("Add", "Students")" class="btn-in-zoom">ENROLL NOW</a>
+            <a href="@Url.Action("Add", "SubjectSchedules")" class="btn-in-zoom">ASSIGN YOUR SCHEDULES</a>
+        </div>
+        <div id="zoom-text-subjects">
+            <h1 class="zoom-text-h1">Subject Listings</h1>
+            <h2 class="zoom-text-h2" style="text-indent: .5em;">Explore Available Courses and Find What Interests You</h2>
+            <p class="zoom-text-p" style="text-indent: 3em;">
+                Discover a comprehensive list of all available subjects offered. Whether you’re looking to enroll in a new course or explore different fields of study, our platform provides easy access to detailed subject information.
+                Start browsing our offerings today to find the right subjects for your academic journey.
+            </p>
+            <a href="@Url.Action("List", "Subjects")" class="btn-in-zoom">VIEW SUBJECT LIST</a>
+        </div>
+        <div id="zoom-text-schedules">
+            <h1 class="zoom-text-h1">View All Schedules</h1>
+            <h2 class="zoom-text-h2" style="text-indent: .5em;">Manage Your Class Timetables, Always Stay Organized</h2>
+            <p class="zoom-text-p" style="text-indent: 3em;">
+                Access a complete list of all assigned schedules for your subjects. Whether you're reviewing class times or ensuring compliance with scheduling requirements, our platform makes it easy to stay informed.
+                Check your schedules today to ensure you’re on track for a successful academic term.
+            </p>
+            <a href="@Url.Action("List", "SubjectSchedules")" class="btn-in-zoom">VIEW SCHEDULE LIST</a>
         </div>
     </div>
     <div class="caption">
@@ -81,15 +99,15 @@
                 <img class="image" src="https://i.abcnewsfe.com/a/58a35e3a-b15c-46f4-8bb3-a71ccf9809d0/ca-schools-3-rf-gty-bb-230906_1694023890660_hpMain.jpg" draggable="false">
             </label>
             <label>
-                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addsched" style="display:none;">
                 <img class="image" src="https://www.daysoftheyear.com/wp-content/uploads/world-student-day1.jpg" draggable="false">
             </label>
             <label>
-                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-subjects" style="display:none;">
                 <img class="image" src="https://imgur.com/vq5JpUu.jpeg" draggable="false">
             </label>
             <label>
-                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-addstud" style="display:none;">
+                <input type="checkbox" class="image-checkbox" data-zoom-text="zoom-text-schedules" style="display:none;">
                 <img class="image" src="https://imgur.com/72UcVFH.jpeg" draggable="false">
             </label>
             <label>
