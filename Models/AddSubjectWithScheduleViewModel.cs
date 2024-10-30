@@ -13,6 +13,10 @@ namespace StudentPortal.Models
         public string Course { get; set; }
         public string Curriculum { get; set; }
 
+        // Properties from SubjectPreqViewModel
+        public string PreCode { get; set; }
+        public string PreCategory { get; set; }
+
         // Properties from AddSubjectScheduleViewModel
         [StringLength(8)]
         public string EDPCode { get; set; }

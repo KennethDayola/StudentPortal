@@ -64,7 +64,7 @@ namespace StudentPortal.Controllers
                 }
             }
             ModelState.Clear();
-			ViewBag.AlertMessage = "Schedule successfully added!";
+			ViewBag.ListAlertMessage = "Schedule successfully added!";
 			return View("AddSubjects");
         }
 
@@ -130,6 +130,7 @@ namespace StudentPortal.Controllers
             {
                 dbContext.SubjectSchedules.Remove(viewModel);
                 await dbContext.SaveChangesAsync();
+                ViewBag.AlertMessage = "Schedule has been successfully deleted!";
             }
 
             return RedirectToAction("List", "SubjectSchedules");

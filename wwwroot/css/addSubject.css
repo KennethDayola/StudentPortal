@@ -417,7 +417,9 @@ input.form-control:focus, select.form-select:focus {
     transform: scale(0.95);
 }
 
-.submit-btn:focus {
+#SubjectForm .submit-btn {
+    transition: all ease 0.5s;
+    margin-bottom: 100px;
 }
 
 @keyframes fly-1 {
@@ -428,4 +430,83 @@ input.form-control:focus, select.form-select:focus {
     to {
         transform: translateY(-0.1em);
     }
+}
+
+#prereqFields {
+    display: none;
+}
+
+.pre-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Space between hr and checkbox */
+}
+
+/* Horizontal line styling */
+.line {
+    flex-grow: 1; /* Makes hr stretch to fill the remaining space */
+    border: none;
+    border-top: 2px solid gray; /* Adjust color as needed */
+    margin-left: 16px;
+}
+
+/* Checkbox label styling */
+.add-prereq-label {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Prevents label from breaking */
+    gap: 10px;
+}
+
+.pre-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px; /* Adjust as needed to position the hr line */
+}
+
+.line {
+    flex-grow: 1;
+    border: 0;
+    border-top: 2px solid gray; /* Adjust color as needed */
+    margin-right: 10px;
+}
+
+.custom-checkbox {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox input {
+    display: none; /* Hide the default checkbox */
+}
+
+.custom-checkbox svg {
+    overflow: visible;
+    margin-right: 10px; /* Space between checkbox and text */
+}
+
+.path {
+    fill: none;
+    stroke: #5f5f5e; /* Change to desired stroke color */
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 241 9999999; /* Initial length for animation */
+    stroke-dashoffset: 0; /* Initial position for animation */
+}
+
+.custom-checkbox input:checked ~ svg .path {
+    stroke-dasharray: 70.5096664428711 9999999; /* Length of the drawn path */
+    stroke-dashoffset: -262.2723388671875; /* Adjust to create the animation effect */
+}
+
+#prereqFields h4 {
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #434341;
+    margin-bottom: 25px;
 }

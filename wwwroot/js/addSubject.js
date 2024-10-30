@@ -179,6 +179,49 @@ function displayToast() {
     }
 }
 
+const prereqCode = document.getElementById("PrerequisiteSubjectCode");
+const prereqCategory = document.getElementById("PrerequisiteCategory");
+function togglePrereqFields() {
+    const prereqFields = document.getElementById('prereqFields');
+    const isChecked = document.getElementById('addPrereqCheckbox').checked;
+
+    prereqFields.style.display = isChecked ? 'block' : 'none';
+
+    if (!isChecked) {
+        prereqCode.value = '';
+        prereqCategory.value = '';
+        prereqCode.required = false;
+        prereqCategory.required = false;
+    }
+}
+
+function setRequiredFields() {
+    if (addPrereqCheckbox.checked) {
+        if (prereqCode.value && !prereqCategory.value) {
+            prereqCategory.setCustomValidity("Please fill in both fields, or uncheck the checkbox.");
+            prereqCode.setCustomValidity(""); // Clear any previous messages
+        } else if (!prereqCode.value && prereqCategory.value) {
+            prereqCode.setCustomValidity("Please fill in both fields, or uncheck the checkbox.");
+            prereqCategory.setCustomValidity(""); // Clear any previous messages
+        } else {
+            prereqCode.setCustomValidity("");
+            prereqCategory.setCustomValidity("");
+        }
+        // Set fields to required if checkbox is checked
+        prereqCode.required = true;
+        prereqCategory.required = true;
+    } else {
+        // Checkbox is unchecked, clear required and custom validity
+        prereqCode.required = false;
+        prereqCategory.required = false;
+        prereqCode.setCustomValidity("");
+        prereqCategory.setCustomValidity("");
+    }
+}
+
+document.getElementById("PrerequisiteSubjectCode").addEventListener("input", setRequiredFields);
+document.getElementById("PrerequisiteCategory").addEventListener("input", setRequiredFields);
+
 let controllerName = document.getElementById('controllerName').value;
 document.addEventListener("DOMContentLoaded", function () {
     const recentForm = document.getElementById('recentForm').value;

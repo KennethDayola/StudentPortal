@@ -16,15 +16,27 @@ $('.middle-name').each(function () {
 });
 
 $(document).ready(function () {
-    //$("#searchEDP").on("keyup", function() {
-    //    var value = $(this).val().toLowerCase(); // Get the input value
+    $('.search-input').on('input', function () {
+        const searchValue = $(this).val().toLowerCase();
+        if (searchValue === "") {
+            $('.table tbody tr').show();
+            return;
+        }
 
-    //    // Loop through all table rows
-    //    $("table tbody tr").filter(function() {
-    //        // Find the second column (EDP Code) and toggle visibility based on its text
-    //        $(this).toggle($(this).find("td:nth-child(2)").text().toLowerCase().indexOf(value) > -1);
-    //    });
-    //});
+        $('.table tbody tr').each(function () {
+            const key = $(this).find('td:nth-child(2)').text().toLowerCase();
+            if (key.startsWith(searchValue)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+    $('.reset').on('click', function () {
+        $('.search-input').val('');
+        $('.table tbody tr').show();
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
 

@@ -36,6 +36,7 @@ namespace StudentPortal.Controllers
                         ViewBag.AlertMessage = "Subject already exists!";
 						return View("AddSubjects", viewModel);
 					}
+
                     var subject = new Subject
                     {
                         Code = viewModel.Code,
@@ -47,9 +48,20 @@ namespace StudentPortal.Controllers
                         Course = viewModel.Course,
                         Curriculum = viewModel.Curriculum
                     };
-
                     await dbContext.Subjects.AddAsync(subject);
                     await dbContext.SaveChangesAsync();
+
+                    if (!string.IsNullOrWhiteSpace(viewModel.PreCategory) || !string.IsNullOrWhiteSpace(viewModel.PreCode))
+                    {
+                        var prerequisite = new SubjectPreq
+                        {
+                            SubjectCode = viewModel.Code,
+                            PreCode = viewModel.PreCode,
+                            Category = viewModel.PreCategory,
+                        };
+                        await dbContext.Prerequistes.AddAsync(prerequisite);
+                        await dbContext.SaveChangesAsync();
+                    }
 
                     await transaction.CommitAsync();
                 }
@@ -67,7 +79,9 @@ namespace StudentPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var subjects = await dbContext.Subjects.ToListAsync();
+            var subjects = await dbContext.Subjects
+                                          .Include(s => s.Prerequisites)
+                                          .ToListAsync();
 
             return View(subjects);
         }
@@ -75,7 +89,9 @@ namespace StudentPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string Id)
         {
-            var subject = await dbContext.Subjects.FindAsync(Id);
+            var subject = await dbContext.Subjects
+                                 .Include(s => s.Prerequisites) // Include the prerequisite entity
+                                 .FirstOrDefaultAsync(s => s.Code == Id);
 
             if (subject == null)
             {
@@ -93,11 +109,13 @@ namespace StudentPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Subject viewModel)
         {
-            var subject = await dbContext.Subjects.FindAsync(viewModel.Code);
+            var subject = await dbContext.Subjects
+                                         .Include(s => s.Prerequisites)
+                                         .FirstOrDefaultAsync(s => s.Code == viewModel.Code);
 
-            if (subject is not null)
+            if (subject != null)
             {
-                subject.Code = viewModel.Code;
+                // Update subject properties
                 subject.Description = viewModel.Description;
                 subject.Units = viewModel.Units;
                 subject.Course = viewModel.Course;
@@ -106,21 +124,41 @@ namespace StudentPortal.Controllers
                 subject.Curriculum = viewModel.Curriculum;
                 subject.Status = viewModel.Status;
 
+                // Update prerequisite properties if it exists
+                if (subject.Prerequisites != null)
+                {
+                    subject.Prerequisites.PreCode = viewModel.Prerequisites.PreCode;
+                    subject.Prerequisites.Category = viewModel.Prerequisites.Category;
+                }
+                else
+                {
+                    subject.Prerequisites = new SubjectPreq
+                    {
+                        SubjectCode = viewModel.Code,
+                        PreCode = viewModel.Prerequisites.PreCode,
+                        Category = viewModel.Prerequisites.Category
+                    };
+                }
+
                 await dbContext.SaveChangesAsync();
+                return RedirectToAction("List", "Subjects");
             }
 
-            return RedirectToAction("List", "Subjects");
+            return NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(Subject viewModel)
         {
-            var subject = await dbContext.Subjects.
-                AsNoTracking().
-                FirstOrDefaultAsync(x => x.Code == viewModel.Code);
+            var subject = await dbContext.Subjects
+                                        .Include(s => s.Prerequisites)
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(x => x.Code == viewModel.Code);
 
             if (subject is not null)
             {
+                dbContext.Prerequistes.RemoveRange(subject.Prerequisites);
+
                 dbContext.Subjects.Remove(viewModel);
                 await dbContext.SaveChangesAsync();
             }

@@ -89,6 +89,100 @@ html {
     font-size: 0.75rem;
 }
 
+.search-form button {
+    border: none;
+    background: none;
+    color: #8b8ba7;
+}
+
+.search-form .search-btn {
+    pointer-events: none;
+}
+
+.search-form {
+    z-index: 900;
+    position: absolute !important;
+    top: 3.3rem;
+    right: 100px !important;
+    --timing: 0.3s;
+    --width-of-input: 300px;
+    --height-of-input: 40px;
+    --border-height: 2px;
+    --input-bg: #fff;
+    --border-color: #35dd48;
+    --border-radius: 30px;
+    --after-border-radius: 1px;
+    position: relative;
+    width: var(--width-of-input);
+    height: var(--height-of-input);
+    display: flex;
+    align-items: center;
+    padding-inline: 0.8em;
+    border-radius: var(--border-radius);
+    transition: border-radius 0.5s ease;
+    background: var(--input-bg,#fff);
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.1); /* Added shadow */
+}
+
+/* Styling for the Search Input */
+.search-input {
+    font-size: 0.9rem;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+}
+
+/* Styling of the Animated Border */
+.search-form:before {
+    content: "";
+    position: absolute;
+    background: var(--border-color);
+    transform: scaleX(0);
+    transform-origin: center;
+    width: 100%;
+    height: var(--border-height);
+    left: 0;
+    bottom: 0;
+    border-radius: 1px;
+    transition: transform var(--timing) ease;
+}
+
+/* Hover on Search Input */
+.search-form:focus-within {
+    border-radius: var(--after-border-radius);
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+/* Animated Border on Focus */
+.search-form:focus-within:before {
+    transform: scale(1);
+}
+
+/* styling of close button */
+/* == you can click the close button to remove text == */
+.reset {
+    border: none;
+    background: none;
+    opacity: 0;
+    visibility: hidden;
+}
+/* close button shown when typing */
+.search-input:not(:placeholder-shown) ~ .reset {
+    opacity: 1;
+    visibility: visible;
+}
+/* sizing svg icons */
+.search-form svg {
+    width: 17px;
+    margin-top: 3px;
+}
+
 .left-navbar {
     border-right: 2px solid #83ff83;
     overflow-y: auto;
@@ -295,11 +389,35 @@ h2 {
 }
 
 .active-status {
-    color: #286228;
+    color: #286228; 
 }
 
 .inactive-status {
-    color: #414140;
+    color: #414140; 
+}
+
+.closed-status {
+    color: #d05151;
+}
+
+.restricted-status {
+    color: #eb9800; 
+}
+
+.dissolved-status {
+    color: #70703b; 
+}
+
+.closed-icon {
+    filter: hue-rotate(270deg) saturate(1.5) brightness(0.95);
+}
+
+.restricted-icon {
+    filter: hue-rotate(300deg) saturate(1.5);
+}
+
+.dissolved-icon {
+    filter: hue-rotate(-10deg) saturate(0.7) brightness(1); 
 }
 
 .grayed-out {

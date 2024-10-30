@@ -32,26 +32,32 @@ namespace StudentPortal.Migrations
 
                     b.Property<string>("Course")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Remarks")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -64,30 +70,36 @@ namespace StudentPortal.Migrations
             modelBuilder.Entity("StudentPortal.Models.Entities.Subject", b =>
                 {
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Category")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("Course")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("Curriculum")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("Offering")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
 
                     b.Property<int>("Units")
                         .HasColumnType("int");
@@ -95,6 +107,26 @@ namespace StudentPortal.Migrations
                     b.HasKey("Code");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("StudentPortal.Models.Entities.SubjectPreq", b =>
+                {
+                    b.Property<string>("SubjectCode")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("PreCode")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.HasKey("SubjectCode", "PreCode");
+
+                    b.ToTable("Prerequistes");
                 });
 
             modelBuilder.Entity("StudentPortal.Models.Entities.SubjectSchedule", b =>
@@ -137,7 +169,8 @@ namespace StudentPortal.Migrations
 
                     b.Property<string>("SubjectCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("XM")
                         .IsRequired()
@@ -154,6 +187,17 @@ namespace StudentPortal.Migrations
                     b.ToTable("SubjectSchedules");
                 });
 
+            modelBuilder.Entity("StudentPortal.Models.Entities.SubjectPreq", b =>
+                {
+                    b.HasOne("StudentPortal.Models.Entities.Subject", "Subject")
+                        .WithMany("Prerequisites")
+                        .HasForeignKey("SubjectCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("StudentPortal.Models.Entities.SubjectSchedule", b =>
                 {
                     b.HasOne("StudentPortal.Models.Entities.Subject", "Subject")
@@ -167,6 +211,8 @@ namespace StudentPortal.Migrations
 
             modelBuilder.Entity("StudentPortal.Models.Entities.Subject", b =>
                 {
+                    b.Navigation("Prerequisites");
+
                     b.Navigation("Schedules");
                 });
 #pragma warning restore 612, 618

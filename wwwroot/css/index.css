@@ -520,15 +520,16 @@
     touch-action: manipulation;
 }
 
-    .intro-btn1:hover {
-        box-shadow: #68c3ea 0 0 0 3px, transparent 0 0 0 0;
-        color: #fff;
-    }
+.intro-btn1:hover {
+    box-shadow: #797f85 0 0 0 3px, transparent 0 0 0 0;
+    background: #46484b;
+    color: #fff;
+}
 
 .intro-btn2:hover {
     background-color: #fff;
-    color: #709fcf;
-    box-shadow: #86c0d9 0 0 0 3px, transparent 0 0 0 0;
+    color: #797f85;
+    box-shadow: #797f85 0 0 0 3px, transparent 0 0 0 0;
 }
 
 .intro-btn2 {
