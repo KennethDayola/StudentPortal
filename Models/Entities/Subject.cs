@@ -20,6 +20,6 @@ namespace StudentPortal.Models.Entities
         [StringLength(10)]
         public required string Curriculum { get; set; }
         public ICollection<SubjectSchedule> Schedules { get; set; }
-        public ICollection<SubjectPreq> Prerequisites { get; set; }
+        public SubjectPreq Prerequisites { get; set; }
     }
 }

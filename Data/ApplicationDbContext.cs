@@ -11,7 +11,7 @@ namespace StudentPortal.Data
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<SubjectPreq> Prerequistes { get; set; }
+        public DbSet<SubjectPreq> Prerequisites { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -19,10 +19,12 @@ namespace StudentPortal.Data
             modelBuilder.Entity<SubjectPreq>()
                 .HasKey(sp => new { sp.SubjectCode, sp.PreCode });
 
-            modelBuilder.Entity<SubjectPreq>()
-                .HasOne(sp => sp.Subject)
-                .WithMany(s => s.Prerequisites)
-                .HasForeignKey(sp => sp.SubjectCode);
+            modelBuilder.Entity<Subject>()
+                .HasOne(s => s.Prerequisites)
+                .WithOne(sp => sp.Subject)
+                .HasForeignKey<SubjectPreq>(sp => sp.SubjectCode)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
         public DbSet<SubjectSchedule> SubjectSchedules { get; set; }
     }

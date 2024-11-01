@@ -408,6 +408,10 @@ h2 {
     color: #70703b; 
 }
 
+.active-status, .inactive-status, .closed-status, .restricted-status, .dissolved-status {
+    white-space: nowrap;
+}
+
 .closed-icon {
     filter: hue-rotate(270deg) saturate(1.5) brightness(0.95);
 }
@@ -427,6 +431,7 @@ h2 {
 .dropdown {
     position: relative;
     display: inline-block;
+    white-space: nowrap;
 }
 
 .dropdown-menu {

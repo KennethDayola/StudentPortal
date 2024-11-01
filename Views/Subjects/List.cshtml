@@ -86,32 +86,8 @@
                             <td>@subject.Category</td>
                             <td>@subject.Course</td>
                             <td>@subject.Curriculum</td>
-                            <td>
-                                @if (subject.Prerequisites != null && subject.Prerequisites.Any())
-                                {
-                                    foreach (var prereq in subject.Prerequisites)
-                                    {
-                                        <div>@prereq.PreCode</div>
-                                    }
-                                }
-                                else
-                                {
-                                    <div>N/A</div>
-                                }
-                            </td>
-                            <td>
-                                @if (subject.Prerequisites != null && subject.Prerequisites.Any())
-                                {
-                                    foreach (var prereq in subject.Prerequisites)
-                                    {
-                                        <div>@(prereq.Category == "PR" ? "Pre-Requisite" : prereq.Category == "CR" ? "Co-Requisite" : "")</div>
-                                    }
-                                }
-                                else
-                                {
-                                    <div>N/A</div>
-                                }
-                            </td>
+                            <td>@(subject.Prerequisites?.PreCode ?? "N/A")</td>
+                            <td>@(subject.Prerequisites?.Category == "PR" ? "Pre-Requisite" : subject.Prerequisites?.Category == "CR" ? "Co-Requisite" : "N/A")</td>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-link" type="button" id="dropdownMenuButton">

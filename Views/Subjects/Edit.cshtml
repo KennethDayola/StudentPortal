@@ -77,6 +77,21 @@
                 </div>
 
                 <div class="mt-3">
+                    <label class="form-label">Requisite Code</label>
+                    <input type="text" class="form-control" id="PrerequisiteSubjectCode" asp-for="Prerequisites.PreCode" maxlength="15" />
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Requisite Category</label>
+                    <select class="form-select" style="border-color: #999c9b !important;" id="PrerequisiteCategory" asp-for="Prerequisites.Category">
+                        <option value="" selected="@(Model.Prerequisites == null)" hidden></option>
+                        <option value="">N/A</option>
+                        <option value="PR" selected="@(Model.Prerequisites?.Category == "PR")">Pre-Requisite</option>
+                        <option value="CR" selected="@(Model.Prerequisites?.Category == "CR")">Co-Requisite</option>
+                    </select>
+                </div>
+
+                <div class="mt-3">
                     <button type="button" id="saveButton" class="btn btn-primary-save">Save</button>
                 </div>
             </form>
@@ -85,6 +100,9 @@
 
     <script>
         $(document).ready(function () {
+            document.getElementById("PrerequisiteSubjectCode").addEventListener("input", setRequiredFields);
+            document.getElementById("PrerequisiteCategory").addEventListener("input", setRequiredFields);
+
             $("#saveButton").click(function (event) {
                 if (!document.getElementById("editForm").checkValidity()) {
                     event.preventDefault(); // Prevent form submission
@@ -109,6 +127,31 @@
                 });
             });
         });
+
+        function setRequiredFields() {
+            const prereqCode = document.getElementById("PrerequisiteSubjectCode");
+            const prereqCategory = document.getElementById("PrerequisiteCategory");
+
+            if (prereqCode.value || prereqCategory.value){
+                prereqCode.required = true;
+                prereqCategory.required = true;
+            }
+            else {
+                prereqCode.required = false;
+                prereqCategory.required = false;
+            }
+
+            if (prereqCode.value && !prereqCategory.value) {
+                prereqCategory.setCustomValidity("Please fill in both requisite fields, else leave them blank.");
+                prereqCode.setCustomValidity(""); 
+            } else if (!prereqCode.value && prereqCategory.value) {
+                prereqCode.setCustomValidity("Please fill in both requisite fields, else leave them blank.");
+                prereqCategory.setCustomValidity(""); // Clear any previous messages
+            } else {
+                prereqCode.setCustomValidity("");
+                prereqCategory.setCustomValidity("");
+            }
+        }
     </script>
 </body>
 </html>
