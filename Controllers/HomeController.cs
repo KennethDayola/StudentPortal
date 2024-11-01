@@ -44,11 +44,12 @@ namespace StudentPortal.Controllers
 
                 if (existingUser != null)
                 {
-                    ViewBag.AlertMessage = "Successfully Logged In! Redirecting to Home Page..";
+                    ViewBag.AlertMessage = "Logged in successfully! Redirecting to Home Page..";
+                    ModelState.Clear();
                     return View();
                 }
 
-                ViewBag.AlertMessage("Invalid Username or Password."); 
+                ViewBag.AlertMessage = "Invalid Username or Password."; 
             }
 
             return View(user);

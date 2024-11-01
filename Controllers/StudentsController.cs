@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StudentPortal.Data;
@@ -8,6 +9,7 @@ using System.Runtime.InteropServices;
 
 namespace StudentPortal.Controllers
 {
+	[Authorize]
 	public class StudentsController : Controller
 	{
 		private readonly ApplicationDbContext dbContext;

@@ -17,18 +17,26 @@
     text-align: center;
     font-size: 0.75rem;
     border-bottom: 0.5px groove #a59eab;
+    box-shadow: 0 4px 8px rgba(0,0,0,.3);
 }
 
 #toast {
     z-index: 90; /* Ensure it's on top */
-    background-color: #f1f1f1; /* Dark background */
-    margin-top: 6rem;
+    background-color: #28292f; /* Dark background */
+    color: white;
+    margin-top: 4rem;
     border: 1px solid #becac9; /* Highlight border */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Darker shadow */
 }
 
 .toast-header {
+    color: white;
+    background-color: #1f1f24; /* Dark background */
     border-bottom: 1px solid #00cec1; /* Highlight border */
+}
+
+.btn-close {
+    color: white;
 }
 
 .custom-toast-img {
@@ -253,6 +261,32 @@
     background: transparent;
 }
 
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #14151a inset; 
+    -webkit-text-fill-color: #fff !important;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px #14151a inset;
+    -webkit-text-fill-color: #fff !important;
+}
+
+/* For Firefox */
+input:-moz-autofill {
+    background-color: #14151a !important; /* Match the background color */
+    color: #fff !important; /* Match the text color */
+}
+
+/* General autofill styles (not supported by all browsers) */
+input:autofill {
+    background-color: #14151a !important; /* Match the background color */
+    color: #fff !important; /* Match the text color */
+}
+
+::-ms-reveal {
+    filter: invert(100%);
+}
+
 .login-box .user-box label {
     position: absolute;
     top: 0;
@@ -272,11 +306,13 @@
     font-size: 12px;
 }
 
-.login-box form a {
+.login-box form button {
     position: relative;
     display: inline-block;
     padding: 10px 20px;
     color: #ffffff;
+    background: transparent;
+    border: none;
     font-size: 16px;
     text-decoration: none;
     text-transform: uppercase;
@@ -286,14 +322,14 @@
     letter-spacing: 4px
 }
 
-    .login-box a:hover {
-        background: #14cbbf;
-        color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 5px #14cbbf, 0 0 25px #14cbbf, 0 0 50px #14cbbf, 0 0 100px #14cbbf;
-    }
+.login-box button:hover {
+    background: #14cbbf;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #14cbbf, 0 0 25px #14cbbf, 0 0 50px #14cbbf, 0 0 100px #14cbbf;
+}
 
-.login-box a span {
+.login-box button span {
     position: absolute;
     display: block;
 }
@@ -308,7 +344,7 @@
     }
 }
 
-.login-box a span:nth-child(1) {
+.login-box button span:nth-child(1) {
     bottom: 2px;
     left: -100%;
     width: 100%;
@@ -331,7 +367,6 @@
     transition: all .5s;
 }
 
-/*accidental border at bottom*/
 .login-box::after {
     content: ''; /* Necessary for a pseudo-element */
     position: absolute; /* Position relative to the span */

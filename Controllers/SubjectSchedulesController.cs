@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentPortal.Data;
 using StudentPortal.Models;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudentPortal.Controllers
 {
+    [Authorize]
     public class SubjectSchedulesController : Controller
     {
         private readonly ApplicationDbContext dbContext;

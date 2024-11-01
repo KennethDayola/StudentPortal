@@ -15,7 +15,7 @@
             <div class="toast-header">
                 <span id="toastSquare" class="rounded me-2 custom-toast-img" alt="Toast Image"></span>
                 <strong class="me-auto" id="toastTitle">Complete!</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body" id="toastMessage"></div>
         </div>
@@ -31,13 +31,12 @@
             <div class="login-box">
                 <form asp-action="Login" method="post">
                     <h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-width="2" fill="none" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM12 14c-4.41 0-8 3.59-8 8v1h16v-1c0-4.41-3.59-8-8-8z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10 12a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V4H3v8h6v-1a.5.5 0 0 1 .5-.5zm2.854-2.354a.5.5 0 0 0-.708 0L11.5 10.293 13.207 12l-.707.707a.5.5 0 0 0 0 .707l2-2a.5.5 0 0 0 0-.707l-2-2z" />
                         </svg>
                         Login
                     </h1>
                     <div class="user-box">
-             
                         <input type="text" asp-for="Username" required>
                         <label>
                             <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -56,12 +55,12 @@
                         </label>
                     </div>
                     <center>
-                        <a href="#">
+                        <button type="submit">
                             SEND
                             <span></span>
-                        </a>
+                        </button>
                     </center>
-                    <p>Don't have an account yet? <span> Signup </span></p>
+                    <p>Don't have an account yet? <span> Sign up </span></p>
                 </form>
             </div>
         </div>
@@ -70,24 +69,36 @@
                 var alertMessage = '@ViewBag.AlertMessage';
 
                 if (alertMessage) {
+                    var toastElement = document.getElementById('toast');
                     var toastMessageElement = document.getElementById('toastMessage');
                     var toastTitleElement = document.getElementById('toastTitle');
                     var toastSquare = document.getElementById('toastSquare');
 
                     if (alertMessage.includes("successfully")) {
                         toastTitleElement.innerText = "Complete!";
+                        toastElement.addEventListener('hidden.bs.toast', function () {
+                            window.location.href = '@Url.Action("Index", "Home")';
+                        });
+                        setTimeout(function () {
+                            var toast = new bootstrap.Toast(toastElement);
+                            toast.hide(); // Hide the toast, triggering the redirect in the listener
+                        }, 2500);
                     } else {
                         toastSquare.style.backgroundColor = '#d44343';
                         toastTitleElement.innerText = "Error!";
                     }
 
                     toastMessageElement.innerText = alertMessage;
-
-                    var toastElement = document.getElementById('toast');
                     toastElement.style.display = 'block';
+
                     var toast = new bootstrap.Toast(toastElement);
                     toast.show();
                 }
+
+                document.querySelectorAll('input').forEach(input => {
+                    input.spellcheck = false;
+                });
+
             });
         </script>
     </body>

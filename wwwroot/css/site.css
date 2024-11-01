@@ -69,6 +69,7 @@ header {
 }
 
 .navbar-collapse {
+    margin-left: 150px;
     justify-content: center;
 }
 
