@@ -1,5 +1,42 @@
 ﻿body {
     margin: 0;
+    background: transparent;
+    min-height: 100vh;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.caption {
+    z-index: 10000;
+    position: relative;
+    height: 1.42rem;
+    width: 100vw;
+    background: #3b3b40;
+    color: #dee7e3;
+    font-weight: 300;
+    text-align: center;
+    font-size: 0.75rem;
+    border-bottom: 0.5px groove #a59eab;
+}
+
+#toast {
+    z-index: 90; /* Ensure it's on top */
+    background-color: #f1f1f1; /* Dark background */
+    margin-top: 6rem;
+    border: 1px solid #becac9; /* Highlight border */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Darker shadow */
+}
+
+.toast-header {
+    border-bottom: 1px solid #00cec1; /* Highlight border */
+}
+
+.custom-toast-img {
+    background-color: #51d251; /* Set the background color to green */
+    border-radius: 50%; /* Ensure the image remains rounded */
+    width: 20px; /* Set a width for the image */
+    height: 20px; /* Set a height for the image */
+    object-fit: cover; /* Ensure the image fits well within the rounded shape */
 }
 
 .animation-container {
@@ -15,7 +52,7 @@
     left: 70%;
     width: 25rem;
     height: 25rem;
-    background: pink;
+    background: rgba(255, 105, 180, 0.7);
     border-radius: 24% 76% 77% 23% / 30% 30% 70% 70%;
     filter: blur(6rem);
     animation: shape1 20s infinite;
@@ -58,7 +95,7 @@
     left: 40%;
     width: 35rem;
     height: 25rem;
-    background: lightblue;
+    background: rgba(173, 216, 230, 0.7);
     border-radius: 73% 27% 77% 23% / 53% 4% 96% 47%;
     filter: blur(12rem);
     animation: shape2 35s infinite;
@@ -99,7 +136,7 @@
     left: 80%;
     width: 25rem;
     height: 25rem;
-    background: lightblue;
+    background: rgba(173, 216, 230, 0.7);
     border-radius: 70% 30% 80% 20% / 42% 25% 75% 58%;
     filter: blur(14rem);
     animation: shape3 35s infinite;
@@ -140,10 +177,10 @@
     left: 70%;
     width: 25rem;
     height: 25rem;
-    background: pink;
+    background: rgba(255, 105, 180, 0.5);
     border-radius: 24% 76% 77% 23% / 30% 30% 70% 70%;
     filter: blur(5rem);
-    // animation: shape1 20s infinite;
+    /* animation: shape1 20s infinite;*/
 }
 
 .shape5 {
@@ -152,10 +189,10 @@
     left: 40%;
     width: 35rem;
     height: 25rem;
-    background: lightyellow;
+    background: rgba(255, 255, 224, 0.5);
     border-radius: 73% 27% 77% 23% / 53% 4% 96% 47%;
     filter: blur(5rem);
-    // animation: shape2 15s infinite;
+    /* animation: shape2 15s infinite;*/
 }
 
 .shape6 {
@@ -164,8 +201,153 @@
     left: 80%;
     width: 25rem;
     height: 25rem;
-    background: lightblue;
+    background: rgba(173, 216, 230, 0.5);
     border-radius: 70% 30% 80% 20% / 42% 25% 75% 58%;
     filter: blur(5rem);
-    // animation: shape3 30s infinite;
+    /*animation: shape3 30s infinite;*/
+}
+
+.login-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: #14151a;
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.8);
+    border-radius: 10px;
+}
+
+.login-box h1 {
+    position: relative;
+    color: white;
+    text-align: center;
+    font-size: 1.8rem;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.login-box h1 svg {
+    margin-top: -6px;
+    margin-right: 5px;
+}
+
+.login-box .user-box {
+    position: relative;
+}
+
+.login-box svg {
+    color: white;
+}
+.login-box .user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.login-box .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #bdb8b8;
+    font-size: 12px;
+}
+
+.login-box form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+}
+
+    .login-box a:hover {
+        background: #14cbbf;
+        color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #14cbbf, 0 0 25px #14cbbf, 0 0 50px #14cbbf, 0 0 100px #14cbbf;
+    }
+
+.login-box a span {
+    position: absolute;
+    display: block;
+}
+
+@keyframes btn-anim1 {
+    0% {
+        left: -100%;
+    }
+
+    50%,100% {
+        left: 100%;
+    }
+}
+
+.login-box a span:nth-child(1) {
+    bottom: 2px;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ffef);
+    animation: btn-anim1 2s linear infinite;
+}
+
+.login-box p {
+    color: #76787a;
+    text-align: center;
+    font-size: 0.7rem;
+    margin-top: 20px;
+}
+
+.login-box p span {
+    color: #d0d9e1;
+    padding: 5px;
+    padding-bottom: 2px;
+    transition: all .5s;
+}
+
+/*accidental border at bottom*/
+.login-box::after {
+    content: ''; /* Necessary for a pseudo-element */
+    position: absolute; /* Position relative to the span */
+    left: 10%; /* Start 10% from the left */
+    right: 10%; /* End 10% from the right */
+    bottom: 0; /* Position it at the bottom of the span */
+    height: 1px; /* Height of the border */
+    background-color: #d0d9e1; /* Color of the border */
+    transition: all 0.5s; /* Transition for hover effects */
+}
+
+.login-box p span:hover {
+    cursor: pointer;
+    border-radius: 5px;
+    /* Gradient for the glow */
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 1)) /* Soft white glow */
+    drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)) /* Medium white glow */
+    drop-shadow(0 0 30px rgba(255, 255, 255, 0.6)); /* Strong white glow */
 }

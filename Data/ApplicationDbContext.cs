@@ -9,6 +9,7 @@ namespace StudentPortal.Data
         { 
         }
 
+        public DbSet<User> Users { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<SubjectPreq> Prerequisites { get; set; }
