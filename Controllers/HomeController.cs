@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentPortal.Data;
 using StudentPortal.Models;
 using StudentPortal.Models.Entities;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace StudentPortal.Controllers
 {
@@ -35,6 +38,7 @@ namespace StudentPortal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(User user)
         {
             if (ModelState.IsValid)
@@ -44,6 +48,16 @@ namespace StudentPortal.Controllers
 
                 if (existingUser != null)
                 {
+                    var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, existingUser.Username),
+                            new Claim(ClaimTypes.NameIdentifier, existingUser.Id.ToString())
+                        };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
                     ViewBag.AlertMessage = "Logged in successfully! Redirecting to Home Page..";
                     ModelState.Clear();
                     return View();
@@ -59,6 +73,16 @@ namespace StudentPortal.Controllers
         public IActionResult Signup()
         {
             return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
         }
 
 
