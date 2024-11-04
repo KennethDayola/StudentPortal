@@ -228,6 +228,33 @@
     border-radius: 10px;
 }
 
+.signup-box {
+    width: 450px;
+}
+
+.white-bg {
+    background: white;
+}
+
+.black-font {
+    color: black !important;
+}
+
+.black-border-bottom {
+    border-bottom: 1px solid black !important;
+}
+
+.account-box h2 {
+    font-size: 0.9rem;
+    color: #414242;
+    text-align: center;
+    font-weight: 300;
+}
+
+.display-block {
+    display: block;
+}
+
 .account-box h1 {
     position: relative;
     color: white;
@@ -249,6 +276,7 @@
 .account-box svg {
     color: white;
 }
+
 .account-box .user-box input {
     width: 100%;
     padding: 10px 0;
@@ -261,30 +289,48 @@
     background: transparent;
 }
 
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px #14151a inset; 
+.login-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #14151a inset;
     -webkit-text-fill-color: #fff !important;
 }
 
-input:-webkit-autofill:focus {
+.login-input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 30px #14151a inset;
     -webkit-text-fill-color: #fff !important;
 }
 
 /* For Firefox */
-input:-moz-autofill {
+.login-input:-moz-autofill {
     background-color: #14151a !important; /* Match the background color */
     color: #fff !important; /* Match the text color */
 }
 
 /* General autofill styles (not supported by all browsers) */
-input:autofill {
+.login-input:autofill {
     background-color: #14151a !important; /* Match the background color */
     color: #fff !important; /* Match the text color */
 }
 
-::-ms-reveal {
+.login-input::-ms-reveal {
     filter: invert(100%);
+}
+
+.signup-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+.signup-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+/* For Firefox */
+.signup-input:-moz-autofill {
+    background-color: white !important; /* Match the background color */
+}
+
+/* General autofill styles (not supported by all browsers) */
+.signup-input:autofill {
+    background-color: white !important; /* Match the background color */
 }
 
 .account-box .user-box label {
@@ -353,6 +399,45 @@ input:autofill {
     animation: btn-anim1 2s linear infinite;
 }
 
+.signup-btn {
+    color: black !important;
+}
+
+.signup-btn:hover {
+    color: white !important;
+    box-shadow: 0 0 5px #0fe, 0 0 25px #0fe, 0 0 50px #0fe, 0 0 100px #0fe;
+}
+
+.signup-btn:hover span:nth-child(1) {
+    background: none !important;
+}
+
+.signup-btn span:nth-child(1) {
+    background: linear-gradient(90deg, transparent, #081918) !important;
+}
+
+.signup-p {
+    color: #81878d !important;
+}
+
+.signup-p span {
+    color: #1d2124 !important; /* Dark color for text */
+}
+
+.signup-link {
+    text-decoration-color: #1d2124;
+}
+
+.signup-p span:hover > .signup-link {
+    text-decoration-color: #484a4b;
+}
+
+.signup-p span:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 30px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 50px rgba(0, 0, 0, 0.2)) !important;
+    color: #484a4b !important; /* Optionally lighten the font color for more contrast */
+}
+
 .account-box p {
     color: #76787a;
     text-align: center;
@@ -365,6 +450,10 @@ input:autofill {
     padding: 5px;
     padding-bottom: 2px;
     transition: all .5s;
+}
+
+.login-link {
+    text-decoration-color: #d0d9e1;
 }
 
 .account-box::after {

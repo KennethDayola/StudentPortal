@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/addEnrollment.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+    <body>
+        <div class="caption">
+            Your academic hub | Connect with resources, manage your studies, and stay on top of important updates.
+        </div>
+        <div class="bg">
+            <img class="bg-pic" src="https://i.imgur.com/kCquuKf.jpeg">
+            <div class="stud-info-box">
+                <img class="three-dots-icon" src="https://imgur.com/9GF3tPx.png">
+                <div class="stud-info-wrapper">
+                    <h1>Subject Enrollment</h1>
+                    <h2>Let’s Start with Your ID Number</h2>
+                    
+                    <form>
+                        <div class="mt-3">
+                            <div class="row mt-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="form-label">ID Number</label>
+                                </div>
+                                <div class="col text-end">
+                                    <div class="loader">
+                                        <span class="bar"></span>
+                                        <span class="bar"></span>
+                                        <span class="bar"></span>
+                                    </div>
+                                    <span id="idNumberMessage" class="form-label label-message"></span>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Enter your ID Number" required maxlength="15" id="idNumber" />
+                        </div>
+                        <div class="hidden-section">
+                            <div class="mt-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control read-only" readonly />
+                            </div>
+                            <div class="row mt-3 small-margin-bottom">
+                                <div class="col-md-6">
+                                    <label class="form-label">Course</label>
+                                    <input type="text" class="form-control read-only" readonly />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Year</label>
+                                    <input type="text" class="form-control read-only" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="find-btn" onclick="revealHiddenSection()">SUBMIT</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="~/js/addEnrollment.js"></script>
+    </body>
+</html>

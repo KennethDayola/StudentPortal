@@ -65,7 +65,7 @@ namespace StudentPortal.Controllers
 				}
 			}
             ModelState.Clear();
-			ViewBag.AlertMessage = "You have been successfully enrolled!";
+			ViewBag.AlertMessage = "You have been successfully registered!";
 			return View();
 		}
 

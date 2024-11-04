@@ -411,21 +411,24 @@ document.querySelector(".intro-btn1").addEventListener("click", function () {
 });
 
 document.querySelector(".intro-btn2").addEventListener("click", function () {
-    const firstCheckbox = document.querySelector('#image-track .image-checkbox');
-    const transformValue = getTransformX(track);
+    const isAuthenticated = document.getElementById("IsAuthenticated").value;
+    if (isAuthenticated) {
+        const firstCheckbox = document.querySelector('#image-track .image-checkbox');
+        const transformValue = getTransformX(track);
 
-    let duration = 0;
+        let duration = 0;
 
-    if (firstCheckbox) {
-        if (transformValue != 0) {
-            animateTrack(100, 350)
-            duration = 350;
+        if (firstCheckbox) {
+            if (transformValue != 0) {
+                animateTrack(100, 350)
+                duration = 350;
+            }
+
+            setTimeout(() => {
+                firstCheckbox.checked = true;
+                firstCheckbox.dispatchEvent(new Event('change'));
+            }, duration);
         }
-
-        setTimeout(() => {
-            firstCheckbox.checked = true;
-            firstCheckbox.dispatchEvent(new Event('change'));
-        }, duration);
     }
 });
 

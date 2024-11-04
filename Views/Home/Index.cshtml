@@ -129,8 +129,16 @@
         </div>
         <div class="intro-btn">
 
+            <input type="hidden" id="IsAuthenticated" value="@User.Identity.IsAuthenticated">
             <button class="intro-btn1">LEARN MORE</button>
-            <button class="intro-btn2">GET STARTED</button>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <button class="intro-btn2" onclick="location.href='@Url.Action("Signup", "Home")'" type="button">GET STARTED</button>
+            }
+            else
+            {
+                <button class="intro-btn2">GET STARTED</button>
+            }
         </div>
     </div>
     <div class="featured-section">

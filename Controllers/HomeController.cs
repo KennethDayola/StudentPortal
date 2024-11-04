@@ -39,12 +39,12 @@ namespace StudentPortal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(User user)
+        public async Task<IActionResult> Login(User viewModel)
         {
             if (ModelState.IsValid)
             {
                 var existingUser = await dbContext.Users
-                    .FirstOrDefaultAsync(u => u.Username == user.Username && u.Password == user.Password);
+                    .FirstOrDefaultAsync(u => u.Username == viewModel.Username && u.Password == viewModel.Password);
 
                 if (existingUser != null)
                 {
@@ -58,7 +58,7 @@ namespace StudentPortal.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                    ViewBag.AlertMessage = "Logged in successfully! Redirecting to Home Page..";
+                    ViewBag.AlertMessage = "Logged in successfully! Redirecting to Home Page...";
                     ModelState.Clear();
                     return View();
                 }
@@ -66,7 +66,7 @@ namespace StudentPortal.Controllers
                 ViewBag.AlertMessage = "Invalid Username or Password."; 
             }
 
-            return View(user);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -75,6 +75,30 @@ namespace StudentPortal.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Signup (User viewModel)
+        {
+            var existingUsername = await dbContext.Users
+                   .FirstOrDefaultAsync(u => u.Username == viewModel.Username);
+            if (existingUsername != null)
+            {
+                ViewBag.AlertMessage = "Username already exists!";
+                return View(viewModel);
+            }
+            
+            var user = new User { 
+                Username = viewModel.Username,
+                Password = viewModel.Password 
+            };
+
+            await dbContext.Users.AddAsync(user);
+            await dbContext.SaveChangesAsync();
+
+            ModelState.Clear();
+            ViewBag.AlertMessage = "Account successfully registered! Redirecting to Login Page...";
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -85,6 +109,11 @@ namespace StudentPortal.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult AccessDenied()
+        {
+            TempData["UnauthorizedMessage"] = "To access other subpages, you need to be registered and logged in.";
+            return RedirectToAction("Signup", "Home");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

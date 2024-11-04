@@ -1,0 +1,176 @@
+﻿body {
+    width: 100vw;
+    overflow-x: hidden;
+    height: 100vh;
+    overflow-y: hidden;
+    background: #f5f5f5;
+}
+
+html {
+    background: transparent;
+}
+
+.caption {
+    z-index: 10000;
+    position: fixed;
+    height: 1.42rem;
+    width: 100vw;
+    background: #3b3b40;
+    color: #dee7e3;
+    font-weight: 300;
+    text-align: center;
+    font-size: 0.75rem;
+    border-bottom: 0.5px groove #a59eab;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.bg {
+    width: 100vw;
+    height: 100vh;
+}
+
+.bg-pic {
+    position: fixed;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    filter: brightness(0.275) blur(2px);
+    transform: scale(1.05);
+}
+
+.stud-info-box {
+    position: relative;
+    background-color: white;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-60%);
+    transition: all ease .5s;
+}
+
+.stud-info-wrapper {
+    position: relative;
+    padding-top: 70px;
+    padding-bottom: 35px;
+    width: 85%;
+    margin: auto;
+}
+
+.stud-info-box h1 {
+    font-size: 1.8rem;
+    font-weight: 550;
+}
+
+.stud-info-box h2 {
+    font-size: 1rem;
+}
+
+.three-dots-icon {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 50px;
+    height: auto;
+}
+
+.hider {
+    position: relative;
+    background: white;
+    padding-bottom: 50px;
+}
+
+.hidden-section {
+    height: 0;
+    overflow: hidden;
+    transition: height .5s ease-in-out;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    display: block; /* Ensure the label takes the full width */
+    text-align: left; /* Center the text */
+    width: 100%;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.label-message {
+    float: right;
+    text-align: right;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+}
+
+.loader {
+    display: flex;
+    align-items: center;
+}
+
+.bar {
+    display: inline-block;
+    width: 3px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 10px;
+    animation: scale-up4 1s linear infinite;
+}
+
+.bar:nth-child(2) {
+    height: 35px;
+    margin: 0 5px;
+    animation-delay: .25s;
+}
+
+.bar:nth-child(3) {
+    animation-delay: .5s;
+}
+
+@keyframes scale-up4 {
+    20% {
+        background-color: #ffff;
+        transform: scaleY(1.5);
+    }
+
+    40% {
+        transform: scaleY(1);
+    }
+}
+
+.read-only {
+    height: 2rem;
+}
+
+.small-margin-bottom {
+    margin-bottom: 10px;
+}
+
+.find-btn {
+    position: relative;
+    transform: translateX(-50%);
+    margin-top: 20px;
+    left: 50%;
+    width: 97%;
+    background-color: #0e0e0e;
+    border-radius: 0;
+    box-shadow: none;
+    color: #fff;
+    padding: 12px 20px;
+    margin-left: 0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 250ms;
+    border: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.find-btn:hover {
+    background-color: #333;
+    transform: translateX(-50%) scale(1.02);
+}

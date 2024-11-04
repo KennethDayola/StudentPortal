@@ -13,7 +13,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("StudentPortal"))
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Home/Login"; // Redirect to this path if not authenticated
+        options.LoginPath = "/Home/AccessDenied"; // Redirect to this path if not authenticated
     });
 
 var app = builder.Build();
@@ -36,6 +36,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Login}/{id?}");
+    pattern: "{controller=Enrollment}/{action=Add}/{id?}");
 
 app.Run();
