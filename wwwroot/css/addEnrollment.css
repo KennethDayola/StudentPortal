@@ -46,13 +46,13 @@ html {
     width: 450px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-60%);
+    transform: translate(-50%,-69%);
     transition: all ease .5s;
 }
 
 .stud-info-wrapper {
     position: relative;
-    padding-top: 70px;
+    padding-top: 60px;
     padding-bottom: 35px;
     width: 85%;
     margin: auto;
@@ -75,16 +75,10 @@ html {
     height: auto;
 }
 
-.hider {
-    position: relative;
-    background: white;
-    padding-bottom: 50px;
-}
-
 .hidden-section {
     height: 0;
     overflow: hidden;
-    transition: height .5s ease-in-out;
+    transition: height .7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .form-label {
@@ -100,6 +94,7 @@ html {
 }
 
 .label-message {
+    display: none;
     float: right;
     text-align: right;
     font-size: 0.6rem;
@@ -107,21 +102,26 @@ html {
 }
 
 .loader {
-    display: flex;
+    right: 0;
+    text-align: right;
+    float: right;
+    display: none;
     align-items: center;
+    margin-right: 15px;
+    margin-top: -5px;
 }
 
 .bar {
     display: inline-block;
     width: 3px;
-    height: 20px;
-    background-color: rgba(255, 255, 255, .5);
+    height: 7px;
+    background-color: #7f000000;
     border-radius: 10px;
     animation: scale-up4 1s linear infinite;
 }
 
 .bar:nth-child(2) {
-    height: 35px;
+    height: 17px;
     margin: 0 5px;
     animation-delay: .25s;
 }
@@ -132,7 +132,7 @@ html {
 
 @keyframes scale-up4 {
     20% {
-        background-color: #ffff;
+        background-color: #252626;
         transform: scaleY(1.5);
     }
 

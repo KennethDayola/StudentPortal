@@ -18,41 +18,39 @@
                     <h1>Subject Enrollment</h1>
                     <h2>Let’s Start with Your ID Number</h2>
                     
-                    <form>
+                    <div class="mt-3">
+                        <div class="row mt-3 align-items-center">
+                            <div class="col-auto">
+                                <label class="form-label">ID Number</label>
+                            </div>
+                            <div class="col text-end">
+                                <div class="loader">
+                                    <span class="bar"></span>
+                                    <span class="bar"></span>
+                                    <span class="bar"></span>
+                                </div>
+                                <span id="idNumberMessage" class="form-label label-message"></span>
+                            </div>
+                        </div>
+                        <input type="number" class="form-control" placeholder="Enter your ID Number" required maxlength="15" id="idNumber" />
+                    </div>
+                    <div class="hidden-section">
                         <div class="mt-3">
-                            <div class="row mt-3 align-items-center">
-                                <div class="col-auto">
-                                    <label class="form-label">ID Number</label>
-                                </div>
-                                <div class="col text-end">
-                                    <div class="loader">
-                                        <span class="bar"></span>
-                                        <span class="bar"></span>
-                                        <span class="bar"></span>
-                                    </div>
-                                    <span id="idNumberMessage" class="form-label label-message"></span>
-                                </div>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Enter your ID Number" required maxlength="15" id="idNumber" />
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control read-only" readonly id="studentName" />
                         </div>
-                        <div class="hidden-section">
-                            <div class="mt-3">
-                                <label class="form-label">Name</label>
-                                <input type="text" class="form-control read-only" readonly />
+                        <div class="row mt-3 small-margin-bottom">
+                            <div class="col-md-6">
+                                <label class="form-label">Course</label>
+                                <input type="text" class="form-control read-only" readonly id="studentCourse" />
                             </div>
-                            <div class="row mt-3 small-margin-bottom">
-                                <div class="col-md-6">
-                                    <label class="form-label">Course</label>
-                                    <input type="text" class="form-control read-only" readonly />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Year</label>
-                                    <input type="text" class="form-control read-only" readonly />
-                                </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Year</label>
+                                <input type="text" class="form-control read-only" readonly id="studentYear" />
                             </div>
                         </div>
-                        <button type="submit" class="find-btn" onclick="revealHiddenSection()">SUBMIT</button>
-                    </form>
+                    </div>
+                    <button type="button" class="find-btn" onclick="validateAndSubmit()">SUBMIT</button>
                 </div>
             </div>
         </div>

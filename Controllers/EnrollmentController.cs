@@ -26,9 +26,9 @@ namespace StudentPortal.Controllers
                .Where(s => s.Id == Id)
                .Select(s => new
                {
-                   Name = $"{s.FirstName} " +
-                       $"{(string.IsNullOrEmpty(s.MiddleName) || s.MiddleName == "-" ? "None" : s.MiddleName)} " +
-                       $"{s.LastName}".Trim(),
+                   Name = string.IsNullOrWhiteSpace(s.MiddleName) || s.MiddleName == "-"
+                            ? $"{s.FirstName} {s.LastName}"
+                            : $"{s.FirstName} {s.MiddleName} {s.LastName}",
                    s.Course,
                    s.Year
                })
@@ -39,7 +39,7 @@ namespace StudentPortal.Controllers
                 return Json(new { success = false, message = "ID number not found" });
             }
 
-            return Json(new { success = true, message = "ID number found" , data = student });
+            return Json(new { success = true, message = "ID number found" , dataObject = student });
         }
     }
 }

@@ -13,7 +13,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("StudentPortal"))
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Home/AccessDenied"; // Redirect to this path if not authenticated
+        options.LoginPath = "/Home/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromDays(30); 
+        options.SlidingExpiration = true;
     });
 
 var app = builder.Build();
