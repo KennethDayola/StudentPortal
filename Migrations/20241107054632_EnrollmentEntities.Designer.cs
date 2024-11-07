@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentPortal.Data;
 
@@ -11,9 +12,11 @@ using StudentPortal.Data;
 namespace StudentPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241107054632_EnrollmentEntities")]
+    partial class EnrollmentEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,11 +53,8 @@ namespace StudentPortal.Migrations
 
             modelBuilder.Entity("StudentPortal.Models.Entities.EnrollmentHeader", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("StudId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Encoder")
                         .IsRequired()
@@ -74,15 +74,10 @@ namespace StudentPortal.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TotalUnits")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
+                    b.HasKey("StudId");
 
                     b.ToTable("EnrollmentHeaders");
                 });
@@ -99,6 +94,9 @@ namespace StudentPortal.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("EnrollmentHeaderStudId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -128,6 +126,8 @@ namespace StudentPortal.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentHeaderStudId");
 
                     b.ToTable("Students");
                 });
@@ -298,12 +298,23 @@ namespace StudentPortal.Migrations
             modelBuilder.Entity("StudentPortal.Models.Entities.EnrollmentHeader", b =>
                 {
                     b.HasOne("StudentPortal.Models.Entities.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne()
+                        .HasForeignKey("StudentPortal.Models.Entities.EnrollmentHeader", "StudId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("StudentPortal.Models.Entities.Student", b =>
+                {
+                    b.HasOne("StudentPortal.Models.Entities.EnrollmentHeader", "EnrollmentHeader")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentHeaderStudId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EnrollmentHeader");
                 });
 
             modelBuilder.Entity("StudentPortal.Models.Entities.SubjectPreq", b =>

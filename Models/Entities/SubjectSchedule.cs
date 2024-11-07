@@ -38,6 +38,8 @@ namespace StudentPortal.Models.Entities
         public required int Year { get; set; } 
 
         [ForeignKey("SubjectCode")]
-        public Subject Subject { get; set; } 
+        public Subject Subject { get; set; }
+
+        public ICollection<EnrollmentDetail> EnrollmentDetails { get; set; }
     }
 }
