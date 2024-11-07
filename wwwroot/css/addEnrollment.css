@@ -1,8 +1,7 @@
 ﻿body {
     width: 100vw;
     overflow-x: hidden;
-    height: 100vh;
-    overflow-y: hidden;
+    overflow-y: auto;
     background: #f5f5f5;
 }
 
@@ -39,15 +38,16 @@ html {
 }
 
 .stud-info-box {
-    position: relative;
+    position: absolute;
     background-color: white;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
-    width: 450px;
-    top: 50%;
+    width: 29%;
+    top: 11rem;
     left: 50%;
-    transform: translate(-50%,-69%);
-    transition: all ease .5s;
+    transform: translateX(-50%);
+    transition: all ease .6s;
+    overflow-y: auto;
 }
 
 .stud-info-wrapper {
@@ -78,7 +78,7 @@ html {
 .hidden-section {
     height: 0;
     overflow: hidden;
-    transition: height .7s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: height .7s ease-in-out;
 }
 
 .form-label {
@@ -149,28 +149,368 @@ html {
     margin-bottom: 10px;
 }
 
-.find-btn {
+.btn-container {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.proceed-label {
+    display: none;
+    position: absolute;
+    margin-top: 29.5px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    z-index: 1;
+    right: 5vw;
+    transition: opacity 0.4s ease; /* Smooth transition for opacity */
+}
+
+.proceed-label.fade-out {
+    animation: fadeOut 0.4s forwards;
+}
+
+.proceed-label.fade-in {
+    animation: fadeIn 0.4s forwards;
+}
+
+.left-svg {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translate(100px,-50%);
+    margin-left: -8px;
+    transition: transform .3s ease-out;
+}
+
+.stud-info-btn {
     position: relative;
-    transform: translateX(-50%);
+    z-index: 5;
     margin-top: 20px;
     left: 50%;
+    transform: translateX(-50%); /* Start centered */
     width: 97%;
     background-color: #0e0e0e;
-    border-radius: 0;
+    border-radius: 10px;
     box-shadow: none;
     color: #fff;
     padding: 12px 20px;
-    margin-left: 0;
-    border-radius: 10px;
     font-size: 16px;
-    transition: all 250ms;
+    transition: all 0.7s cubic-bezier(0.68, -0.33, 0.27, 1.33);
     border: none;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    overflow: hidden;
 }
 
-.find-btn:hover {
+.stud-info-btn:hover {
     background-color: #333;
-    transform: translateX(-50%) scale(1.02);
+    transform: translateX(-50%) scale(1.02); /* Scale effect on hover */
+}
+
+#studBtnSpan {
+    position: relative; /* Make span relative to the button */
+    display: inline-block;
+    transition: transform 0.5s ease; /* Smooth transition for transform */
+}
+
+.stud-info-btn.transition-state {
+    width: 50px; /* Example: width equal to the height */
+    border-radius: 50%; /* Make it circular */
+    transform: translateX(-110%); /* Move it to the right */
+    left: 100%; /* Adjust button alignment */
+    right: 20px; /* Align to the right */
+}
+
+.stud-info-btn.transition-state:hover {
+    transform: translateX(-110%) scale(1.1); /* Scale slightly larger in transition state */
+    background-color: #555; /* Change color on hover in transition state */
+}
+
+#studBtnSpan.transition-span {
+    transform: translateX(-100px); /* Move span left by some value when in transition */
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition */
+}
+
+.less-opacity > *:not(.btn-container) {
+    opacity: 0.8;
+}
+
+.enrollment-box {
+    position: absolute;
+    background-color: white;
+    top: 4rem;
+    min-height: 60vh;
+    height: auto;
+    width: 60%;
+    left: 37%;
+    border-radius: 10px;
+    padding-bottom: 50px;
+    margin-bottom: 50px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(110%);
+    overflow-y: auto;
+    transition: transform .85s ease;
+}
+
+.enrollment-wrapper {
+    /*overflow-y: auto;*/
+    padding-top: 50px;  
+    flex-grow: 1;
+    width: 85%;
+    margin: 0 auto;
+}
+
+.enrollment-wrapper h1{
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.enrollment-icon {
+    margin-top: -5px;
+    margin-right: 5px;
+}
+
+.enrollment-wrapper h2{
+    text-align: center;
+    margin-top: -2px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-left: 1px;
+}
+
+
+.enrollment-wrapper .d-flex {
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.no-margin-top {
+    margin-top: 0px !important;
+}
+
+.enrollment-wrapper .form-label {
+  
+}
+
+.longer-column {
+    width: 60%;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.enrollment-wrapper .form-control {
+    margin-top: -5px;
+}
+
+.edp-textbox {
+    margin-top: -5px;
+    width: 100%;
+    height: 2rem;
+}
+
+.units-div {
+    padding-top: 5px;
+}
+
+.small-label {
+    margin-left: 20px;
+    font-size: 0.8rem;
+}
+
+.units-textbox {
+    height: 1.8rem;
+    width: 2rem;
+}
+
+.enrollment-wrapper .add-btn {
+    margin-left: 20px;
+    margin-top: 15px
+}
+
+.add-btn {
+    position: relative;
+    width: 100px; /* Keep the width the same */
+    height: 32px; /* Make the height smaller */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: -10px !important;
+    border: 1px solid #4b8c53; /* Muted, less saturated green */
+    background-color: #4c9c64; /* Muted, less saturated green */
+}
+
+.add-btn, .add-btn__icon, .add-btn__text {
+    transition: all 0.3s;
+}
+
+.add-btn .add-btn__text {
+    margin-top: 2px;
+    transform: translateX(17px);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.add-btn .add-btn__icon {
+    position: absolute;
+    transform: translateX(70px);
+    height: 100%;
+    width: 39px;
+    background-color: #4b8c53; /* Muted icon background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-btn .svg {
+    width: 30px;
+    stroke: #fff;
+}
+
+.add-btn:hover {
+    background-color: #4b8c53; /* Slightly darker but still muted green */
+}
+
+.add-btn:hover .add-btn__text {
+    color: transparent;
+}
+
+.add-btn:hover .add-btn__icon {
+    width: 99px;
+    transform: translateX(0);
+}
+
+.add-btn:hover .svg {
+    transform: translateX(-3px);
+}
+
+.add-btn:active .add-btn__icon {
+    background-color: #397a45; /* Even darker muted green on active */
+}
+
+.add-btn:active {
+    border: 1px solid #397a45; /* Darker border on active */
+}
+
+.table-container {
+    position: relative;
+    margin-top: 20px;
+    min-height: 17rem;
+    width: 100%;
+    overflow: auto; /* Enable vertical scrolling */
+    border: 1px solid #ddd; /* Optional: Add a border around the table for better visibility */
+    margin-bottom: -8px;
+}
+
+/* Styling for the table */
+.enrollment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 0.85rem; /* Smaller font size for the table */
+    background-color: #f9f9f9;
+}
+
+    /* Styling for the table header */
+    .enrollment-table thead {
+        background-color: #d3d3d3; /* Gray background for the header */
+        color: #333; /* Dark text color for better contrast */
+        position: sticky; /* Sticky header */
+        top: 0;
+        z-index: 1;
+    }
+
+    /* Styling for table header and cell padding */
+    .enrollment-table th, .enrollment-table td {
+        padding: 8px; /* Reduced padding for smaller rows */
+        border: 1px solid #ddd;
+    }
+
+    /* Header cell style */
+    .enrollment-table th {
+        font-weight: 600;
+        text-align: center;
+    }
+
+    /* Row styling */
+    .enrollment-table tbody tr {
+        transition: background-color 0.3s ease;
+    }
+    
+        /* Hover effect for rows */
+        .enrollment-table tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+/* Placeholder row */
+.placeholder-row {
+    color: #999;
+    text-align: center;
+    font-style: italic;
+}
+
+.placeholder-row td {
+    text-align: center;
+    padding: 10px; /* Adjusted padding */
+    color: #888;
+}
+
+.enrollment-bottom {
+    position: relative;
+    white-space: nowrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.year-div {
+    margin-left: 100px;
+}
+
+.encoded-div {
+    margin-top: 5px;
+    margin-left: 50px;
+}
+
+.small-textbox {
+    height: 1.8rem;
+    width: 100%;
+}
+
+.enrollment-save-btn {
+    position: relative;
+    width: 25%;
+    transform: none;
+    left: auto;
+    float: right;
+}
+
+.enrollment-save-btn:hover {
+    transform: scale(1.05);
 }
