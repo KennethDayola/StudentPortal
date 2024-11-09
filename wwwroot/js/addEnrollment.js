@@ -21,7 +21,7 @@ function studButtonFunction() {
     const enrollmentBox = $('.enrollment-box');
 
     if (!isIdValidated) {
-        validateAndSubmit();
+        validateIdAndSubmit();
     }
     else if (confirmedStudInfo) {
         toggleButtonDesign("Transition");
@@ -115,11 +115,39 @@ function toggleButtonDesign(task) {
     }
 }
 
+let alertMessage = $('#alertMessage').val();
+function displayToast(toastMessage) {
+    if (toastMessage) {
+        alertMessage = toastMessage;
+    }
+    if (alertMessage) {
+        const toastMessageElement = document.getElementById('toastMessage');
+        const toastTitleElement = document.getElementById('toastTitle');
+        const toastSquare = document.getElementById('toastSquare');
+
+        if (alertMessage.includes("successfully")) {
+            toastTitleElement.innerText = "Complete!";
+        } else {
+            toastSquare.style.backgroundColor = '#d12525';
+            toastTitleElement.innerText = "Error!";
+        }
+
+        toastMessageElement.innerText = alertMessage;
+
+        const toastElement = document.getElementById('toast');
+        toastElement.style.display = 'block';
+        const toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    }
+}
+
 let isIdValidated = false;
-function validateAndSubmit() {
+function validateIdAndSubmit() {
     const idNumber = $('#idNumber').val();
     const loader = $('.loader');
     const idNumberMessage = $('#idNumberMessage');
+
+    $('#hiddenIdInput').val(idNumber);
 
     idNumberMessage.hide();
     loader.css('display', 'flex');
@@ -153,10 +181,190 @@ function validateAndSubmit() {
     });
 }
 
+function edpCodeAddition() {
+    var edpCode = $("#edpCode").val().trim();
+
+    $.ajax({
+        url: '/Enrollment/ValidateEDPCode',
+        data: { edpCode: edpCode },
+        type: 'GET',
+        success: function (response) {
+            if (response.success) {
+                var existsInTable = false;
+                $(".enrollment-table tbody tr").each(function () {
+                    var existingEDPCode = $(this).find("td:nth-child(1)").text().trim();
+                    if (existingEDPCode === edpCode) {
+                        existsInTable = true;
+                        return false;
+                    }
+                });
+                if (existsInTable) {
+                    displayToast("EDP Code already in the list!");
+                    return;
+                }
+
+                if (response.dataObject.subjectSchedule.classSize >= response.dataObject.subjectSchedule.maxSize) {
+                    displayToast("Current EDP Code already at full!");
+                    return;
+                }
+
+                if (totalUnits + response.dataObject.units >= 27) {
+                    displayToast("Current EDP Code will exceed max units of 27!");
+                    return;
+                }
+
+                var formatTime = function (date) {
+                    var d = new Date(date);
+                    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                };
+
+                var startTime = formatTime(response.dataObject.subjectSchedule.startTime);
+                var endTime = formatTime(response.dataObject.subjectSchedule.endTime);
+                var days = response.dataObject.subjectSchedule.days;
+
+                const parseDays = (days) => {
+                    const tCount = (days.match(/T/g) || []).length;
+                    const hCount = (days.match(/H/g) || []).length;
+
+                    if (tCount === 2 && hCount === 1) {
+                        return ["T", "TH"];  // Tuesday and Thursday
+                    } else if (tCount === 1 && hCount === 1) {
+                        return ["TH"];       // Thursday
+                    } else {
+                        return [...days];    // Treat as separate days (e.g., "MWF")
+                    }
+                };
+
+                var dayArray = parseDays(days);
+
+                var conflictDetected = false;
+                $(".enrollment-table tbody tr").each(function () {
+                    var existingDays = $(this).find("td:nth-child(5)").text().trim();
+                    var existingDayArray = parseDays(existingDays);
+                    var existingStartTime = $(this).find("td:nth-child(3)").text().trim();
+                    var existingEndTime = $(this).find("td:nth-child(4)").text().trim();
+
+                    // Check if any day in the new schedule conflicts with existing days
+                    if (dayArray.some(day => existingDayArray.includes(day))) {
+                        if (timeOverlap(existingStartTime, existingEndTime, startTime, endTime)) {
+                            conflictDetected = true;
+                            return false;
+                        }
+                    }
+                });
+
+                if (conflictDetected) {
+                    displayToast("Time conflict detected for the selected days.");
+                    return;
+                }
+
+                addTableRow(response.dataObject, startTime, endTime, days);
+                
+            } else {
+                displayToast(response.message);
+            }
+        },
+        error: function () {
+            displayToast("An error occurred while validating the EDP code.");
+        }
+    });
+}
+
+let rowIndex = 0;
+function addTableRow(dataObject, startTime, endTime, days) {
+    var newRow = `<tr>
+                    <td>${dataObject.subjectSchedule.edpCode}</td>
+                    <td>${dataObject.subjectSchedule.subjectCode}</td>
+                    <td>${startTime}</td>
+                    <td>${endTime}</td>
+                    <td>${days}</td>
+                    <td>${dataObject.subjectSchedule.room}</td>
+                    <td>${dataObject.units}</td>
+                    <td>
+                        <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a34747" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                        </button>
+                        <input type="hidden" asp-fpr="EnrollmentDetails[${rowIndex}].EDPCode" value="${dataObject.subjectSchedule.edpCode}" />
+                        <input type="hidden" asp-for="EnrollmentDetails[${rowIndex}].SubjectCode" value="${dataObject.subjectSchedule.subjectCode}" />
+                    </td>
+                 </tr>`;
+            
+    // Append the new row to the table
+    $(".enrollment-table tbody").append(newRow);
+    $(".placeholder-row").hide();
+
+    rowIndex++;
+    $(".enrollment-table").on("click", ".delete-btn", function () {
+        $(this).closest("tr").remove();
+        rowIndex--;
+    });
+}
+
+let totalUnits = 0;
+function timeOverlap(startTime1, endTime1, startTime2, endTime2) {
+    var parseTime = function (timeStr) {
+        // Parse AM/PM format
+        var time = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/);
+        var hours = parseInt(time[1], 10);
+        var minutes = parseInt(time[2], 10);
+        var period = time[3];
+
+        // Convert to 24-hour format
+        if (period === "PM" && hours < 12) hours += 12;
+        if (period === "AM" && hours === 12) hours = 0;
+
+        return hours * 60 + minutes;  // Return total minutes since midnight
+    };
+
+    var start1 = parseTime(startTime1);
+    var end1 = parseTime(endTime1);
+    var start2 = parseTime(startTime2);
+    var end2 = parseTime(endTime2);
+
+    return (start1 < end2 && start2 < end1);
+}
+
+document.getElementById("EnrollmentForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    let enrollmentDetails = [];
+
+    document.querySelectorAll(".enrollment-table tbody tr:not(.placeholder-row)").forEach((row) => {
+        // Read the EDPCode from the first column (assumed to be the first 'td')
+        let edpCode = row.querySelector("td:first-child").textContent.trim();
+        let studId = document.getElementById("hiddenIdInput").value;
+
+        // Push only the EDPCode and StudId as plain strings
+        enrollmentDetails.push(edpCode, studId);
+
+        // For debugging
+        console.log("EDPCode:", edpCode);
+        console.log("StudId:", studId);
+    });
+
+    $.ajax({
+        url: '/Enrollment/IsStudentInEdpCode',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(enrollmentDetails),  // Send the flat array
+        success: function (data) {
+            if (!data.success) {
+                displayToast(data.message); // Show duplicate message if found
+            } else {
+                 $('#EnrollmentForm').submit();
+            }
+        },
+        error: function () {
+            console.error("Error occurred during the request.");
+        }
+    });
+});
+
 $(document).ready(function () {
+    displayToast();
     $('#idNumber').on('keydown', function (event) {
         if (event.key === 'Enter') {
-            validateAndSubmit();
+            validateIdAndSubmit();
             event.preventDefault(); 
         }
     });
@@ -171,5 +379,26 @@ $(document).ready(function () {
             $('#studentCourse').val("");
             $('#studentYear').val("");
         }
+    });
+
+    $("#edpCode").on("keydown", function (e) {
+        if (e.key === "Enter") {
+            edpCodeAddition();
+        }
+    });
+
+    var tableObserver = new MutationObserver(function () {
+        totalUnits = $(".enrollment-table tbody tr").toArray().reduce(function (sum, row) {
+            var units = $(row).find("td:nth-child(7)").text().trim();
+            return sum + (parseInt(units) || 0);  // Add the parsed units, default to 0 if invalid
+        }, 0);
+
+        $("#hiddenUnitsInput").val(totalUnits);
+        $("#unitsTextBox").val(totalUnits);
+    });
+
+    // Set up the observer to watch for added or removed rows
+    tableObserver.observe($(".enrollment-table tbody")[0], {
+        childList: true, // Watch for added or removed rows
     });
 });

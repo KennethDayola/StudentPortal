@@ -19,5 +19,6 @@ namespace StudentPortal.Models.Entities
         [StringLength(2)]
         public string Status { get; set; } = "AC";
         public int Year { get; set; }
+        public EnrollmentHeader EnrollmentHeader { get; set; }
     }
 }

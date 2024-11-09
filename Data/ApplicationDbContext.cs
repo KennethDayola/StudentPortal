@@ -39,15 +39,21 @@ namespace StudentPortal.Data
                .HasKey(e => new { e.StudId, e.EDPCode });
 
             modelBuilder.Entity<EnrollmentHeader>()
-               .HasMany(s => s.EnrollmentDetails)
-               .WithOne(sc => sc.EnrollmentHeader)
-               .HasForeignKey(sc => sc.StudId)
-               .OnDelete(DeleteBehavior.NoAction);
+                .HasOne(eh => eh.Student)              // Each EnrollmentHeader has one Student
+                .WithOne(s => s.EnrollmentHeader)      // Each Student has one EnrollmentHeader
+                .HasForeignKey<EnrollmentHeader>(eh => eh.StudId) // StudId is the foreign key in EnrollmentHeader
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EnrollmentHeader>()
+               .HasMany(eh => eh.EnrollmentDetails)
+               .WithOne(ed => ed.EnrollmentHeader)
+               .HasForeignKey(ed => ed.StudId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SubjectSchedule>()
-                .HasMany(s => s.EnrollmentDetails)
-                .WithOne(sc => sc.SubjectSchedule)
-                .HasForeignKey(sc => sc.EDPCode)
+                .HasMany(ss => ss.EnrollmentDetails)
+                .WithOne(ed => ed.SubjectSchedule)
+                .HasForeignKey(ed => ed.EDPCode)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

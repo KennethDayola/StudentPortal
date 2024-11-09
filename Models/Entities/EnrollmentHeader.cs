@@ -6,7 +6,7 @@ namespace StudentPortal.Models.Entities
     public class EnrollmentHeader
     {
         [Key]
-        public int Id { get; set; }
+        public int StudId { get; set; }
 
         public required DateTime EnrollDate { get; set; }
 

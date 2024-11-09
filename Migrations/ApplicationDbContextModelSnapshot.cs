@@ -50,11 +50,8 @@ namespace StudentPortal.Migrations
 
             modelBuilder.Entity("StudentPortal.Models.Entities.EnrollmentHeader", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("StudId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Encoder")
                         .IsRequired()
@@ -74,15 +71,10 @@ namespace StudentPortal.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TotalUnits")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
+                    b.HasKey("StudId");
 
                     b.ToTable("EnrollmentHeaders");
                 });
@@ -287,7 +279,7 @@ namespace StudentPortal.Migrations
                     b.HasOne("StudentPortal.Models.Entities.EnrollmentHeader", "EnrollmentHeader")
                         .WithMany("EnrollmentDetails")
                         .HasForeignKey("StudId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("EnrollmentHeader");
@@ -298,8 +290,8 @@ namespace StudentPortal.Migrations
             modelBuilder.Entity("StudentPortal.Models.Entities.EnrollmentHeader", b =>
                 {
                     b.HasOne("StudentPortal.Models.Entities.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
+                        .WithOne("EnrollmentHeader")
+                        .HasForeignKey("StudentPortal.Models.Entities.EnrollmentHeader", "StudId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -331,6 +323,12 @@ namespace StudentPortal.Migrations
             modelBuilder.Entity("StudentPortal.Models.Entities.EnrollmentHeader", b =>
                 {
                     b.Navigation("EnrollmentDetails");
+                });
+
+            modelBuilder.Entity("StudentPortal.Models.Entities.Student", b =>
+                {
+                    b.Navigation("EnrollmentHeader")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("StudentPortal.Models.Entities.Subject", b =>

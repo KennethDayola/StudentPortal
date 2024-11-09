@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model StudentPortal.Models.Entities.EnrollmentHeader
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -10,6 +12,17 @@
         <div class="caption">
             Your academic hub | Connect with resources, manage your studies, and stay on top of important updates.
         </div>
+
+         <div id="toast" class="toast position-fixed start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+            <div class="toast-header">
+                <span id="toastSquare" class="rounded me-2 custom-toast-img" alt="Toast Image"></span>
+                <strong class="me-auto" id="toastTitle">Complete!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+        <input type="hidden" id="alertMessage" value="@ViewBag.AlertMessage">
+
         <div class="bg">
             <img class="bg-pic" src="https://i.imgur.com/kCquuKf.jpeg">
             <div class="stud-info-box">
@@ -52,7 +65,7 @@
                     </div>
                     <div class="btn-container">
                         <label class="proceed-label">Proceed</label>
-                        <button type="button" class="stud-info-btn" id="studInfoBtn"onclick="studButtonFunction()">
+                        <button type="button" class="black-btn" id="studInfoBtn"onclick="studButtonFunction()">
                             <svg xmlns="http://www.w3.org/2000/svg" class="left-svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6" /></svg>
                             <span id="studBtnSpan">SUBMIT</span>
                         </button>
@@ -68,33 +81,35 @@
                         Choose Your Class Schedule
                     </h1>
                     <h2>Pick from Available Time Slots</h2>
-                    <form>
 
-                        <div class="d-flex">
-                            <div class="flex-2">
-                                <div class="d-flex">
-                                    <div class="me-2"><label class="form-label">EDP Code</label></div>
-                                    <div class="flex-grow-1">
-                                        <input type="text" class="form-control edp-textbox" placeholder="Enter EDP Code">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <button type="button" class="add-btn">
-                                    <span class="add-btn__text">Add</span>
-                                    <span class="add-btn__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
-                                </button>
-                            </div>
-                            <div>
-                                <div class="d-flex units-div">
-                                    <div><label class="form-label small-label">Total Units</label></div>
-                                    <div>
-                                        <input type="text" class="form-control units-textbox" readonly>
-                                    </div>
+                    <div class="d-flex">
+                        <div class="flex-2">
+                            <div class="d-flex">
+                                <div class="me-2"><label class="form-label">EDP Code</label></div>
+                                <div class="flex-grow-1">
+                                    <input type="text" class="form-control edp-textbox" id="edpCode" placeholder="Enter EDP Code">
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <button type="button" class="add-btn" id="edpCodeBtn" onclick="edpCodeAddition()">
+                                <span class="add-btn__text">Add</span>
+                                <span class="add-btn__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+                            </button>
+                        </div>
+                        <div>
+                            <div class="d-flex small-padding-top">
+                                <div><label class="form-label small-label">Total Units</label></div>
+                                <div>
+                                    <input type="text" class="form-control units-textbox" id="unitsTextBox" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <form id="EnrollmentForm" asp-action="Add" asp-controller="Enrollment" method="post">
+                        <input type="hidden" asp-for="StudId" id="hiddenIdInput">
+                        <input type="hidden" asp-for="TotalUnits"  id="hiddenUnitsInput">
                         <div class="table-container">
                             <table class="enrollment-table">
                                 <thead>
@@ -112,27 +127,27 @@
                                 <tbody>
                                     <!-- Placeholder row to indicate items will be added -->
                                     <tr class="placeholder-row">
-                                        <td colspan="8">No items added yet. Enter EDP code to start adding.</td>
+                                        <td colspan="8">No subjects added yet. Enter EDP code to start adding.</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="d-flex no-margin-top enrollment-bottom">
-                            
+
                             <div class="flex-grow-1">
-                                <div class="d-flex units-div">
+                                <div class="d-flex small-padding-top">
                                     <div><label class="form-label small-label">Date</label></div>
                                     <div>
-                                        <input type="date" class="form-control small-textbox" required>
+                                    <input type="date" asp-for="EnrollDate" class="form-control small-textbox" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex-grow-1 year-div">
-                                <div class="d-flex units-div">
+                            <div class="d-flex small-padding-top">
                                     <div><label class="form-label small-label">School Year</label></div>
                                     <div>
-                                        <input type="text" class="form-control small-textbox" required>
+                                        <input type="text" asp-for="SchoolYear" class="form-control small-textbox" required>
                                     </div>
                                 </div>
                             </div>
@@ -140,19 +155,18 @@
 
                         <div class="d-flex">
                             <div class="flex-grow-1 encoded-div">
-                                <div class="d-flex units-div">
+                            <div class="d-flex small-padding-top">
                                     <div><label class="form-label">Encoded By</label></div>
                                     <div>
-                                        <input type="text" class="form-control " required>
+                                        <input type="text" asp-for="Encoder" class="form-control " required>
                                     </div>
                                 </div>
                             </div>
-                            <button class="stud-info-btn enrollment-save-btn">SAVE</button>
+                            <button type="submit" id="enrollmentBtn" class="black-btn enrollment-save-btn">SAVE</button>
                         </div>
-                        
                     </form>
+                    
                 </div>
-                
             </div>
         </div>
         <script src="~/js/addEnrollment.js"></script>

@@ -23,6 +23,26 @@ html {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+#toast {
+    z-index: 90; /* Ensure it's on top */
+    background-color: #f1f1f1; /* Dark background */
+    margin-top: 6rem;
+    border: 1px solid #becac9; /* Highlight border */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Darker shadow */
+}
+
+.toast-header {
+    border-bottom: 1px solid #9c9c9c; /* Highlight border */
+}
+
+.custom-toast-img {
+    background-color: #51d251; /* Set the background color to green */
+    border-radius: 50%; /* Ensure the image remains rounded */
+    width: 20px; /* Set a width for the image */
+    height: 20px; /* Set a height for the image */
+    object-fit: cover; /* Ensure the image fits well within the rounded shape */
+}
+
 .bg {
     width: 100vw;
     height: 100vh;
@@ -202,7 +222,7 @@ html {
     transition: transform .3s ease-out;
 }
 
-.stud-info-btn {
+.black-btn {
     position: relative;
     z-index: 5;
     margin-top: 20px;
@@ -223,7 +243,7 @@ html {
     overflow: hidden;
 }
 
-.stud-info-btn:hover {
+.black-btn:hover {
     background-color: #333;
     transform: translateX(-50%) scale(1.02); /* Scale effect on hover */
 }
@@ -234,7 +254,7 @@ html {
     transition: transform 0.5s ease; /* Smooth transition for transform */
 }
 
-.stud-info-btn.transition-state {
+.black-btn.transition-state {
     width: 50px; /* Example: width equal to the height */
     border-radius: 50%; /* Make it circular */
     transform: translateX(-110%); /* Move it to the right */
@@ -242,7 +262,7 @@ html {
     right: 20px; /* Align to the right */
 }
 
-.stud-info-btn.transition-state:hover {
+.black-btn.transition-state:hover {
     transform: translateX(-110%) scale(1.1); /* Scale slightly larger in transition state */
     background-color: #555; /* Change color on hover in transition state */
 }
@@ -334,7 +354,7 @@ html {
     height: 2rem;
 }
 
-.units-div {
+.small-padding-top {
     padding-top: 5px;
 }
 
@@ -344,8 +364,12 @@ html {
 }
 
 .units-textbox {
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    text-align: center;
     height: 1.8rem;
-    width: 2rem;
+    width: 2.2rem;
 }
 
 .enrollment-wrapper .add-btn {
@@ -501,6 +525,14 @@ html {
 .small-textbox {
     height: 1.8rem;
     width: 100%;
+}
+
+.delete-btn {
+    position: relative;
+    left: 50%;
+    transform: translateX(-60%);
+    border: none;
+    outline: none;
 }
 
 .enrollment-save-btn {
