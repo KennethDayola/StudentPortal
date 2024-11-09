@@ -45,7 +45,6 @@ $(document).ready(function () {
 
         $(this).closest(".dropdown").removeClass("show");
 
-        // Determine if the active view is "Students" or "Subjects"
         let activeView;
 
         if (window.location.pathname.includes("Students")) {
@@ -54,16 +53,15 @@ $(document).ready(function () {
             activeView = "Subjects";
         } else if (window.location.pathname.includes("SubjectSchedules")) {
             activeView = "SubjectSchedules";
+        } else if (window.location.pathname.includes("Enrollment")) {
+            activeView = "Enrollment";
         }
 
-        // Use 'id' for Students and 'code' for Subjects
         const id = $(this).data("id");
 
-        // Perform the AJAX request to load the correct edit form based on the active view
         $.get("/" + activeView + "/Edit/" + id, function (data) {
-            $("#editContent").html(data);  // Populate the modal with the edit form
+            $("#editContent").html(data); 
 
-            // Show the modal and apply animation
             $("#editModal").show();
             $(".modal-content").css("animation", "slideIn 0.5s forwards");
         });

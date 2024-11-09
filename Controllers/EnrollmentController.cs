@@ -15,6 +15,50 @@ namespace StudentPortal.Controllers
             this.dbContext = dbContext;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            var enrollmentHeaders = await dbContext.EnrollmentHeaders.ToListAsync();
+            return View(enrollmentHeaders);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            var enrollmentHeader = await dbContext.EnrollmentHeaders.FindAsync(Id);
+
+            if (enrollmentHeader == null)
+            {
+                return NotFound();
+            }
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("Edit", enrollmentHeader);
+            }
+
+            return View(enrollmentHeader);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Edit(EnrollmentHeader viewModel)
+        {
+            var enrollmentHeader = await dbContext.EnrollmentHeaders.FindAsync(viewModel.StudId);
+
+            if (enrollmentHeader is not null)
+            {
+                enrollmentHeader.EnrollDate = viewModel.EnrollDate;
+                enrollmentHeader.SchoolYear = viewModel.SchoolYear;
+                enrollmentHeader.Encoder = viewModel.Encoder;
+                enrollmentHeader.TotalUnits = viewModel.TotalUnits;
+                enrollmentHeader.Status = viewModel.Status;
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction("List", "Enrollment");
+        }
+
         public IActionResult Add()
         {
             return View();
@@ -23,18 +67,25 @@ namespace StudentPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(EnrollmentHeader enrollmentHeader)
         {
-            enrollmentHeader.Status = "EN"; 
+            enrollmentHeader.Status = "EN";
             foreach (var detail in enrollmentHeader.EnrollmentDetails)
             {
                 detail.Status = "WI";
                 detail.StudId = enrollmentHeader.StudId;
-            }
 
+                var existingSubjectSchedule = await dbContext.SubjectSchedules
+                    .FirstOrDefaultAsync(s => s.EDPCode == detail.EDPCode);
+
+                if (existingSubjectSchedule != null)
+                {
+                    existingSubjectSchedule.ClassSize += 1;
+                    dbContext.SubjectSchedules.Update(existingSubjectSchedule);
+                }
+            }
             using (var transaction = await dbContext.Database.BeginTransactionAsync())
             {
                 try
                 {
-
                     var existingHeader = await dbContext.EnrollmentHeaders
                         .FirstOrDefaultAsync(h => h.StudId == enrollmentHeader.StudId);
 
@@ -53,7 +104,17 @@ namespace StudentPortal.Controllers
                         dbContext.EnrollmentHeaders.Update(existingHeader);
                     }
 
-                    await dbContext.EnrollmentDetails.AddRangeAsync(enrollmentHeader.EnrollmentDetails);
+                    foreach (var detail in enrollmentHeader.EnrollmentDetails)
+                    {
+                        var existingDetail = await dbContext.EnrollmentDetails
+                            .FirstOrDefaultAsync(d => d.StudId == detail.StudId && d.EDPCode == detail.EDPCode);
+
+                        if (existingDetail == null) 
+                        {
+                            await dbContext.EnrollmentDetails.AddAsync(detail);
+                        }
+                    }
+
                     await dbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();
@@ -64,27 +125,43 @@ namespace StudentPortal.Controllers
                 }
                 catch (Exception ex)
                 {
+                    // Log the main exception message
                     Console.WriteLine($"Error occurred: {ex.Message}");
                     Console.WriteLine($"Stack Trace: {ex.StackTrace}");
 
+                    // Log all inner exceptions, if present
+                    Exception inner = ex.InnerException;
+                    while (inner != null)
+                    {
+                        Console.WriteLine("Inner exception: " + inner.Message);
+                        Console.WriteLine("Inner stack trace: " + inner.StackTrace);
+                        inner = inner.InnerException;
+                    }
+
                     await transaction.RollbackAsync();
                     ViewBag.AlertMessage = ex.Message;
-                    return View(); 
+                    ViewBag.ExceptionMsg = ex.Message + (ex.InnerException?.Message ?? "");
+                    return View();
                 }
             }
         }
 
         [HttpPost]
-        public JsonResult IsStudentInEdpCode([FromBody] List<string> enrollmentDetails)
+        public JsonResult ValidateSubjectAdditions([FromBody] List<string> enrollmentDetails)
         {
             bool isDuplicateFound = false;
             List<string> duplicateEntries = new List<string>();
 
-            for (int i = 0; i < enrollmentDetails.Count; i += 2)
+            bool requisiteMet = true;
+            string requisiteMessage = "You do not have the ";
+
+            for (int i = 0; i < enrollmentDetails.Count; i += 3)
             {
                 string edpCode = enrollmentDetails[i];
 
                 int studId = int.Parse(enrollmentDetails[i + 1]);
+
+                string subjCode = enrollmentDetails[i + 2];
 
                 var existingEntry = dbContext.EnrollmentDetails
                     .FirstOrDefault(e => e.StudId == studId && e.EDPCode == edpCode);
@@ -94,11 +171,47 @@ namespace StudentPortal.Controllers
                     isDuplicateFound = true;
                     duplicateEntries.Add(edpCode);
                 }
+
+                var subject = dbContext.Subjects
+                    .Include(s => s.Prerequisites)
+                    .FirstOrDefault(s => s.Code == subjCode);
+
+                if (subject != null && subject.Prerequisites != null)
+                {
+                    if (subject.Prerequisites.Category == "PR")
+                    {
+                        requisiteMet = dbContext.EnrollmentDetails
+                            .Any(e => e.StudId == studId && e.SubjectCode == subject.Prerequisites.PreCode);
+
+                        if (!requisiteMet)
+                        {
+                            requisiteMessage += "Pre-Requisite subject for " + subjCode + ": " + subject.Prerequisites.PreCode;
+                            break;
+                        }
+                    }
+                    else if (subject.Prerequisites.Category == "CR")
+                    {
+                        requisiteMet = enrollmentDetails
+                           .Where((e, index) => index % 3 == 2)
+                           .Any(e => e == subject.Prerequisites.PreCode);
+
+                        if (!requisiteMet)
+                        {
+                            requisiteMessage += "Co-Requisite subject for " + subjCode + ": " + subject.Prerequisites.PreCode;
+                            break;
+                        }
+                    }
+                }
             }
 
             if (isDuplicateFound)
             {
                 return Json(new { success = false, message = "You are already enrolled in the following EDP codes: " + string.Join(", ", duplicateEntries) });
+            }
+
+            if (!requisiteMet)
+            {
+                return Json(new { success = false, message = requisiteMessage });
             }
 
             return Json(new { success = true });
@@ -173,6 +286,23 @@ namespace StudentPortal.Controllers
                     Units = subject.Units
                 }
             });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(EnrollmentHeader viewModel)
+        {
+            var enrollment = await dbContext.EnrollmentHeaders
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.StudId == viewModel.StudId);
+
+            if (enrollment is not null)
+            {
+                dbContext.EnrollmentHeaders.Remove(viewModel);
+                await dbContext.SaveChangesAsync();
+                ViewBag.AlertMessage = "Enrollment record has been successfully deleted!";
+            }
+
+            return RedirectToAction("List", "Enrollment");
         }
     }
 }

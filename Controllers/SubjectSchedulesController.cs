@@ -66,7 +66,7 @@ namespace StudentPortal.Controllers
                 }
             }
             ModelState.Clear();
-			ViewBag.ListAlertMessage = "Schedule successfully added!";
+			ViewBag.AlertMessage = "Schedule successfully added!";
 			return View("AddSubjects");
         }
 
