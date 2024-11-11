@@ -17,7 +17,7 @@
     background-color: rgba(0, 0, 0, 0.7); 
 }
 
-.modal-content {
+.edit-modal-content {
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
@@ -557,6 +557,200 @@ h2 {
     width: 40px;
     opacity: 0.9;
 }
+
+.details-row {
+    position: relative;
+}
+
+.details-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #5283b2;
+    gap: 7px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+/*.details-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 10%;*/ /* Adjust this to center the border within the link */
+    /*width: 80%;*/ /* 80% width for the border */
+    /*border-bottom: 2px solid #3d8cdc;*/ /* Dark blue border */
+    /*transition: width 0.3s ease, left 0.3s ease;
+}*/
+
+.details-link i {
+    margin-right: 6px;
+}
+
+.details-link:hover {
+    color: #3a89d8;
+    transform: scale(1.05);
+}
+
+.details-link:focus {
+    outline: none;
+}
+
+.details-modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    max-width: 90%; /* Adjusts responsively */
+    min-height: 70%;
+    position: absolute;
+    left: 50%;
+    top: 17.5%;
+    overflow-x: auto;
+    border-radius: 20px;
+    transform: translateX(-50%);
+    animation: fadeIn 0.75s forwards;
+}
+
+.details-modal-content .close {
+    top: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+#detailsContent {
+    position: relative;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+}
+
+.blank-pfp {
+    width: 10.5rem;
+    height: 12rem; /* Set equal width and height for a circle */
+    position: relative;
+    padding-top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%; /* Makes it a circle */
+    overflow: hidden; /* Ensures content fits within the circle */
+    object-fit: cover;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+#detailsContent h1, #detailsContent h2 {
+    margin: 0;
+    padding: 0;
+    left: 0;
+    position: relative;
+    text-align: center;
+}
+
+#detailsContent h1 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+#detailsContent span {
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+#detailsContent h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+.details-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details-table th, .details-table td {
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.details-table th {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #333;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ddd;
+}
+
+.details-table td {
+    background-color: #fff;
+    color: #555;
+    border-bottom: 1px solid #eee;
+}
+
+.details-table tr:last-child td {
+    border-bottom: none;
+}
+
+.no-outline {
+    position: relative;
+    outline: none;
+    border: none;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.status-dropdown {
+    background: none;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    appearance: none; /* Removes default dropdown styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    cursor: pointer;
+    padding-right: 20px; /* Extra space for custom arrow */
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+}
+
+    .status-dropdown:focus {
+        border-color: #007bff; /* Slightly highlighted border on focus */
+    }
+
+    .status-dropdown option {
+        background: #fefefe; /* Light background for options */
+        color: #333;
+    }
 
 footer {
     z-index: 100;

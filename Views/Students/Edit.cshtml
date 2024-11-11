@@ -95,7 +95,9 @@
                     return;
                 }
 
-                event.preventDefault(); 
+                event.preventDefault();
+
+                $("#saveButton").prop("disabled", true);
 
                 var formData = $("#editForm").serialize();
 
@@ -108,6 +110,7 @@
                     },
                     error: function (xhr, status, error) {
                         displayToast("An error occurred: " + error );
+                        $("#saveButton").prop("disabled", false);
                     }
                 });
             });

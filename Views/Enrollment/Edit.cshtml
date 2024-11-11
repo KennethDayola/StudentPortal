@@ -86,6 +86,8 @@
 
                 var formData = $("#editForm").serialize();
 
+                $("#saveButton").prop("disabled", true);
+
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("Edit", "Enrollment")",
@@ -95,6 +97,7 @@
                     },
                     error: function (xhr, status, error) {
                         alert("An error occurred: " + error);
+                        $("#saveButton").prop("disabled", false);
                     }
                 });
             });

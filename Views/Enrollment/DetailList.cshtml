@@ -1,0 +1,126 @@
+﻿@model List<StudentPortal.Models.Entities.EnrollmentDetail>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/list.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="detailsContent">
+        <img class="blank-pfp" src="https://imgur.com/q70o8gN.png">
+
+        @if (Model.Any())
+        {
+            var student = Model.First().EnrollmentHeader?.Student;
+            if (student != null)
+            {
+                <div class="detailsheader">
+                    <h2>ID: @student.Id</h2>
+                    <h1>Name: <span>@($"{student.FirstName} {student.MiddleName} {student.LastName}")</span></h1>
+                </div>
+            }
+        }
+
+        <table class="details-table">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>EDP Code</th>
+                    <th>Subject Code</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Days</th>
+                    <th>Units</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model)
+                {
+                    <tr id="row-@detail.EDPCode">
+                        <td>
+                            <select class="status-dropdown"
+                                    data-edp-code="@detail.EDPCode"
+                                    onchange="updateStatus(this)">
+                                <option value="WI" selected="@(detail.Status == "WI")">Withdrawn</option>
+                                <option value="CA" selected="@(detail.Status == "CA")" )>Cancelled</option>
+                            </select>
+                        </td>
+                        <td>@detail.EDPCode</td>
+                        <td>@detail.SubjectCode</td>
+                        <td>@detail.SubjectSchedule.StartTime.ToString("HH:mm")</td>
+                        <td>@detail.SubjectSchedule.EndTime.ToString("HH:mm")</td>
+                        <td>@detail.SubjectSchedule.Days</td>
+                        <td>@detail.SubjectSchedule.Subject.Units</td>
+                        <td>
+                            <button class="no-outline" onclick="deleteEnrollment(@detail.StudId, '@detail.EDPCode',@detail.SubjectSchedule.Subject.Units)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a34747" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script>
+        let hasEdited = false; 
+
+        function deleteEnrollment(studentId, edpCode, units) {
+            if (confirm("Are you sure you want to delete this entry?")) {
+                $.ajax({
+                    url: '@Url.Action("DetailDelete", "Enrollment")',
+                    type: 'POST',
+                    data: { studentId: studentId, edpCode: edpCode, units: units },
+                    success: function () {
+                        hasEdited = true;
+                        $('#row-' + edpCode).remove();
+                    },
+                    error: function () {
+                        alert("Failed to delete the entry. Please try again.");
+                    }
+                });
+            }
+        }
+
+        function updateStatus(selectElement) {
+            var edpCode = $(selectElement).data("edp-code");
+            var newStatus = $(selectElement).val();
+
+            $.ajax({
+                url: '@Url.Action("UpdateStatus", "Enrollment")',
+                type: 'POST',
+                data: {
+                    edpCode: edpCode,
+                    newStatus: newStatus
+                },
+                success: function () {
+                },
+                error: function () {
+                    alert("Failed to update status.");
+                }
+            });
+        }
+
+        $(".details-modal-content .close").click(function () {
+            $(".details-modal-content").css("animation", "fadeOut 0.45s forwards");
+
+            setTimeout(function () {
+                if (hasEdited) {
+                    location.reload();
+                }
+                $("#detailsModal").hide();
+                
+            }, 500);
+        });
+    </script>
+</body>
+</html>

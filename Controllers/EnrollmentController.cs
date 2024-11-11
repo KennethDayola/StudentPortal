@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentPortal.Data;
 using StudentPortal.Models;
 using StudentPortal.Models.Entities;
+using System.Reflection.Emit;
 
 namespace StudentPortal.Controllers
 {
+    [Authorize]
     public class EnrollmentController : Controller
     {
         private readonly ApplicationDbContext dbContext;
@@ -20,6 +23,68 @@ namespace StudentPortal.Controllers
         {
             var enrollmentHeaders = await dbContext.EnrollmentHeaders.ToListAsync();
             return View(enrollmentHeaders);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DetailList(int studId = 23239916)
+        {
+            var detailList = await dbContext.EnrollmentDetails
+                .Include(e => e.EnrollmentHeader)
+                .ThenInclude(eh => eh.Student)                  
+                .Include(e => e.SubjectSchedule)
+                .ThenInclude(s => s.Subject)
+                .Where(e => e.StudId == studId)
+                .ToListAsync();
+
+            if (!detailList.Any())
+            {
+                return NotFound();
+            }
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("DetailList", detailList);
+            }
+
+            return View(detailList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatus(string edpCode, string newStatus)
+        {
+            var detail = await dbContext.EnrollmentDetails
+                .FirstOrDefaultAsync(e => e.EDPCode == edpCode);
+
+            if (detail == null)
+            {
+                return NotFound();
+            }
+
+            detail.Status = newStatus;
+            await dbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DetailDelete(int studentId, string edpCode, int units)
+        {
+            var enrollmentDetail = await dbContext.EnrollmentDetails
+                .Include(e => e.EnrollmentHeader)
+                .FirstOrDefaultAsync(e => e.StudId == studentId && e.EDPCode == edpCode);
+
+            if (enrollmentDetail == null)
+            {
+                return NotFound();
+            }
+
+            enrollmentDetail.EnrollmentHeader.TotalUnits -= units;
+            await dbContext.SaveChangesAsync();
+
+            dbContext.EnrollmentDetails.Remove(enrollmentDetail);
+            await dbContext.SaveChangesAsync();
+
+            return Ok();
         }
 
         [HttpGet]
@@ -59,6 +124,7 @@ namespace StudentPortal.Controllers
             return RedirectToAction("List", "Enrollment");
         }
 
+        [HttpGet]
         public IActionResult Add()
         {
             return View();
@@ -72,15 +138,6 @@ namespace StudentPortal.Controllers
             {
                 detail.Status = "WI";
                 detail.StudId = enrollmentHeader.StudId;
-
-                var existingSubjectSchedule = await dbContext.SubjectSchedules
-                    .FirstOrDefaultAsync(s => s.EDPCode == detail.EDPCode);
-
-                if (existingSubjectSchedule != null)
-                {
-                    existingSubjectSchedule.ClassSize += 1;
-                    dbContext.SubjectSchedules.Update(existingSubjectSchedule);
-                }
             }
             using (var transaction = await dbContext.Database.BeginTransactionAsync())
             {
@@ -99,7 +156,7 @@ namespace StudentPortal.Controllers
                         existingHeader.EnrollDate = enrollmentHeader.EnrollDate;
                         existingHeader.SchoolYear = enrollmentHeader.SchoolYear;
                         existingHeader.Encoder = enrollmentHeader.Encoder;
-                        existingHeader.TotalUnits = enrollmentHeader.TotalUnits;
+                        existingHeader.TotalUnits += enrollmentHeader.TotalUnits;
                         existingHeader.Status = "EN"; 
                         dbContext.EnrollmentHeaders.Update(existingHeader);
                     }
@@ -112,6 +169,15 @@ namespace StudentPortal.Controllers
                         if (existingDetail == null) 
                         {
                             await dbContext.EnrollmentDetails.AddAsync(detail);
+
+                            var existingSubjectSchedule = await dbContext.SubjectSchedules
+                                .FirstOrDefaultAsync(s => s.EDPCode == detail.EDPCode);
+
+                            if (existingSubjectSchedule != null)
+                            {
+                                existingSubjectSchedule.ClassSize += 1;
+                                dbContext.SubjectSchedules.Update(existingSubjectSchedule);
+                            }
                         }
                     }
 
@@ -125,11 +191,9 @@ namespace StudentPortal.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Log the main exception message
                     Console.WriteLine($"Error occurred: {ex.Message}");
                     Console.WriteLine($"Stack Trace: {ex.StackTrace}");
 
-                    // Log all inner exceptions, if present
                     Exception inner = ex.InnerException;
                     while (inner != null)
                     {

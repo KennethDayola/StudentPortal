@@ -63,12 +63,12 @@ $(document).ready(function () {
             $("#editContent").html(data); 
 
             $("#editModal").show();
-            $(".modal-content").css("animation", "slideIn 0.5s forwards");
+            $(".edit-modal-content").css("animation", "slideIn 0.5s forwards");
         });
     });
 
-    $(".close").click(function () {
-        $(".modal-content").css("animation", "slideOut 0.75s forwards");
+    $(".edit-modal-content .close").click(function () {
+        $(".edit-modal-content").css("animation", "slideOut 0.75s forwards");
 
         setTimeout(function () {
             $("#editModal").hide();
@@ -77,7 +77,7 @@ $(document).ready(function () {
 
     $(window).click(function (event) {
         if ($(event.target).is("#editModal")) {
-            $(".modal-content").css("animation", "slideOut 0.75s forwards");
+            $(".edit-modal-content").css("animation", "slideOut 0.75s forwards");
             setTimeout(function () {
                 $("#editModal").hide();
             }, 750);

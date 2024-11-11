@@ -112,6 +112,8 @@
 
                 event.preventDefault();
 
+                $("#saveButton").prop("disabled", true);
+
                 var formData = $("#editForm").serialize();
 
                 $.ajax({
@@ -122,6 +124,7 @@
                         displayToast("Subject details updated successfully!", "@Url.Action("List", "Subjects")");
                     },
                     error: function (xhr, status, error) {
+                        $("#saveButton").prop("disabled", false);
                         displayToast("An error occurred: " + error );
                     }
                 });

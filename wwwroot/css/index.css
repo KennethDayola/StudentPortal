@@ -170,7 +170,7 @@
     top: 35%;
 }
 
-#zoom-text-students {
+#zoom-text-students, #zoom-text-enrollments {
     text-align: center;
     animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     position: absolute;
@@ -181,7 +181,7 @@
     color: white;
 }
 
-#zoom-text-addsub {
+#zoom-text-addsub, #zoom-text-addenrollment {
     animation: slideIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     z-index: 1000000;
     position: absolute;
@@ -200,7 +200,7 @@
     color: white;
     width: 55%;
     left: 23.5%; /* Aligned more centrally */
-    top: 35%;
+    top: 29%;
     text-align: center; /* Center alignment for headings */
 }
 

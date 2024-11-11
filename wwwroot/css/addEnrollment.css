@@ -546,3 +546,10 @@ html {
 .enrollment-save-btn:hover {
     transform: scale(1.05);
 }
+
+.enrollment-save-btn:active {
+    transition: all .2s;
+    transform: scale(0.95); /* Slightly reduce size */
+    background-color: #0a0a0a;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3); /* Add inner shadow */
+}
